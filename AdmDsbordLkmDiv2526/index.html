@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Lakmud IV - Dashboard Resmi PAC IPNU IPPNU Dander</title>
+
+  <!-- PWA & Mobile Fullscreen Meta -->
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Libraries: Lucide Icons, Chart.js & QRCode Generator -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-sub: #f1f5f9;
+      --primary: #059669;
+      --primary-light: #ecfdf5;
+      --primary-border: #a7f3d0;
+      --accent: #f59e0b;
+      --accent-light: #fffbeb;
+      --rose: #e11d48;
+      --rose-light: #fff1f2;
+      --sky: #0284c7;
+      --sky-light: #f0f9ff;
+      --text-main: #0f172a;
+      --text-sub: #334155;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius-pill: 9999px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 10px 25px -4px rgba(15, 23, 42, 0.07);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-ambient-glow {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(180deg, rgba(5, 150, 105, 0.07) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* =========================================================================
+       DYNAMIC HEADER (NORMAL BRAND, IN-HEADER SEARCH, DETAIL VIEW HEADER)
+    ========================================================================= */
+    .header-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      padding: max(env(safe-area-inset-top), 14px) 16px 12px;
+      background: rgba(248, 250, 252, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .header-content-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 44px;
+      gap: 10px;
+    }
+
+    /* Mode 1: Brand & Desktop Segmented Tabs */
+    .header-left-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-emblem-box {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.28);
+      flex-shrink: 0;
+    }
+
+    .brand-titles-col h1 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      line-height: 1.15;
+    }
+
+    .brand-titles-col p {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .desktop-nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--surface-sub);
+      padding: 4px;
+      border-radius: var(--radius-pill);
+    }
+
+    .d-tab-btn {
+      background: transparent;
+      border: none;
+      padding: 7px 15px;
+      border-radius: var(--radius-pill);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .d-tab-btn.active {
+      background: var(--surface);
+      color: var(--primary);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-right-slot {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-icon-search {
+      width: 38px; height: 38px;
+      border-radius: var(--radius-pill);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .live-sync-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      border: 1px solid var(--primary-border);
+      color: var(--primary);
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 0.7rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .live-dot {
+      width: 6px; height: 6px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: pulseGlow 1.6s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.4; }
+    }
+
+    /* Mode 2: In-Header Search (Menggantikan Logo & Teks Header Penuh) */
+    .header-search-mode {
+      display: none;
+      width: 100%;
+      align-items: center;
+      background: var(--surface);
+      border: 1.5px solid var(--primary);
+      border-radius: var(--radius-pill);
+      padding: 6px 14px;
+      gap: 8px;
+    }
+
+    .header-search-mode.active {
+      display: flex;
+    }
+
+    .header-search-mode input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 0.85rem;
+      font-family: inherit;
+      color: var(--text-main);
+      background: transparent;
+    }
+
+    .btn-search-exit {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Mode 3: Detail Header (Tombol Kembali & Status di Header) */
+    .header-detail-mode {
+      display: none;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-detail-mode.active {
+      display: flex;
+    }
+
+    .btn-header-back {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* =========================================================================
+       MAIN APPLICATION VIEWPORT
+    ========================================================================= */
+    .app-viewport {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      padding-bottom: 90px;
+      z-index: 1;
+    }
+
+    .view-pane {
+      display: none;
+      width: 100%;
+    }
+
+    .view-pane.active-pane {
+      display: block;
+    }
+
+    .view-pane#page-beranda.active-pane {
+      animation: enterFade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes enterFade {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================================================
+       VIEW 1: BERANDA
+    ========================================================================= */
+    .beranda-container {
+      padding: 16px;
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .kpi-row-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .kpi-box-clean {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .kpi-lbl {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .kpi-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-top: 4px;
+      line-height: 1;
+    }
+
+    .kpi-icon-pill {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .charts-grid-layout {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr;
+      gap: 16px;
+    }
+
+    .chart-clean-surface {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .chart-head-meta { margin-bottom: 14px; }
+    .chart-head-meta h3 { font-size: 0.94rem; font-weight: 800; color: var(--text-main); }
+    .chart-head-meta p { font-size: 0.72rem; color: var(--text-muted); }
+
+    /* =========================================================================
+       VIEW 2: DATA PESERTA (SLIDE DETAIL + EDIT/VERIF/WA/HAPUS)
+    ========================================================================= */
+    .kader-wrapper-fluid {
+      position: relative;
+      width: 100%;
+      min-height: calc(100vh - 170px);
+      overflow: hidden;
+    }
+
+    .kader-subview-list {
+      width: 100%;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .kader-subview-list.slide-out {
+      transform: translateX(-100%);
+      display: none;
+    }
+
+    .peserta-list-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .peserta-list-item:hover { border-color: var(--primary); }
+    .peserta-list-item:active { transform: scale(0.98); }
+
+    .peserta-avatar-thumb {
+      width: 46px; height: 46px;
+      border-radius: 10px;
+      background: var(--surface-sub);
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+
+    .peserta-avatar-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .peserta-meta-col {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .peserta-meta-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .peserta-code-txt {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .peserta-title-txt {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .peserta-meta-sub {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .badge-chip-status {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 0.64rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .badge-chip-status.st-proses { background: var(--accent-light); color: #d97706; border: 1px solid rgba(217,119,6,0.2); }
+    .badge-chip-status.st-terverifikasi { background: var(--sky-light); color: var(--sky); border: 1px solid rgba(2,132,199,0.2); }
+    .badge-chip-status.st-lolos { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+    .badge-chip-status.st-gugur { background: var(--rose-light); color: var(--rose); border: 1px solid rgba(225,29,72,0.2); }
+
+    /* Detail View */
+    .kader-subview-detail {
+      width: 100%;
+      padding: 12px 16px;
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .kader-subview-detail.active { display: flex; }
+
+    .hero-profile-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-profile-avatar {
+      width: 70px; height: 70px;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+      border: 1.5px solid var(--primary-border);
+    }
+
+    .qr-card-surface {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    #qrcodeContainer {
+      background: #fff;
+      padding: 8px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .profile-grid-2col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .p-field-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+    }
+
+    .p-field-box.full { grid-column: span 2; }
+    .p-field-box .lbl { font-size: 0.65rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+    .p-field-box .val { font-size: 0.84rem; font-weight: 700; color: var(--text-main); margin-top: 3px; word-break: break-word; }
+
+    .card-detail-action-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .btn-card-op {
+      padding: 11px 8px;
+      border-radius: var(--radius-md);
+      font-size: 0.74rem;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+
+    .btn-card-op:active { transform: scale(0.96); }
+    .btn-card-op.edit { background: var(--surface-sub); border: 1px solid var(--border); color: var(--text-main); }
+    .btn-card-op.verif { background: var(--sky-light); border: 1px solid rgba(2,132,199,0.2); color: var(--sky); }
+    .btn-card-op.wa { background: #25d366; color: #ffffff; }
+    .btn-card-op.del { background: var(--rose-light); border: 1px solid rgba(225,29,72,0.2); color: var(--rose); }
+
+    /* =========================================================================
+       VIEW 3: SCREENING BERKAS (FUZZY MATCHER & INLINE AUDIT)
+    ========================================================================= */
+    .screening-container {
+      padding: 16px;
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .screening-input-hero {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .input-group-clean {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-group-clean label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .input-group-clean input {
+      width: 100%;
+      background: var(--surface-sub);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      font-family: inherit;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .input-group-clean input:focus {
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    .btn-search-screening {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 13px;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .candidates-picker-box {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+    }
+
+    .picker-item {
+      padding: 12px;
+      border-radius: var(--radius-md);
+      background: var(--surface-sub);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .picker-item:hover { border-color: var(--primary); }
+
+    .screening-result-dossier {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      flex-direction: column;
+      gap: 16px;
+      animation: enterFade 0.3s ease forwards;
+    }
+
+    .drive-docs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 8px;
+    }
+
+    .btn-doc-item {
+      background: var(--surface-sub);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn-doc-item.ready {
+      color: var(--primary);
+      border-color: var(--primary-border);
+      background: var(--primary-light);
+    }
+
+    .btn-doc-item.empty {
+      opacity: 0.45;
+      pointer-events: none;
+      border-style: dashed;
+    }
+
+    .screening-final-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-final-pass {
+      flex: 1;
+      padding: 13px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 0.84rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-final-fail {
+      flex: 1;
+      padding: 13px;
+      background: var(--rose);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 0.84rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* =========================================================================
+       VIEW 4: BERKAS (PESERTA FEED WITH PREVIEWS & ACTIONS)
+    ========================================================================= */
+    .berkas-feed-container {
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .berkas-kader-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .berkas-kader-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .berkas-kader-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .berkas-kader-avatar {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+    }
+
+    .berkas-file-pills-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 6px;
+    }
+
+    .btn-file-preview-chip {
+      background: var(--surface-sub);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-file-preview-chip.has-file {
+      border-color: var(--primary-border);
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .berkas-bottom-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+
+    /* =========================================================================
+       MODALS: EDIT BIODATA & PREVIEW
+    ========================================================================= */
+    .modal-overlay-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-overlay-bg.open { display: flex; }
+
+    .modal-window-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 580px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      animation: enterFade 0.25s ease forwards;
+    }
+
+    .modal-window-head {
+      padding: 14px 18px;
+      background: var(--surface-sub);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-window-body {
+      padding: 18px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* =========================================================================
+       MOBILE BOTTOM DOCK (E-WALLET SUPERAPP)
+    ========================================================================= */
+    .mobile-bottom-dock {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      padding: 6px 12px calc(env(safe-area-inset-bottom, 8px) + 6px);
+      justify-content: space-around;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .dock-btn-tab {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      cursor: pointer;
+    }
+
+    .dock-btn-tab.active { color: var(--primary); }
+
+    .toast-zone {
+      position: fixed;
+      top: 16px; right: 16px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast-chip {
+      background: #ffffff;
+      border: 1px solid var(--primary);
+      box-shadow: var(--shadow-md);
+      padding: 10px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: enterFade 0.25s forwards;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 900px) {
+      .desktop-nav-tabs { display: none; }
+      .mobile-bottom-dock { display: flex; }
+      .charts-grid-layout { grid-template-columns: 1fr; }
+      .profile-grid-2col { grid-template-columns: 1fr; }
+      .p-field-box.full { grid-column: span 1; }
+      .card-detail-action-row { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-ambient-glow"></div>
+  <div class="toast-zone" id="toastZone"></div>
+
+  <!-- HEADER -->
+  <header class="header-wrapper">
+    <div class="header-content-row">
+      
+      <!-- Normal Brand Mode -->
+      <div class="header-left-brand" id="headerNormalBrand">
+        <div class="brand-emblem-box">
+          <i data-lucide="shield-check" style="width: 22px; height: 22px;"></i>
+        </div>
+        <div class="brand-titles-col">
+          <h1 id="headerMainTitle">Lakmud IV</h1>
+          <p id="headerSubTitle">Dashboard Resmi</p>
+        </div>
+      </div>
+
+      <!-- Desktop Nav Tabs -->
+      <nav class="desktop-nav-tabs" id="headerDesktopNav">
+        <button class="d-tab-btn active" onclick="switchNavMenu('page-beranda', 'Lakmud IV', 'Dashboard Resmi', this)">
+          <i data-lucide="layout-grid" style="width: 14px; height: 14px;"></i> Beranda
+        </button>
+        <button class="d-tab-btn" onclick="switchNavMenu('page-peserta', 'Direktori Peserta', 'Database Calon Kader', this)">
+          <i data-lucide="users" style="width: 14px; height: 14px;"></i> Data Peserta
+        </button>
+        <button class="d-tab-btn" onclick="switchNavMenu('page-screening', 'Screening Berkas', 'Verifikasi Dokumen', this)">
+          <i data-lucide="clipboard-check" style="width: 14px; height: 14px;"></i> Screening
+        </button>
+        <button class="d-tab-btn" onclick="switchNavMenu('page-berkas', 'Pusat Dokumen', 'Berkas Terkirim', this)">
+          <i data-lucide="folder-check" style="width: 14px; height: 14px;"></i> Berkas
+        </button>
+      </nav>
+
+      <!-- Right Header Slots -->
+      <div class="header-right-slot" id="headerRightSlot">
+        <button class="btn-icon-search" id="btnHeaderSearchTrigger" onclick="openInHeaderSearch()" title="Cari Data">
+          <i data-lucide="search" style="width: 16px; height: 16px;"></i>
+        </button>
+        <div class="live-sync-pill" id="liveSyncPill">
+          <div class="live-dot"></div>
+          <span id="syncText">Auto-Sync</span>
+        </div>
+      </div>
+
+      <!-- In-Header Search (Replacing Brand) -->
+      <div class="header-search-mode" id="headerSearchMode">
+        <i data-lucide="search" style="width: 16px; height: 16px; color: var(--primary);"></i>
+        <input type="text" id="inHeaderSearchInput" placeholder="Cari nama, ID tiket, atau delegasi ranting..." oninput="handleInHeaderSearch()" />
+        <button class="btn-search-exit" onclick="closeInHeaderSearch()">
+          <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+        </button>
+      </div>
+
+      <!-- Detail Mode Header (Back + Status) -->
+      <div class="header-detail-mode" id="headerDetailMode">
+        <button class="btn-header-back" onclick="slideBackToList()">
+          <i data-lucide="arrow-left" style="width: 15px; height: 15px;"></i> Kembali
+        </button>
+        <span id="headerDetailStatusBadge" class="badge-chip-status st-proses">Proses</span>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- VIEWPORT -->
+  <main class="app-viewport">
+
+    <!-- VIEW 1: BERANDA -->
+    <section id="page-beranda" class="view-pane active-pane">
+      <div class="beranda-container">
+        
+        <div class="kpi-row-grid">
+          <div class="kpi-box-clean">
+            <div>
+              <div class="kpi-lbl">Total Kader</div>
+              <div class="kpi-val" id="cntTotal">0</div>
+            </div>
+            <div class="kpi-icon-pill" style="background: var(--sky-light); color: var(--sky);">
+              <i data-lucide="users" style="width: 22px; height: 22px;"></i>
+            </div>
+          </div>
+
+          <div class="kpi-box-clean">
+            <div>
+              <div class="kpi-lbl">Terverifikasi / Lolos</div>
+              <div class="kpi-val" id="cntPassed" style="color: var(--primary);">0</div>
+            </div>
+            <div class="kpi-icon-pill" style="background: var(--primary-light); color: var(--primary);">
+              <i data-lucide="check-circle" style="width: 22px; height: 22px;"></i>
+            </div>
+          </div>
+
+          <div class="kpi-box-clean">
+            <div>
+              <div class="kpi-lbl">Dalam Proses</div>
+              <div class="kpi-val" id="cntWaiting" style="color: var(--accent);">0</div>
+            </div>
+            <div class="kpi-icon-pill" style="background: var(--accent-light); color: var(--accent);">
+              <i data-lucide="clock" style="width: 22px; height: 22px;"></i>
+            </div>
+          </div>
+
+          <div class="kpi-box-clean">
+            <div>
+              <div class="kpi-lbl">Tidak Lolos</div>
+              <div class="kpi-val" id="cntFailed" style="color: var(--rose);">0</div>
+            </div>
+            <div class="kpi-icon-pill" style="background: var(--rose-light); color: var(--rose);">
+              <i data-lucide="x-circle" style="width: 22px; height: 22px;"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="charts-grid-layout">
+          <div class="chart-clean-surface">
+            <div class="chart-head-meta">
+              <h3>Persebaran Delegasi Ranting</h3>
+              <p>Rekapitulasi jumlah calon kader beserta persentase per ranting</p>
+            </div>
+            <div style="height: 250px; position: relative;">
+              <canvas id="canvasRanting"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-clean-surface">
+            <div class="chart-head-meta">
+              <h3>Distribusi Ukuran Kaos</h3>
+              <p>Rekapitulasi logistik seragam LAKMUD IV</p>
+            </div>
+            <div style="height: 250px; position: relative;">
+              <canvas id="canvasKaos"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 2: DATA PESERTA -->
+    <section id="page-peserta" class="view-pane">
+      <div class="kader-wrapper-fluid">
+        
+        <div class="kader-subview-list" id="kaderMasterList">
+          <!-- Dynamically Injected -->
+        </div>
+
+        <div class="kader-subview-detail" id="kaderDetailView">
+          
+          <div class="hero-profile-card">
+            <img id="dtAvatarImg" class="hero-profile-avatar" src="" alt="Foto" />
+            <div style="flex:1; min-width:0;">
+              <span id="dtIdCode" style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:800; color:var(--primary);">-</span>
+              <h3 id="dtFullName" style="font-size: 1.05rem; font-weight:800; color:var(--text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">-</h3>
+              <p id="dtDelegasi" style="font-size:0.75rem; font-weight:600; color:var(--text-muted);">-</p>
+            </div>
+          </div>
+
+          <div class="qr-card-surface">
+            <div style="font-size: 0.74rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">ID QR Card Peserta</div>
+            <div id="qrcodeContainer"></div>
+            <button onclick="downloadQRCodeImage()" style="background: var(--surface-sub); border: 1px solid var(--border); padding: 7px 14px; border-radius: var(--radius-pill); font-size: 0.74rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+              <i data-lucide="download" style="width: 14px; height: 14px;"></i> Unduh QR Card
+            </button>
+          </div>
+
+          <div class="profile-grid-2col">
+            <div class="p-field-box">
+              <div class="lbl">Tempat Tanggal Lahir</div>
+              <div class="val" id="dtTtl">-</div>
+            </div>
+            <div class="p-field-box">
+              <div class="lbl">Ukuran Kaos</div>
+              <div class="val" id="dtKaos">-</div>
+            </div>
+            <div class="p-field-box">
+              <div class="lbl">Nomor WhatsApp</div>
+              <div class="val" id="dtWa">-</div>
+            </div>
+            <div class="p-field-box">
+              <div class="lbl">Email Aktif</div>
+              <div class="val" id="dtEmail">-</div>
+            </div>
+            <div class="p-field-box full">
+              <div class="lbl">Alamat Domisili</div>
+              <div class="val" id="dtAlamat">-</div>
+            </div>
+            <div class="p-field-box full">
+              <div class="lbl">Motivasi & Komitmen Kader</div>
+              <div class="val" id="dtMotivasi" style="font-style: italic; font-weight: 500;">-</div>
+            </div>
+          </div>
+
+          <div class="card-detail-action-row">
+            <button class="btn-card-op edit" onclick="openEditBiodataModal()"><i data-lucide="edit-3" style="width: 14px; height: 14px;"></i> Edit</button>
+            <button class="btn-card-op verif" onclick="toggleParticipantVerification()"><i data-lucide="check-circle" style="width: 14px; height: 14px;"></i> Verifikasi</button>
+            <button class="btn-card-op wa" onclick="dispatchDirectWA()"><i data-lucide="message-circle" style="width: 14px; height: 14px;"></i> WhatsApp</button>
+            <button class="btn-card-op del" onclick="deleteParticipantDirect()"><i data-lucide="trash-2" style="width: 14px; height: 14px;"></i> Hapus</button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 3: SCREENING BERKAS -->
+    <section id="page-screening" class="view-pane">
+      <div class="screening-container">
+        
+        <div class="screening-input-hero" id="screeningSearchBox">
+          <div style="text-align: center; margin-bottom: 4px;">
+            <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main);">Verifikasi Berkas Kader</h3>
+            <p style="font-size: 0.74rem; color: var(--text-muted);">Masukkan Nama & Delegasi Ranting (Pencarian Fleksibel / Cocok Parsial)</p>
+          </div>
+
+          <div class="input-group-clean">
+            <label>Nama Peserta</label>
+            <input type="text" id="scrNamaInput" placeholder="Ketik nama atau panggilan..." />
+          </div>
+
+          <div class="input-group-clean">
+            <label>Asal Delegasi / Ranting</label>
+            <input type="text" id="scrDelegasiInput" placeholder="Ketik ranting atau PAC..." />
+          </div>
+
+          <button class="btn-search-screening" onclick="executeFuzzyScreeningSearch()">
+            <i data-lucide="file-search" style="width: 16px; height: 16px;"></i>
+            Lihat Data Berkas (Tekan Enter)
+          </button>
+        </div>
+
+        <div class="candidates-picker-box" id="screeningCandidatesPicker">
+          <div style="font-size: 0.74rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Ditemukan Beberapa Peserta yang Cocok:</div>
+          <div id="pickerItemsList" style="display: flex; flex-direction: column; gap: 6px;"></div>
+        </div>
+
+        <div class="screening-result-dossier" id="screeningDossierView">
+          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+            <div>
+              <h3 id="scCandidateName" style="font-size: 1.1rem; font-weight: 800; color: var(--text-main);">-</h3>
+              <p id="scCandidateMeta" style="font-size: 0.74rem; color: var(--primary); font-weight: 700;">-</p>
+            </div>
+            <button onclick="resetScreeningSearch()" style="background: none; border: none; color: var(--text-muted); cursor: pointer;"><i data-lucide="rotate-ccw" style="width: 18px; height: 18px;"></i></button>
+          </div>
+
+          <div class="profile-grid-2col">
+            <div class="p-field-box">
+              <div class="lbl">TTL</div>
+              <div class="val" id="scTtlVal">-</div>
+            </div>
+            <div class="p-field-box">
+              <div class="lbl">Kaos</div>
+              <div class="val" id="scKaosVal">-</div>
+            </div>
+            <div class="p-field-box full">
+              <div class="lbl">Alamat</div>
+              <div class="val" id="scAlamatVal">-</div>
+            </div>
+            <div class="p-field-box full">
+              <div class="lbl">Motivasi</div>
+              <div class="val" id="scMotivasiVal" style="font-style: italic;">-</div>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">6 File Berkas Drive:</div>
+            <div class="drive-docs-grid" id="scDriveGrid"></div>
+          </div>
+
+          <div class="screening-final-actions">
+            <button class="btn-final-pass" onclick="commitScreeningResult('Lolos Screening')"><i data-lucide="check-circle" style="width: 16px; height: 16px;"></i> Loloskan</button>
+            <button class="btn-final-fail" onclick="commitScreeningResult('Tidak Lolos')"><i data-lucide="x-circle" style="width: 16px; height: 16px;"></i> Gagalkan</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 4: BERKAS -->
+    <section id="page-berkas" class="view-pane">
+      <div class="berkas-feed-container" id="berkasFeedContainer">
+        <!-- Dynamically Injected -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL EDIT BIODATA -->
+  <div class="modal-overlay-bg" id="modalEditBiodata">
+    <div class="modal-window-card">
+      <div class="modal-window-head">
+        <h3 style="font-size: 0.95rem; font-weight: 800;">Edit Biodata Peserta</h3>
+        <button onclick="closeEditBiodataModal()" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><i data-lucide="x" style="width: 18px; height: 18px;"></i></button>
+      </div>
+      <div class="modal-window-body">
+        <div class="input-group-clean">
+          <label>Nama Lengkap</label>
+          <input type="text" id="editInpNama" />
+        </div>
+        <div class="input-group-clean">
+          <label>Delegasi Ranting</label>
+          <input type="text" id="editInpDelegasi" />
+        </div>
+        <div class="input-group-clean">
+          <label>Ukuran Kaos</label>
+          <input type="text" id="editInpKaos" />
+        </div>
+        <div class="input-group-clean">
+          <label>WhatsApp</label>
+          <input type="text" id="editInpWa" />
+        </div>
+        <div class="input-group-clean">
+          <label>Alamat Domisili</label>
+          <input type="text" id="editInpAlamat" />
+        </div>
+        <button onclick="saveEditedBiodata()" style="background: var(--primary); color: #fff; border: none; padding: 12px; border-radius: var(--radius-md); font-weight: 800; cursor: pointer;">
+          Simpan Perubahan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PREVIEW -->
+  <div class="modal-overlay-bg" id="modalPreview">
+    <div class="modal-window-card" style="max-width: 720px;">
+      <div class="modal-window-head">
+        <h3 id="prevTitle" style="font-size: 0.92rem; font-weight: 800;">Pratinjau Dokumen</h3>
+        <button onclick="closePreviewModal()" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><i data-lucide="x" style="width: 18px; height: 18px;"></i></button>
+      </div>
+      <div class="modal-window-body" style="align-items: center; justify-content: center; min-height: 380px;">
+        <img id="prevImg" src="" style="max-width: 100%; max-height: 440px; object-fit: contain; border-radius: 8px; display: none;" />
+        <iframe id="prevFrame" style="width: 100%; height: 440px; border: none; border-radius: 8px; display: none;"></iframe>
+        <a id="prevDirectLink" href="#" target="_blank" rel="noopener" style="margin-top: 10px; background: var(--primary); color: #fff; padding: 8px 16px; border-radius: var(--radius-pill); font-size: 0.76rem; font-weight: 700; text-decoration: none;">Buka di Google Drive</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE BOTTOM DOCK -->
+  <nav class="mobile-bottom-dock">
+    <button class="dock-btn-tab active" onclick="switchNavMenu('page-beranda', 'Lakmud IV', 'Dashboard Resmi', this)">
+      <i data-lucide="layout-grid" style="width: 18px; height: 18px;"></i>
+      <span>Beranda</span>
+    </button>
+    <button class="dock-btn-tab" onclick="switchNavMenu('page-peserta', 'Direktori Peserta', 'Database Kader', this)">
+      <i data-lucide="users" style="width: 18px; height: 18px;"></i>
+      <span>Peserta</span>
+    </button>
+    <button class="dock-btn-tab" onclick="switchNavMenu('page-screening', 'Screening Berkas', 'Verifikasi Dokumen', this)">
+      <i data-lucide="clipboard-check" style="width: 18px; height: 18px;"></i>
+      <span>Screening</span>
+    </button>
+    <button class="dock-btn-tab" onclick="switchNavMenu('page-berkas', 'Pusat Dokumen', 'Arsip File', this)">
+      <i data-lucide="folder-check" style="width: 18px; height: 18px;"></i>
+      <span>Berkas</span>
+    </button>
+  </nav>
+
+  <!-- SCRIPT ENGINE -->
+  <script>
+    const CONFIG = {
+      SCRIPT_URL: "https://script.google.com/macros/s/AKfycbz_cUJ5fglodLf8GwjM8OdGL3FuCOZx2sJBMNE_9jtEnBcQThmHYxkyPHeByBsqFfSL/exec",
+      ADMIN_KEY: "PAC_DANDER_LAKMUD4_SECURE_KEY",
+      POLL_INTERVAL: 6500
+    };
+
+    let dataset = [];
+    let currentNavPage = 'page-beranda';
+    let focusedParticipant = null;
+    let currentScreenedCandidate = null;
+    let chartRantingInst = null;
+    let chartKaosInst = null;
+
+    function showToast(msg) {
+      const zone = document.getElementById("toastZone");
+      const chip = document.createElement("div");
+      chip.className = "toast-chip";
+      chip.innerHTML = `<i data-lucide="check-circle" style="width:15px;height:15px;color:var(--primary);"></i><span>${msg}</span>`;
+      zone.appendChild(chip);
+      lucide.createIcons();
+      setTimeout(() => chip.remove(), 3200);
+    }
+
+    function switchNavMenu(pageId, title, subTitle, btnElement) {
+      currentNavPage = pageId;
+      document.querySelectorAll(".view-pane").forEach(p => p.classList.remove("active-pane"));
+      const target = document.getElementById(pageId);
+      if (target) target.classList.add("active-pane");
+
+      document.getElementById("headerMainTitle").textContent = title;
+      document.getElementById("headerSubTitle").textContent = subTitle;
+
+      document.querySelectorAll(".d-tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".dock-btn-tab").forEach(b => b.classList.remove("active"));
+      if (btnElement) btnElement.classList.add("active");
+
+      closeInHeaderSearch();
+      exitDetailHeaderMode();
+
+      const searchTrigger = document.getElementById("btnHeaderSearchTrigger");
+      const syncPill = document.getElementById("liveSyncPill");
+
+      if (pageId === 'page-peserta' || pageId === 'page-berkas') {
+        searchTrigger.style.display = "flex";
+        syncPill.style.display = "none";
+      } else {
+        searchTrigger.style.display = "none";
+        syncPill.style.display = "inline-flex";
+      }
+
+      if (pageId === 'page-beranda') {
+        animateNumbers();
+        renderAnimatedCharts();
+      }
+
+      if (pageId === 'page-peserta') {
+        slideBackToList();
+      }
+
+      lucide.createIcons();
+    }
+
+    function openInHeaderSearch() {
+      document.getElementById("headerNormalBrand").style.display = "none";
+      document.getElementById("headerDesktopNav").style.display = "none";
+      document.getElementById("headerRightSlot").style.display = "none";
+      document.getElementById("headerDetailMode").classList.remove("active");
+
+      const searchBar = document.getElementById("headerSearchMode");
+      searchBar.classList.add("active");
+      const inp = document.getElementById("inHeaderSearchInput");
+      inp.focus();
+    }
+
+    function closeInHeaderSearch() {
+      document.getElementById("headerSearchMode").classList.remove("active");
+      document.getElementById("headerNormalBrand").style.display = "flex";
+      document.getElementById("headerDesktopNav").style.display = "flex";
+      document.getElementById("headerRightSlot").style.display = "flex";
+      document.getElementById("inHeaderSearchInput").value = "";
+
+      if (currentNavPage === 'page-peserta') renderPesertaList();
+      if (currentNavPage === 'page-berkas') renderBerkasFeed();
+    }
+
+    function handleInHeaderSearch() {
+      const q = document.getElementById("inHeaderSearchInput").value.toLowerCase();
+      if (currentNavPage === 'page-peserta') renderPesertaList(q);
+      if (currentNavPage === 'page-berkas') renderBerkasFeed(q);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+      fetchCloudData(true);
+      setInterval(() => fetchCloudData(false), CONFIG.POLL_INTERVAL);
+      setupHardwareNavigation();
+    });
+
+    async function fetchCloudData(isFirst = false) {
+      try {
+        const res = await fetch(`${CONFIG.SCRIPT_URL}?action=getParticipants&auth=${CONFIG.ADMIN_KEY}`);
+        const result = await res.json();
+        if (result.status === "success" && Array.isArray(result.data)) {
+          dataset = result.data;
+          if (isFirst) {
+            animateNumbers();
+            renderAnimatedCharts();
+          }
+          renderPesertaList();
+          renderBerkasFeed();
+        }
+      } catch (e) {}
+    }
+
+    function animateNumbers() {
+      const total = dataset.length;
+      const pass = dataset.filter(d => d.status === "Lolos Screening").length;
+      const wait = dataset.filter(d => d.status === "Menunggu Screening" || d.status === "Terverifikasi" || !d.status).length;
+      const fail = dataset.filter(d => d.status === "Tidak Lolos").length;
+
+      counterUp("cntTotal", total);
+      counterUp("cntPassed", pass);
+      counterUp("cntWaiting", wait);
+      counterUp("cntFailed", fail);
+    }
+
+    function counterUp(id, target) {
+      const el = document.getElementById(id);
+      let current = 0;
+      const step = Math.max(1, Math.ceil(target / 25));
+      const interval = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          el.textContent = target;
+          clearInterval(interval);
+        } else {
+          el.textContent = current;
+        }
+      }, 25);
+    }
+
+    function renderAnimatedCharts() {
+      const rantingMap = {};
+      dataset.forEach(d => { rantingMap[d.delegasi || "Lainnya"] = (rantingMap[d.delegasi || "Lainnya"] || 0) + 1; });
+      const totalCount = dataset.length || 1;
+
+      const ctxR = document.getElementById("canvasRanting").getContext("2d");
+      if (chartRantingInst) chartRantingInst.destroy();
+      chartRantingInst = new Chart(ctxR, {
+        type: "bar",
+        data: {
+          labels: Object.keys(rantingMap),
+          datasets: [{ data: Object.values(rantingMap), backgroundColor: "#059669", borderRadius: 6 }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 1600, easing: "easeOutQuart" },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `Jumlah: ${ctx.raw} Kader (${((ctx.raw/totalCount)*100).toFixed(1)}%)`
+              }
+            }
+          },
+          scales: {
+            y: { ticks: { stepSize: 1, color: "#94a3b8" }, grid: { color: "#f1f5f9" } },
+            x: { ticks: { color: "#64748b", font: { size: 10 } }, grid: { display: false } }
+          }
+        }
+      });
+
+      const kaosMap = {};
+      dataset.forEach(d => { kaosMap[d.ukuranKaos || "L"] = (kaosMap[d.ukuranKaos || "L"] || 0) + 1; });
+
+      const ctxK = document.getElementById("canvasKaos").getContext("2d");
+      if (chartKaosInst) chartKaosInst.destroy();
+      chartKaosInst = new Chart(ctxK, {
+        type: "doughnut",
+        data: {
+          labels: Object.keys(kaosMap),
+          datasets: [{ data: Object.values(kaosMap), backgroundColor: ["#059669", "#f59e0b", "#0284c7", "#f97316", "#8b5cf6", "#ec4899"], borderWidth: 0 }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { animateRotate: true, duration: 1800, easing: "easeInOutCubic" },
+          plugins: { legend: { position: "bottom", labels: { boxWidth: 10, font: { size: 10 } } } },
+          cutout: "70%"
+        }
+      });
+    }
+
+    function getStatusClass(st) {
+      if (st === "Lolos Screening") return "st-lolos";
+      if (st === "Terverifikasi") return "st-terverifikasi";
+      if (st === "Tidak Lolos") return "st-gugur";
+      return "st-proses";
+    }
+
+    function renderPesertaList(q = "") {
+      const container = document.getElementById("kaderMasterList");
+      const filtered = dataset.filter(d => 
+        (d.nama || "").toLowerCase().includes(q) || 
+        (d.code || "").toLowerCase().includes(q) || 
+        (d.delegasi || "").toLowerCase().includes(q)
+      );
+
+      container.innerHTML = "";
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text-muted);">Tidak ada peserta ditemukan.</div>`;
+        return;
+      }
+
+      filtered.forEach(d => {
+        let fCount = 0;
+        if (d.files) Object.values(d.files).forEach(u => { if (u && u.startsWith("http")) fCount++; });
+
+        const photoUrl = (d.files && d.files.foto && d.files.foto.startsWith("http"))
+          ? d.files.foto
+          : "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=60";
+
+        const card = document.createElement("div");
+        card.className = "peserta-list-item";
+        card.onclick = () => openCandidateDetail(d.code);
+        card.innerHTML = `
+          <div class="peserta-avatar-thumb">
+            <img src="${photoUrl}" alt="${d.nama}" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=60'" />
+          </div>
+          <div class="peserta-meta-col">
+            <div class="peserta-meta-top">
+              <span class="peserta-code-txt">${d.code}</span>
+              <span class="badge-chip-status ${getStatusClass(d.status)}">${d.status || "Proses"}</span>
+            </div>
+            <div class="peserta-title-txt">${d.nama}</div>
+            <div class="peserta-meta-sub">
+              <span style="font-weight:600;">${d.delegasi || "Ranting"}</span>
+              <span style="font-weight:700; color:var(--primary); font-size:0.68rem;">${fCount}/6 Berkas</span>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function openCandidateDetail(code) {
+      const p = dataset.find(x => x.code === code);
+      if (!p) return;
+      focusedParticipant = p;
+
+      document.getElementById("dtIdCode").textContent = p.code;
+      document.getElementById("dtFullName").textContent = p.nama;
+      document.getElementById("dtDelegasi").textContent = p.delegasi || "-";
+      document.getElementById("dtTtl").textContent = p.ttl || "-";
+      document.getElementById("dtKaos").textContent = p.ukuranKaos || "-";
+      document.getElementById("dtWa").textContent = p.whatsapp || "-";
+      document.getElementById("dtEmail").textContent = p.email || "-";
+      document.getElementById("dtAlamat").textContent = p.alamat || "-";
+      document.getElementById("dtMotivasi").textContent = `"${p.motivasi || "Tidak ada komitmen khusus."}"`;
+
+      const photoUrl = (p.files && p.files.foto && p.files.foto.startsWith("http"))
+        ? p.files.foto
+        : "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=60";
+      document.getElementById("dtAvatarImg").src = photoUrl;
+
+      const qrBox = document.getElementById("qrcodeContainer");
+      qrBox.innerHTML = "";
+      new QRCode(qrBox, {
+        text: p.code,
+        width: 120, height: 120,
+        colorDark: "#059669", colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+      enterDetailHeaderMode(p.status || "Proses");
+
+      document.getElementById("kaderMasterList").classList.add("slide-out");
+      document.getElementById("kaderDetailView").classList.add("active");
+      history.pushState({ detailActive: true }, "");
+      lucide.createIcons();
+    }
+
+    function enterDetailHeaderMode(statusText) {
+      document.getElementById("headerNormalBrand").style.display = "none";
+      document.getElementById("headerDesktopNav").style.display = "none";
+      document.getElementById("headerRightSlot").style.display = "none";
+      document.getElementById("headerSearchMode").classList.remove("active");
+
+      const badge = document.getElementById("headerDetailStatusBadge");
+      badge.className = `badge-chip-status ${getStatusClass(statusText)}`;
+      badge.textContent = statusText;
+
+      document.getElementById("headerDetailMode").classList.add("active");
+    }
+
+    function exitDetailHeaderMode() {
+      document.getElementById("headerDetailMode").classList.remove("active");
+      document.getElementById("headerNormalBrand").style.display = "flex";
+      document.getElementById("headerDesktopNav").style.display = "flex";
+      document.getElementById("headerRightSlot").style.display = "flex";
+    }
+
+    function slideBackToList() {
+      document.getElementById("kaderMasterList").classList.remove("slide-out");
+      document.getElementById("kaderDetailView").classList.remove("active");
+      exitDetailHeaderMode();
+      focusedParticipant = null;
+
+      document.getElementById("btnHeaderSearchTrigger").style.display = "flex";
+      document.getElementById("liveSyncPill").style.display = "none";
+    }
+
+    function downloadQRCodeImage() {
+      const qrCanvas = document.querySelector("#qrcodeContainer canvas");
+      if (!qrCanvas || !focusedParticipant) return;
+      const link = document.createElement("a");
+      link.download = `QR_${focusedParticipant.code}_${focusedParticipant.nama}.png`;
+      link.href = qrCanvas.toDataURL("image/png");
+      link.click();
+      showToast("QR Card berhasil diunduh.");
+    }
+
+    async function toggleParticipantVerification() {
+      if (!focusedParticipant) return;
+      const newStatus = focusedParticipant.status === "Terverifikasi" ? "Menunggu Screening" : "Terverifikasi";
+      focusedParticipant.status = newStatus;
+
+      document.getElementById("headerDetailStatusBadge").className = `badge-chip-status ${getStatusClass(newStatus)}`;
+      document.getElementById("headerDetailStatusBadge").textContent = newStatus;
+      renderPesertaList();
+      showToast(`Status peserta: ${newStatus}`);
+
+      try {
+        await fetch(CONFIG.SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "update_status", code: focusedParticipant.code, status: newStatus, auth: CONFIG.ADMIN_KEY })
+        });
+      } catch(e) {}
+    }
+
+    function dispatchDirectWA() {
+      if (!focusedParticipant) return;
+      const num = (focusedParticipant.whatsapp || "").replace(/\D/g, "");
+      const msg = `Assalamu'alaikum Rekan/Rekanita *${focusedParticipant.nama}* (${focusedParticipant.code}), Panitia Pelaksana LAKMUD IV PAC IPNU IPPNU DANDER memberitahukan status berkas Anda: *${focusedParticipant.status || "Dalam Proses"}*. Salam 3B!`;
+      window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, "_blank");
+    }
+
+    async function deleteParticipantDirect() {
+      if (!focusedParticipant) return;
+      if (!confirm(`Hapus permanen peserta ${focusedParticipant.nama} (${focusedParticipant.code})?`)) return;
+
+      const code = focusedParticipant.code;
+      dataset = dataset.filter(x => x.code !== code);
+      slideBackToList();
+      renderPesertaList();
+      showToast("Peserta berhasil dihapus.");
+
+      try {
+        await fetch(CONFIG.SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "delete_participant", code: code, auth: CONFIG.ADMIN_KEY })
+        });
+      } catch(e) {}
+    }
+
+    function openEditBiodataModal() {
+      if (!focusedParticipant) return;
+      document.getElementById("editInpNama").value = focusedParticipant.nama || "";
+      document.getElementById("editInpDelegasi").value = focusedParticipant.delegasi || "";
+      document.getElementById("editInpKaos").value = focusedParticipant.ukuranKaos || "";
+      document.getElementById("editInpWa").value = focusedParticipant.whatsapp || "";
+      document.getElementById("editInpAlamat").value = focusedParticipant.alamat || "";
+      document.getElementById("modalEditBiodata").classList.add("open");
+    }
+
+    function closeEditBiodataModal() {
+      document.getElementById("modalEditBiodata").classList.remove("open");
+    }
+
+    function saveEditedBiodata() {
+      if (!focusedParticipant) return;
+      focusedParticipant.nama = document.getElementById("editInpNama").value.trim();
+      focusedParticipant.delegasi = document.getElementById("editInpDelegasi").value.trim();
+      focusedParticipant.ukuranKaos = document.getElementById("editInpKaos").value.trim();
+      focusedParticipant.whatsapp = document.getElementById("editInpWa").value.trim();
+      focusedParticipant.alamat = document.getElementById("editInpAlamat").value.trim();
+
+      document.getElementById("dtFullName").textContent = focusedParticipant.nama;
+      document.getElementById("dtDelegasi").textContent = focusedParticipant.delegasi;
+      document.getElementById("dtKaos").textContent = focusedParticipant.ukuranKaos;
+      document.getElementById("dtWa").textContent = focusedParticipant.whatsapp;
+      document.getElementById("dtAlamat").textContent = focusedParticipant.alamat;
+
+      renderPesertaList();
+      closeEditBiodataModal();
+      showToast("Biodata berhasil diperbarui!");
+    }
+
+    // SCREENING LOGIC
+    function executeFuzzyScreeningSearch() {
+      const qNama = document.getElementById("scrNamaInput").value.trim().toLowerCase();
+      const qDel = document.getElementById("scrDelegasiInput").value.trim().toLowerCase();
+
+      if (!qNama && !qDel) {
+        showToast("Masukkan nama atau delegasi ranting.");
+        return;
+      }
+
+      const matches = dataset.filter(d => {
+        const matchNama = qNama ? (d.nama || "").toLowerCase().includes(qNama) : true;
+        const matchDel = qDel ? (d.delegasi || "").toLowerCase().includes(qDel) : true;
+        return matchNama && matchDel;
+      });
+
+      if (matches.length === 0) {
+        showToast("Data kader tidak ditemukan!");
+        return;
+      }
+
+      if (matches.length === 1) {
+        openCandidateScreeningDossier(matches[0]);
+      } else {
+        showCandidatePicker(matches);
+      }
+    }
+
+    function showCandidatePicker(list) {
+      document.getElementById("screeningSearchBox").style.display = "none";
+      document.getElementById("screeningDossierView").style.display = "none";
+      const picker = document.getElementById("screeningCandidatesPicker");
+      picker.style.display = "flex";
+
+      const itemsList = document.getElementById("pickerItemsList");
+      itemsList.innerHTML = "";
+
+      list.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "picker-item";
+        div.onclick = () => openCandidateScreeningDossier(item);
+        div.innerHTML = `
+          <div>
+            <div style="font-size:0.86rem; font-weight:800; color:var(--text-main);">${item.nama}</div>
+            <div style="font-size:0.72rem; color:var(--primary); font-weight:700;">${item.code} • ${item.delegasi}</div>
+          </div>
+          <i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--text-muted);"></i>
+        `;
+        itemsList.appendChild(div);
+      });
+      lucide.createIcons();
+    }
+
+    function openCandidateScreeningDossier(candidate) {
+      currentScreenedCandidate = candidate;
+      document.getElementById("screeningSearchBox").style.display = "none";
+      document.getElementById("screeningCandidatesPicker").style.display = "none";
+
+      document.getElementById("scCandidateName").textContent = candidate.nama;
+      document.getElementById("scCandidateMeta").textContent = `${candidate.code} • ${candidate.delegasi}`;
+      document.getElementById("scTtlVal").textContent = candidate.ttl || "-";
+      document.getElementById("scKaosVal").textContent = candidate.ukuranKaos || "-";
+      document.getElementById("scAlamatVal").textContent = candidate.alamat || "-";
+      document.getElementById("scMotivasiVal").textContent = `"${candidate.motivasi || "-"}"`;
+
+      const grid = document.getElementById("scDriveGrid");
+      grid.innerHTML = "";
+      const fileDefs = [
+        { k: "foto", l: "1. Foto 3x4" },
+        { k: "rekom", l: "2. Surat Rekom" },
+        { k: "biodata", l: "3. Biodata" },
+        { k: "kesediaan", l: "4. Pernyataan" },
+        { k: "izin", l: "5. Izin Ortu" },
+        { k: "esai", l: "6. Makalah/Esai" }
+      ];
+
+      fileDefs.forEach(def => {
+        const url = candidate.files ? candidate.files[def.k] : "";
+        const hasUrl = url && url.startsWith("http");
+        grid.innerHTML += `
+          <a href="${hasUrl ? url : '#'}" target="_blank" rel="noopener" class="btn-doc-item ${hasUrl ? 'ready' : 'empty'}">
+            <span>${def.l}</span>
+            <i data-lucide="${hasUrl ? 'external-link' : 'slash'}" style="width:13px;height:13px;"></i>
+          </a>
+        `;
+      });
+
+      document.getElementById("screeningDossierView").style.display = "flex";
+      lucide.createIcons();
+    }
+
+    function resetScreeningSearch() {
+      document.getElementById("screeningSearchBox").style.display = "flex";
+      document.getElementById("screeningCandidatesPicker").style.display = "none";
+      document.getElementById("screeningDossierView").style.display = "none";
+      currentScreenedCandidate = null;
+    }
+
+    async function commitScreeningResult(status) {
+      if (!currentScreenedCandidate) return;
+      currentScreenedCandidate.status = status;
+      showToast(`Putusan: ${status}`);
+      resetScreeningSearch();
+
+      try {
+        await fetch(CONFIG.SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "update_status", code: currentScreenedCandidate.code, status: status, auth: CONFIG.ADMIN_KEY })
+        });
+      } catch(e) {}
+    }
+
+    // BERKAS FEED
+    function renderBerkasFeed(q = "") {
+      const container = document.getElementById("berkasFeedContainer");
+      const filtered = dataset.filter(d => 
+        (d.nama || "").toLowerCase().includes(q) || 
+        (d.code || "").toLowerCase().includes(q) || 
+        (d.delegasi || "").toLowerCase().includes(q)
+      );
+
+      container.innerHTML = "";
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text-muted);">Tidak ada berkas kader yang cocok.</div>`;
+        return;
+      }
+
+      const fileDefs = [
+        { k: "foto", l: "Foto 3x4", isImg: true },
+        { k: "rekom", l: "Surat Rekom" },
+        { k: "biodata", l: "Biodata" },
+        { k: "kesediaan", l: "Pernyataan" },
+        { k: "izin", l: "Izin Ortu" },
+        { k: "esai", l: "Makalah/Esai" }
+      ];
+
+      filtered.forEach(d => {
+        const photoUrl = (d.files && d.files.foto && d.files.foto.startsWith("http"))
+          ? d.files.foto
+          : "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=60";
+
+        let pillsHtml = "";
+        fileDefs.forEach(f => {
+          const url = d.files ? d.files[f.k] : "";
+          const hasUrl = url && url.startsWith("http");
+          pillsHtml += `
+            <div class="btn-file-preview-chip ${hasUrl ? 'has-file' : ''}" onclick="openFilePreview('${url}', '${d.nama}', '${f.l}', ${f.isImg ? 'true' : 'false'})">
+              <span>${f.l}</span>
+              <i data-lucide="${hasUrl ? 'eye' : 'slash'}" style="width:12px;height:12px;"></i>
+            </div>
+          `;
+        });
+
+        const card = document.createElement("div");
+        card.className = "berkas-kader-card";
+        card.innerHTML = `
+          <div class="berkas-kader-top">
+            <div class="berkas-kader-info">
+              <img src="${photoUrl}" class="berkas-kader-avatar" alt="Foto" />
+              <div>
+                <h4 style="font-size:0.9rem; font-weight:800; color:var(--text-main);">${d.nama}</h4>
+                <p style="font-size:0.72rem; color:var(--primary); font-weight:700;">${d.code} • ${d.delegasi}</p>
+              </div>
+            </div>
+            <span class="badge-chip-status ${getStatusClass(d.status)}">${d.status || "Proses"}</span>
+          </div>
+
+          <div class="berkas-file-pills-row">${pillsHtml}</div>
+
+          <div class="berkas-bottom-actions">
+            <button class="btn-card-op verif" onclick="quickVerifyFromBerkas('${d.code}')"><i data-lucide="check-circle" style="width:13px;height:13px;"></i> Verifikasi</button>
+            <button class="btn-card-op wa" onclick="quickWAFromBerkas('${d.code}')"><i data-lucide="message-circle" style="width:13px;height:13px;"></i> WhatsApp</button>
+            <button class="btn-card-op del" onclick="quickDeleteFromBerkas('${d.code}')"><i data-lucide="trash-2" style="width:13px;height:13px;"></i> Hapus</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function openFilePreview(url, nama, label, isImg) {
+      if (!url || !url.startsWith("http")) {
+        showToast("File belum diunggah oleh peserta.");
+        return;
+      }
+      document.getElementById("prevTitle").textContent = `${label} - ${nama}`;
+      document.getElementById("prevDirectLink").href = url;
+
+      const imgEl = document.getElementById("prevImg");
+      const frameEl = document.getElementById("prevFrame");
+
+      if (isImg || url.match(/\.(jpeg|jpg|png|webp)$/i)) {
+        imgEl.src = url;
+        imgEl.style.display = "block";
+        frameEl.style.display = "none";
+      } else {
+        frameEl.src = url.replace("/view", "/preview");
+        frameEl.style.display = "block";
+        imgEl.style.display = "none";
+      }
+
+      document.getElementById("modalPreview").classList.add("open");
+    }
+
+    function closePreviewModal() {
+      document.getElementById("modalPreview").classList.remove("open");
+      document.getElementById("prevFrame").src = "";
+    }
+
+    async function quickVerifyFromBerkas(code) {
+      const p = dataset.find(x => x.code === code);
+      if (!p) return;
+      const newStatus = p.status === "Terverifikasi" ? "Menunggu Screening" : "Terverifikasi";
+      p.status = newStatus;
+      renderBerkasFeed();
+      showToast(`Status berkas ${p.nama}: ${newStatus}`);
+
+      try {
+        await fetch(CONFIG.SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "update_status", code: code, status: newStatus, auth: CONFIG.ADMIN_KEY })
+        });
+      } catch(e) {}
+    }
+
+    function quickWAFromBerkas(code) {
+      const p = dataset.find(x => x.code === code);
+      if (!p) return;
+      const num = (p.whatsapp || "").replace(/\D/g, "");
+      const msg = `Assalamu'alaikum Rekan/Rekanita *${p.nama}* (${p.code}), Panitia LAKMUD IV PAC DANDER mengonfirmasi status berkas Anda: *${p.status || "Dalam Proses"}*. Salam 3B!`;
+      window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, "_blank");
+    }
+
+    async function quickDeleteFromBerkas(code) {
+      const p = dataset.find(x => x.code === code);
+      if (!p) return;
+      if (!confirm(`Hapus permanen berkas: ${p.nama} (${p.code})?`)) return;
+
+      dataset = dataset.filter(x => x.code !== code);
+      renderBerkasFeed();
+      showToast("Berkas berhasil dihapus.");
+
+      try {
+        await fetch(CONFIG.SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "delete_participant", code: code, auth: CONFIG.ADMIN_KEY })
+        });
+      } catch(e) {}
+    }
+
+    function setupHardwareNavigation() {
+      window.addEventListener("popstate", () => {
+        if (document.getElementById("modalPreview").classList.contains("open")) {
+          closePreviewModal();
+        } else if (document.getElementById("modalEditBiodata").classList.contains("open")) {
+          closeEditBiodataModal();
+        } else if (document.getElementById("kaderDetailView").classList.contains("active")) {
+          slideBackToList();
+        }
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closePreviewModal();
+          closeEditBiodataModal();
+          closeInHeaderSearch();
+        }
+        if (e.key === "Enter") {
+          if (document.activeElement.id === "scrNamaInput" || document.activeElement.id === "scrDelegasiInput") {
+            executeFuzzyScreeningSearch();
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
