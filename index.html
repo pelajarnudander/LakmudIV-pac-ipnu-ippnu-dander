@@ -5,286 +5,367 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <title>LAKMUD IV — PAC IPNU IPPNU Dander</title>
   <meta name="description" content="Portal Resmi Kaderisasi LAKMUD IV PAC IPNU IPPNU Dander." />
-  <meta name="theme-color" content="#f8fafc" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+
   <style>
     :root {
-      --bg-canvas: #f8fafc;
+      --primary-red: #d9230f;
+      --primary-red-hover: #b51a08;
+      --primary-red-soft: rgba(217, 35, 15, 0.08);
+
+      --seabank-orange: #ff5c00;
+      --seabank-soft: rgba(255, 92, 0, 0.1);
+
+      --primary-navy: #0e2238;
+      --primary-navy-soft: rgba(14, 34, 56, 0.06);
+
+      --gold-accent: #b45309;
+      --bg-body: #ffffff;
       --bg-surface: #ffffff;
-      --bg-subtle: #f1f5f9;
-      --bg-card: #ffffff;
-      --bg-card-hover: #fcfdfe;
-      --accent-spirit: #d9381e;
-      --accent-spirit-dark: #b82810;
-      --accent-spirit-soft: rgba(217, 56, 30, 0.08);
-      --accent-navy: #1e3a5f;
-      --accent-navy-soft: rgba(30, 58, 95, 0.06);
-      --accent-dana: #118eea;
-      --accent-dana-dark: #0c75c4;
+      --bg-muted: #f8fafc;
       --border-crisp: #e2e8f0;
-      --border-hover: #cbd5e1;
-      --border-active: #94a3b8;
+
       --text-main: #0f172a;
-      --text-sub: #334155;
+      --text-sub: #475569;
       --text-muted: #64748b;
-      --text-dim: #94a3b8;
-      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
-      --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+
+      --radius-2xl: 20px;
       --radius-xl: 14px;
-      --radius-lg: 10px;
-      --radius-md: 8px;
-      --radius-sm: 6px;
       --radius-pill: 9999px;
+      --shadow-soft: 0 4px 20px -2px rgba(14, 34, 56, 0.06);
     }
+
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
     }
+
     html {
       scroll-behavior: smooth;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+      background: var(--bg-body);
     }
-    html::-webkit-scrollbar,
-    body::-webkit-scrollbar {
-      display: none;
-      width: 0;
-      height: 0;
-    }
+
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-canvas);
+      background: var(--bg-body);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 16px 14px 12px;
+      padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
       position: relative;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
-    .scroll-progress-line {
+
+    /* POIN 3: ANIMASI SCROLL MOBILE DARI UJUNG KE UJUNG */
+    .mobile-scroll-track-edge {
       position: fixed;
+      right: 0;
       top: 0;
-      left: 0;
-      width: 100%;
-      height: 2.5px;
-      background: rgba(15, 23, 42, 0.06);
+      bottom: 0;
+      width: 4px;
+      background: rgba(14, 34, 56, 0.05);
       z-index: 9999;
     }
-    .scroll-progress-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #d9381e, #ea580c, #1e3a5f);
-      transition: width 0.08s linear;
-    }
-    .container {
+
+    .mobile-scroll-fill-edge {
       width: 100%;
-      max-width: 450px;
+      height: 0%;
+      background: linear-gradient(180deg, var(--primary-red) 0%, #ea580c 50%, var(--primary-navy) 100%);
+      transition: height 0.04s linear;
+    }
+
+    @media (min-width: 768px) {
+      .mobile-scroll-track-edge {
+        display: none;
+      }
+    }
+
+    .app-viewport {
+      width: 100%;
+      max-width: 620px;
       display: flex;
       flex-direction: column;
-      flex: 1;
-    }
-    .header {
-      padding: 4px 0 14px;
-      text-align: center;
+      gap: 14px;
       position: relative;
+      z-index: 1;
     }
-    .hero-brand {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 6px;
-    }
-    .emblem-clean {
-      width: 52px;
-      height: 52px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-crisp);
-      border-radius: var(--radius-lg);
-      padding: 7px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: var(--shadow-sm);
-    }
-    .emblem-clean img {
+
+    /* POIN 1: LOGO BESAR SELEBAR TOMBOL MENU */
+    .logo-hero-container {
       width: 100%;
-      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2px 0 0;
+    }
+
+    .logo-hero-container img {
+      width: 100%;
+      max-height: 220px;
       object-fit: contain;
+      filter: drop-shadow(0 8px 20px rgba(217, 35, 15, 0.15));
     }
-    .title-box {
-      text-align: left;
+
+    /* POIN 2: WAKTU BERSIH MINIMALIS TANPA BANYAK GRID BOX */
+    .clean-timer-bar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: var(--bg-muted);
+      border: 1px solid var(--border-crisp);
+      border-radius: var(--radius-xl);
     }
-    .main-title {
-      font-size: 1.65rem;
+
+    .timer-badge-side {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary-red);
+      box-shadow: 0 0 8px var(--primary-red);
+      animation: pulseDot 1.5s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 0.6; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .timer-badge-text {
+      font-size: 0.72rem;
       font-weight: 800;
-      line-height: 1;
-      color: var(--text-main);
+      color: var(--primary-navy);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .timer-inline-digits {
       display: flex;
       align-items: baseline;
-      gap: 5px;
-      letter-spacing: -0.02em;
+      gap: 8px;
+      font-family: 'Space Grotesk', monospace;
     }
-    .main-title span.roman {
-      font-family: 'Cinzel', serif;
-      color: var(--accent-spirit);
-      font-size: 1.55rem;
+
+    .digit-group {
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
     }
-    .sub-org {
-      font-size: 0.72rem;
+
+    .digit-val {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary-red);
+    }
+
+    .digit-lbl {
+      font-size: 0.65rem;
       font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent-navy);
-      margin-top: 3px;
-    }
-    .theme-motto {
-      font-size: 0.74rem;
       color: var(--text-muted);
-      line-height: 1.4;
-      font-style: italic;
-      padding: 0 8px;
-      margin-top: 4px;
+      text-transform: lowercase;
     }
-    .slider {
+
+    /* MEDIA SOSIAL IKON VECTOR */
+    .social-pills-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .social-action-pill {
+      flex: 1;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-crisp);
+      border-radius: var(--radius-xl);
+      text-decoration: none;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.2s ease;
+    }
+
+    .social-action-pill svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: var(--primary-navy);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: all 0.2s ease;
+    }
+
+    .social-action-pill:hover {
+      border-color: var(--primary-red);
+      transform: translateY(-2px);
+    }
+    .social-action-pill:hover svg {
+      stroke: var(--primary-red);
+      transform: scale(1.08);
+    }
+
+    /* SLIDER DOKUMENTASI */
+    .slider-frame {
       position: relative;
       width: 100%;
-      height: 180px;
+      height: 190px;
       border-radius: var(--radius-xl);
       overflow: hidden;
-      margin-bottom: 10px;
-      background: var(--bg-subtle);
       border: 1px solid var(--border-crisp);
-      box-shadow: var(--shadow-sm);
+      background: #e2e8f0;
+      box-shadow: var(--shadow-soft);
     }
-    .slider-track {
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
-    .slide-img {
+
+    .slide-photo {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 0.6s ease-in-out;
+      transition: opacity 0.8s ease;
     }
-    .slide-img.active {
+
+    .slide-photo.active {
       opacity: 1;
     }
-    .social-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .social-pill {
+
+    .slider-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      padding: 8px 10px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-crisp);
-      border-radius: var(--radius-lg);
-      text-decoration: none;
-      color: var(--accent-navy);
-      font-size: 0.74rem;
-      font-weight: 700;
-      box-shadow: var(--shadow-sm);
-      transition: all 0.15s ease;
+      gap: 6px;
+      z-index: 2;
     }
-    .social-pill i {
-      width: 15px;
-      height: 15px;
-      color: var(--accent-spirit);
+
+    .dot-node {
+      width: 6px;
+      height: 6px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.6);
+      transition: all 0.3s ease;
     }
-    .social-pill:hover {
-      border-color: var(--accent-navy);
-      background: var(--bg-card-hover);
+
+    .dot-node.active {
+      width: 22px;
+      background: var(--primary-red);
     }
-    .section-divider {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 14px 0 8px;
-    }
-    .section-divider::before,
-    .section-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border-crisp);
-    }
-    .section-divider span {
-      font-size: 0.69rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent-navy);
-      white-space: nowrap;
-    }
-    .vertical-menu {
+
+    /* ANIMASI BERGANTIAN PENDAFTARAN & UPLOAD BERKAS */
+    .motion-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
+      width: 100%;
     }
-    .cta-card {
-      background: linear-gradient(135deg, var(--accent-spirit) 0%, var(--accent-spirit-dark) 100%);
-      color: #ffffff;
-      border-radius: var(--radius-xl);
-      padding: 13px 16px;
-      text-decoration: none;
+
+    .action-button-card {
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      box-shadow: 0 3px 8px -1px rgba(217, 56, 30, 0.25);
-      transition: transform 0.15s ease, opacity 0.15s ease;
+      padding: 14px 16px;
+      border-radius: var(--radius-xl);
+      text-decoration: none;
+      transition: all 0.2s ease;
     }
-    .cta-card:active {
-      transform: scale(0.985);
-      opacity: 0.95;
+
+    .btn-register-flow {
+      background: linear-gradient(135deg, #d9230f 0%, #b51a08 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(217, 35, 15, 0.25);
     }
-    .cta-left {
+
+    .btn-upload-flow {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border: 1.5px solid var(--border-crisp);
+      box-shadow: var(--shadow-soft);
+    }
+
+    @keyframes pulseCard1 {
+      0%, 45% { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(217, 35, 15, 0.38); }
+      50%, 100% { transform: translateY(0); box-shadow: 0 4px 12px rgba(217, 35, 15, 0.2); }
+    }
+    @keyframes pulseCard2 {
+      0%, 45% { transform: translateY(0); border-color: var(--border-crisp); box-shadow: var(--shadow-soft); }
+      50%, 95% { transform: translateY(-2px); border-color: var(--primary-red); box-shadow: 0 8px 20px rgba(14, 34, 56, 0.12); }
+      100% { transform: translateY(0); }
+    }
+
+    .pulse-flow-1 { animation: pulseCard1 7s infinite ease-in-out; }
+    .pulse-flow-2 { animation: pulseCard2 7s infinite ease-in-out; }
+
+    .action-button-card:active { transform: scale(0.985) !important; }
+
+    .btn-card-left {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .cta-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-lg);
+
+    .icon-badge-box {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-xl);
       background: rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      color: #ffffff;
     }
-    .cta-text h3 {
+
+    .btn-upload-flow .icon-badge-box {
+      background: var(--primary-red-soft);
+      color: var(--primary-red);
+      border: 1px solid rgba(217, 35, 15, 0.2);
+    }
+
+    .btn-card-texts h3 {
       font-size: 0.94rem;
       font-weight: 800;
       line-height: 1.2;
     }
-    .cta-text p {
+
+    .btn-card-texts p {
       font-size: 0.72rem;
-      color: rgba(255, 255, 255, 0.92);
-      margin-top: 1px;
+      opacity: 0.9;
+      margin-top: 2px;
     }
-    .cta-arrow {
-      width: 28px;
-      height: 28px;
+
+    .btn-upload-flow .btn-card-texts p {
+      color: var(--text-muted);
+    }
+
+    .btn-arrow-icon {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.2);
       display: flex;
@@ -292,616 +373,562 @@
       justify-content: center;
       flex-shrink: 0;
     }
-    .menu-card {
-      background: var(--bg-card);
+    .btn-upload-flow .btn-arrow-icon {
+      background: var(--bg-muted);
+      color: var(--primary-navy);
+    }
+
+    /* SECTION TITLE */
+    .clean-section-divider {
+      font-size: 0.73rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary-navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .clean-section-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border-crisp);
+    }
+
+    /* ACCORDION */
+    .content-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      width: 100%;
+    }
+
+    .accordion-card {
+      background: var(--bg-surface);
       border: 1px solid var(--border-crisp);
       border-radius: var(--radius-xl);
       overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      transition: border-color 0.2s ease, background-color 0.2s ease;
+      box-shadow: var(--shadow-soft);
+      transition: border-color 0.2s ease;
     }
-    .menu-card:hover {
-      background-color: var(--bg-card-hover);
-      border-color: var(--border-hover);
+
+    .accordion-card.open {
+      border-color: var(--primary-red);
     }
-    .menu-btn {
+
+    .accordion-toggle-btn {
       width: 100%;
       background: transparent;
       border: none;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      text-align: left;
-      font-family: inherit;
-      color: inherit;
-      text-decoration: none;
-    }
-    .menu-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: var(--radius-lg);
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-crisp);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-navy);
-      flex-shrink: 0;
-    }
-    .menu-icon i {
-      width: 18px;
-      height: 18px;
-    }
-    .menu-info {
-      flex: 1;
-      min-width: 0;
-    }
-    .menu-title {
-      font-size: 0.86rem;
-      font-weight: 700;
-      color: var(--text-main);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .menu-desc {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 1px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .menu-arrow {
-      color: var(--text-dim);
-      display: flex;
-      align-items: center;
-      transition: transform 0.25s ease, color 0.2s ease;
-      flex-shrink: 0;
-    }
-    .menu-arrow i {
-      width: 16px;
-      height: 16px;
-    }
-    .menu-card.open .menu-arrow {
-      transform: rotate(90deg);
-      color: var(--accent-spirit);
-    }
-    .drawer-wrapper {
-      display: grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows 0.25s ease-out;
-      background: #fafbfd;
-      border-top: 1px solid transparent;
-    }
-    .menu-card.open .drawer-wrapper {
-      grid-template-rows: 1fr;
-      border-top-color: var(--border-crisp);
-    }
-    .drawer-inner {
-      overflow: hidden;
-    }
-    .drawer-body {
-      padding: 12px 14px 14px;
-    }
-    .doc-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .doc-card {
+      padding: 13px 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 12px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-crisp);
-      border-radius: var(--radius-lg);
+      gap: 12px;
+      cursor: pointer;
+      color: inherit;
+      text-align: left;
+      font-family: inherit;
       text-decoration: none;
-      color: var(--text-main);
-      transition: all 0.15s ease;
     }
-    .doc-card:hover {
-      border-color: var(--accent-navy);
-      background: #ffffff;
-      box-shadow: var(--shadow-sm);
-    }
-    .doc-card-left {
+
+    .toggle-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       min-width: 0;
     }
-    .doc-badge-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: var(--radius-md);
-      background: var(--accent-spirit-soft);
-      color: var(--accent-spirit);
+
+    .toggle-icon-wrap {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-xl);
+      background: var(--primary-red-soft);
+      border: 1px solid rgba(217, 35, 15, 0.2);
+      color: var(--primary-red);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
-    .doc-texts {
-      display: flex;
-      flex-direction: column;
+
+    .toggle-titles {
       min-width: 0;
     }
-    .doc-title {
-      font-size: 0.81rem;
+
+    .toggle-main-title {
+      font-size: 0.88rem;
       font-weight: 700;
       color: var(--text-main);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      line-height: 1.3;
     }
-    .doc-format {
-      font-size: 0.67rem;
-      font-weight: 600;
+
+    .toggle-sub-title {
+      font-size: 0.71rem;
       color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      margin-top: 1px;
     }
-    .doc-btn-download {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      padding: 5px 10px;
-      border-radius: var(--radius-pill);
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-crisp);
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--accent-navy);
-      flex-shrink: 0;
+
+    .toggle-chevron {
+      color: var(--text-muted);
+      transition: transform 0.25s ease;
     }
-    .doc-card:hover .doc-btn-download {
-      background: var(--accent-navy);
-      color: #ffffff;
-      border-color: var(--accent-navy);
+
+    .accordion-card.open .toggle-chevron {
+      transform: rotate(90deg);
+      color: var(--primary-red);
     }
-    .admin-card-box {
+
+    .accordion-expansion {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.25s ease;
+      background: #fafbfd;
+    }
+
+    .accordion-card.open .accordion-expansion {
+      grid-template-rows: 1fr;
+      border-top: 1px solid var(--border-crisp);
+    }
+
+    .accordion-expansion-inner {
+      overflow: hidden;
+    }
+
+    .accordion-body-padding {
+      padding: 14px;
+    }
+
+    /* POIN 5: FORMAT BERKAS WAJIB (4 FILE DOCX) */
+    .download-items-flow {
       display: flex;
       flex-direction: column;
       gap: 9px;
     }
-    .tier-grid {
+
+    .download-row-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 12px 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-crisp);
+      border-radius: var(--radius-xl);
+      text-decoration: none;
+      color: var(--text-main);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    @media (min-width: 520px) {
+      .download-row-card {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .download-lead {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .file-type-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--primary-navy-soft);
+      border: 1px solid var(--border-crisp);
+      color: var(--primary-navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .file-name-text {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .file-format-tag {
+      font-size: 0.67rem;
+      color: var(--primary-red);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .btn-download-action {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--primary-navy);
+      color: #ffffff;
+      border-radius: var(--radius-pill);
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.15s ease;
+    }
+
+    @media (min-width: 520px) {
+      .btn-download-action {
+        width: auto;
+      }
+    }
+
+    .btn-download-action:hover {
+      background: var(--primary-red);
+    }
+
+    /* POIN 4: BIAYA KONTRIBUSI PESERTA (SEABANK ONLY & NOMINAL BARU) */
+    .tier-clean-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
+      margin-bottom: 10px;
     }
-    .tier-card {
+
+    .tier-clean-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-crisp);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
       padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+      border-left: 3px solid var(--primary-red);
     }
-    .tier-label {
+
+    .tier-name-tag {
       font-size: 0.67rem;
       font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--accent-navy);
-    }
-    .tier-sub {
-      font-size: 0.64rem;
       color: var(--text-muted);
+      text-transform: uppercase;
     }
-    .tier-amount {
+
+    .tier-nominal {
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 1.15rem;
       font-weight: 800;
-      color: var(--accent-spirit);
-      margin-top: 2px;
+      color: var(--primary-navy);
+      margin-top: 3px;
     }
-    .rek-card {
+
+    .bank-plate-row {
       background: var(--bg-surface);
       border: 1px solid var(--border-crisp);
-      border-radius: var(--radius-lg);
-      padding: 10px 12px;
+      border-radius: var(--radius-xl);
+      padding: 12px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-bottom: 10px;
     }
-    .bank-brand {
-      font-size: 0.68rem;
+
+    .bank-brand-title {
+      font-size: 0.72rem;
       font-weight: 800;
-      color: var(--accent-navy);
+      color: var(--seabank-orange);
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
-    .rek-digits {
+
+    .bank-digits {
       font-family: monospace;
-      font-size: 0.92rem;
-      font-weight: 700;
+      font-size: 1rem;
+      font-weight: 800;
       color: var(--text-main);
-      margin-top: 1px;
+      margin: 2px 0;
+      letter-spacing: 0.05em;
     }
-    .rek-holder {
-      font-size: 0.65rem;
-      color: var(--text-muted);
-    }
-    .btn-copy-action {
-      background: var(--accent-spirit-soft);
-      color: var(--accent-spirit);
-      border: 1px solid rgba(217, 56, 30, 0.2);
-      padding: 6px 12px;
+
+    .btn-copy-account {
+      background: var(--seabank-soft);
+      border: 1px solid rgba(255, 92, 0, 0.3);
+      color: var(--seabank-orange);
+      padding: 7px 14px;
       border-radius: var(--radius-pill);
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      transition: all 0.15s ease;
     }
-    .btn-copy-action:hover {
-      background: var(--accent-spirit);
-      color: #ffffff;
-    }
-    .dana-action-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .btn-dana {
-      background: linear-gradient(135deg, var(--accent-dana) 0%, var(--accent-dana-dark) 100%);
+
+    .btn-submit-proof {
+      width: 100%;
+      background: var(--primary-navy);
       color: #ffffff;
       text-decoration: none;
-      padding: 9px 8px;
-      border-radius: var(--radius-lg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      box-shadow: 0 2px 6px rgba(17, 142, 234, 0.2);
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-    .btn-dana:active {
-      transform: scale(0.97);
-    }
-    .btn-dana i {
-      width: 16px;
-      height: 16px;
-    }
-    .btn-dana span.dana-price {
-      font-size: 0.64rem;
-      opacity: 0.9;
-      font-weight: 600;
-    }
-    .admin-note {
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      line-height: 1.35;
-      padding: 2px 2px;
-    }
-    .location-box {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .location-card-info {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-crisp);
-      border-radius: var(--radius-lg);
-      padding: 10px 12px;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-    .location-card-info i {
-      color: var(--accent-spirit);
-      margin-top: 2px;
-      flex-shrink: 0;
-    }
-    .loc-name {
-      font-size: 0.81rem;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-    .loc-address {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-      line-height: 1.3;
-    }
-    .map-frame {
-      width: 100%;
-      height: 135px;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      border: 1px solid var(--border-crisp);
-      background: #e2e8f0;
-    }
-    .map-frame iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    .btn-nav-map {
-      background: var(--accent-navy);
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 9px 14px;
-      border-radius: var(--radius-lg);
+      padding: 10px;
+      border-radius: var(--radius-xl);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 7px;
-      width: 100%;
-      transition: opacity 0.15s ease;
+      font-size: 0.76rem;
+      font-weight: 700;
+      transition: background 0.15s ease;
     }
-    .btn-nav-map:hover {
-      opacity: 0.93;
+    .btn-submit-proof:hover {
+      background: var(--primary-red);
     }
-    .timeline-list {
+
+    /* POIN 6: PETA LOKASI LUAS & JELAS */
+    .map-wide-card {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      position: relative;
-    }
-    .timeline-item {
-      display: flex;
-      align-items: flex-start;
       gap: 10px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-crisp);
-      border-radius: var(--radius-lg);
-      padding: 9px 11px;
     }
-    .timeline-badge {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--accent-spirit-soft);
-      color: var(--accent-spirit);
-      font-size: 0.7rem;
-      font-weight: 800;
+
+    .venue-address-detail {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      line-height: 1.4;
+      background: var(--bg-surface);
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-crisp);
+    }
+
+    .map-wide-frame {
+      width: 100%;
+      height: 280px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1.5px solid var(--border-crisp);
+      background: #e2e8f0;
+    }
+
+    .map-wide-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .btn-open-maps {
+      background: var(--primary-navy);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 10px;
+      border-radius: var(--radius-xl);
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
+      gap: 6px;
     }
-    .timeline-texts {
-      display: flex;
-      flex-direction: column;
-    }
-    .timeline-title {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-    .timeline-date {
-      font-size: 0.67rem;
-      color: var(--text-muted);
-      margin-top: 1px;
-    }
-    .video-card {
-      margin-top: 12px;
-      background: var(--bg-card);
+
+    /* VIDEO TUTORIAL */
+    .video-card-white {
+      background: var(--bg-surface);
       border: 1px solid var(--border-crisp);
       border-radius: var(--radius-xl);
-      padding: 12px;
-      box-shadow: var(--shadow-sm);
+      padding: 14px;
+      box-shadow: var(--shadow-soft);
     }
-    .video-header {
+
+    .video-switch-tabs {
       display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 9px;
-    }
-    .video-header i {
-      color: var(--accent-spirit);
-      width: 17px;
-      height: 17px;
-    }
-    .video-tabs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 4px;
-      background: var(--bg-subtle);
+      gap: 5px;
+      background: var(--bg-muted);
       padding: 3px;
-      border-radius: var(--radius-lg);
-      margin-bottom: 9px;
+      border-radius: var(--radius-xl);
+      margin-bottom: 10px;
       border: 1px solid var(--border-crisp);
     }
-    .video-tab {
+
+    .vid-tab-btn {
+      flex: 1;
       background: transparent;
       border: none;
-      padding: 6px 2px;
-      font-size: 0.68rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      text-align: center;
-    }
-    .video-tab.active {
-      background: var(--bg-card);
-      color: var(--text-main);
+      padding: 7px 4px;
+      font-size: 0.71rem;
       font-weight: 700;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      color: var(--text-muted);
+      border-radius: 10px;
+      cursor: pointer;
     }
-    .video-box {
+
+    .vid-tab-btn.active {
+      background: var(--bg-surface);
+      color: var(--primary-red);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .video-embed-box {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
       overflow: hidden;
       background: #000;
-      border: 1px solid var(--border-crisp);
     }
-    .video-box iframe {
+
+    .video-embed-box iframe {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       border: none;
     }
-    .video-caption {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-top: 8px;
-    }
-    .footer {
+
+    /* FOOTER */
+    .clean-footer {
       width: 100%;
-      margin-top: 16px;
-      padding-top: 12px;
+      margin-top: 14px;
+      padding-top: 16px;
       border-top: 1px solid var(--border-crisp);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 10px;
     }
-    .footer-content {
+
+    .footer-flex-row {
       width: 100%;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
       gap: 8px;
+      text-align: center;
     }
-    .footer-brand {
-      font-size: 0.7rem;
+
+    @media (min-width: 500px) {
+      .footer-flex-row {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+
+    .footer-brand-title {
+      font-size: 0.74rem;
       font-weight: 800;
+      color: var(--primary-navy);
       letter-spacing: 0.04em;
-      color: var(--accent-navy);
     }
-    .footer-links {
+
+    .footer-links-group {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
-    .footer-links a {
+
+    .footer-links-group a {
       color: var(--text-muted);
       text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.68rem;
+      font-size: 0.71rem;
       font-weight: 600;
-      transition: color 0.15s ease;
     }
-    .footer-links a:hover {
-      color: var(--accent-spirit);
+
+    .footer-links-group a:hover {
+      color: var(--primary-red);
     }
+
     .footer-copyright {
-      font-size: 0.63rem;
-      color: var(--text-dim);
+      font-size: 0.66rem;
+      color: var(--text-muted);
       text-align: center;
-      letter-spacing: 0.01em;
     }
-    .support-anchor {
+
+    /* BANTUAN */
+    .floating-help-wrap {
       position: fixed;
-      bottom: 14px;
-      right: 14px;
+      bottom: calc(16px + env(safe-area-inset-bottom));
+      right: 16px;
       z-index: 100;
     }
-    .btn-support {
+
+    .btn-help-trigger {
       display: flex;
       align-items: center;
       gap: 6px;
       background: var(--bg-surface);
+      border: 1px solid var(--border-crisp);
       color: var(--text-main);
-      border: 1px solid var(--border-active);
-      padding: 8px 14px;
+      padding: 9px 15px;
       border-radius: var(--radius-pill);
-      font-family: inherit;
       font-size: 0.74rem;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 4px 18px rgba(14, 34, 56, 0.15);
     }
-    .btn-support i {
-      color: var(--accent-spirit);
-      width: 14px;
-      height: 14px;
-    }
-    .popover {
+
+    .popover-help {
       position: absolute;
-      bottom: 44px;
+      bottom: 48px;
       right: 0;
       width: 250px;
       background: var(--bg-surface);
-      border: 1px solid var(--border-active);
+      border: 1px solid var(--border-crisp);
       border-radius: var(--radius-xl);
       padding: 12px;
       display: none;
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 10px 30px rgba(14, 34, 56, 0.18);
     }
-    .popover.active {
+
+    .popover-help.active {
       display: block;
     }
-    .popover-head {
+
+    .popover-top-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
-    .popover-head span {
-      font-size: 0.78rem;
+
+    .popover-top-bar span {
+      font-size: 0.76rem;
       font-weight: 800;
       color: var(--text-main);
     }
-    .popover-head button {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-    .admin-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 8px;
-    }
-    .admin-link {
+
+    .admin-link-card {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 7px 10px;
-      border-radius: var(--radius-lg);
+      padding: 8px 10px;
+      border-radius: 10px;
       text-decoration: none;
       font-size: 0.72rem;
       font-weight: 700;
-      background: var(--bg-subtle);
+      background: var(--bg-muted);
       border: 1px solid var(--border-crisp);
       color: var(--text-main);
+      margin-top: 6px;
     }
+
+    /* TOAST */
     .toast-box {
       position: fixed;
       top: 18px;
       left: 50%;
-      transform: translateX(-50%) translateY(-10px);
-      background: var(--text-main);
-      border: 1px solid transparent;
+      transform: translateX(-50%) translateY(-20px);
+      background: var(--primary-navy);
       color: #ffffff;
-      padding: 7px 16px;
+      padding: 7px 18px;
       border-radius: var(--radius-pill);
       font-size: 0.74rem;
-      font-weight: 600;
+      font-weight: 700;
       z-index: 10000;
       display: flex;
       align-items: center;
       gap: 7px;
       pointer-events: none;
       opacity: 0;
-      box-shadow: var(--shadow-md);
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
     }
+
     .toast-box.show {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
@@ -909,450 +936,479 @@
   </style>
 </head>
 <body>
-  <div class="scroll-progress-line">
-    <div class="scroll-progress-fill" id="scrollProgress"></div>
+  <!-- POIN 3: SCROLL TRACK UJUNG KE UJUNG DI SISI KANAN -->
+  <div class="mobile-scroll-track-edge">
+    <div class="mobile-scroll-fill-edge" id="mobileScrollFill"></div>
   </div>
+
   <div id="toast" class="toast-box">
-    <i data-lucide="check" style="width: 14px; height: 14px; color: #ff8c42;"></i>
-    <span id="toast-text"></span>
+    <i data-lucide="check" style="width: 14px; height: 14px; color: #22c55e;"></i>
+    <span id="toast-text">Berhasil disalin!</span>
   </div>
-  <div class="container">
-    <header class="header">
-      <div class="hero-brand">
-        <div class="emblem-clean">
-          <img src="assets/images/logo-lakmud.png" alt="Logo LAKMUD IV" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' rx=\'20\' fill=\'%231E3A5F\'/><path d=\'M35 24C35 24 45 44 45 64C45 74 35 79 35 79C35 79 65 74 65 50C65 35 50 24 35 24Z\' fill=\'%23D9381E\'/></svg>';" />
-        </div>
-        <div class="title-box">
-          <div class="main-title">
-            Lakmud <span class="roman">IV</span>
-          </div>
-          <div class="sub-org">PAC IPNU IPPNU DANDER</div>
-        </div>
-      </div>
-      <p class="theme-motto">"Mencetak Kader yang Reflektif, Strategis, dan Transformatif Menuju Kemandirian Organisasi"</p>
+
+  <div class="app-viewport">
+    <!-- POIN 1: LOGO BESAR MENGIKUTI LEBAR PENUH TOMBOL MENU -->
+    <header class="logo-hero-container">
+      <img 
+        src="https://lakmudiv26-pelajarnudander.pages.dev/FILE/LOGO/LOGO%20LAKMUD%20IV%20PELAJARNU%20DANDER%20RGB%20(3).png" 
+        alt="Logo Besar LAKMUD IV PAC IPNU IPPNU Dander" 
+        loading="eager"
+      />
     </header>
-    <section class="slider">
-      <div class="slider-track" id="slider-track"></div>
+
+    <!-- POIN 2: WAKTU BERSIH MINIMALIS TANPA GIRD BOX BERLEBIH -->
+    <div class="clean-timer-bar">
+      <div class="timer-badge-side">
+        <span class="live-dot"></span>
+        <span class="timer-badge-text">Menuju Pembukaan</span>
+      </div>
+      <div class="timer-inline-digits">
+        <div class="digit-group">
+          <span class="digit-val" id="cd-days">00</span>
+          <span class="digit-lbl">h</span>
+        </div>
+        <span style="color:var(--text-muted); font-weight:700;">:</span>
+        <div class="digit-group">
+          <span class="digit-val" id="cd-hours">00</span>
+          <span class="digit-lbl">j</span>
+        </div>
+        <span style="color:var(--text-muted); font-weight:700;">:</span>
+        <div class="digit-group">
+          <span class="digit-val" id="cd-mins">00</span>
+          <span class="digit-lbl">m</span>
+        </div>
+        <span style="color:var(--text-muted); font-weight:700;">:</span>
+        <div class="digit-group">
+          <span class="digit-val" id="cd-secs">00</span>
+          <span class="digit-lbl">d</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEDIA SOSIAL IKON MURNI VECTOR -->
+    <div class="social-pills-row">
+      <a href="https://instagram.com/pac_ipnu_ippnu_dander" target="_blank" rel="noopener noreferrer" class="social-action-pill" aria-label="Instagram">
+        <svg viewBox="0 0 24 24">
+          <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+        </svg>
+      </a>
+
+      <a href="https://facebook.com/pacipnuippnudander" target="_blank" rel="noopener noreferrer" class="social-action-pill" aria-label="Facebook">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+        </svg>
+      </a>
+
+      <a href="https://pacdander.or.id" target="_blank" rel="noopener noreferrer" class="social-action-pill" aria-label="Website">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" x2="22" y1="12" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+      </a>
+    </div>
+
+    <!-- SLIDER DOKUMENTASI BERSIH -->
+    <section class="slider-frame">
+      <div id="slider-track" style="width:100%; height:100%; position:relative;"></div>
+      <div class="slider-dots" id="slider-dots"></div>
     </section>
-    <div class="social-strip">
-      <a href="https://instagram.com/pac_ipnu_ippnu_dander" target="_blank" rel="noopener noreferrer" class="social-pill">
-        <i data-lucide="instagram"></i>
-        <span>Instagram</span>
-      </a>
-      <a href="https://facebook.com/pacipnuippnudander" target="_blank" rel="noopener noreferrer" class="social-pill">
-        <i data-lucide="facebook"></i>
-        <span>Facebook</span>
-      </a>
-      <a href="https://pacdander.or.id" target="_blank" rel="noopener noreferrer" class="social-pill">
-        <i data-lucide="globe"></i>
-        <span>Website</span>
-      </a>
-    </div>
-    <div class="section-divider">
-      <span>Syarat Wajib Peserta</span>
-    </div>
-    <nav class="vertical-menu">
-      <div class="menu-card">
-        <button type="button" class="menu-btn trigger-acc">
-          <div class="menu-icon">
-            <i data-lucide="folder-down"></i>
+
+    <!-- TOMBOL PENDAFTARAN & UPLOAD BERKAS (ANIMASI BERGANTIAN) -->
+    <div class="motion-group">
+      <a href="https://lakmudiv26-pelajarnudander.pages.dev/registrasi.html" class="action-button-card btn-register-flow pulse-flow-1">
+        <div class="btn-card-left">
+          <div class="icon-badge-box">
+            <i data-lucide="user-plus" style="width: 22px; height: 22px;"></i>
           </div>
-          <div class="menu-info">
-            <div class="menu-title">Berkas Wajib Peserta</div>
-            <div class="menu-desc">Format kelengkapan administrasi dan surat pernyataan</div>
-          </div>
-          <div class="menu-arrow">
-            <i data-lucide="chevron-right"></i>
-          </div>
-        </button>
-        <div class="drawer-wrapper">
-          <div class="drawer-inner">
-            <div class="drawer-body">
-              <div class="doc-group" id="download-list"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a href="https://pelajarnudander.github.io/LakmudIV-pac-ipnu-ippnu-dander/registrasi.html" class="cta-card">
-        <div class="cta-left">
-          <div class="cta-icon">
-            <i data-lucide="user-plus"></i>
-          </div>
-          <div class="cta-text">
+          <div class="btn-card-texts">
             <h3>Pendaftaran Peserta</h3>
-            <p>Pengisian formulir biodata dan registrasi calon peserta</p>
+            <p>Registrasi &amp; pengisian biodata resmi LAKMUD IV</p>
           </div>
         </div>
-        <div class="cta-arrow">
-          <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
+        <div class="btn-arrow-icon">
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
         </div>
       </a>
-      <div class="menu-card">
-        <a href="https://pelajarnudander.github.io/LakmudIV-pac-ipnu-ippnu-dander/upload.html" class="menu-btn">
-          <div class="menu-icon">
-            <i data-lucide="upload-cloud"></i>
+
+      <a href="https://lakmudiv26-pelajarnudander.pages.dev/upload.html" class="action-button-card btn-upload-flow pulse-flow-2">
+        <div class="btn-card-left">
+          <div class="icon-badge-box">
+            <i data-lucide="upload-cloud" style="width: 22px; height: 22px;"></i>
           </div>
-          <div class="menu-info">
-            <div class="menu-title">Upload Berkas Persyaratan</div>
-            <div class="menu-desc">Pengiriman dokumen persyaratan yang telah diisi lengkap</div>
+          <div class="btn-card-texts">
+            <h3 style="color:var(--text-main);">Upload Berkas Persyaratan</h3>
+            <p>Pengiriman berkas &amp; bukti transaksi peserta</p>
           </div>
-          <div class="menu-arrow">
-            <i data-lucide="arrow-up-right"></i>
-          </div>
-        </a>
-      </div>
-    </nav>
-    <div class="section-divider">
-      <span>Teknis &amp; Pembayaran</span>
+        </div>
+        <div class="btn-arrow-icon">
+          <i data-lucide="arrow-up-right" style="width: 16px; height: 16px;"></i>
+        </div>
+      </a>
     </div>
-    <nav class="vertical-menu">
-      <div class="menu-card">
-        <a href="assets/documents/TOR-LAKMUD-IV-PAC-IPNU-IPPNU-DANDER.pdf" download class="menu-btn">
-          <div class="menu-icon">
-            <i data-lucide="file-text"></i>
+
+    <!-- POIN 5: FORMAT BERKAS WAJIB PESERTA (4 FILE DOCX) -->
+    <div class="clean-section-divider">Berkas Wajib Peserta</div>
+
+    <div class="content-stack">
+      <div class="accordion-card open">
+        <button type="button" class="accordion-toggle-btn trigger-acc">
+          <div class="toggle-left">
+            <div class="toggle-icon-wrap">
+              <i data-lucide="folder-down" style="width: 20px; height: 20px;"></i>
+            </div>
+            <div class="toggle-titles">
+              <div class="toggle-main-title">Unduh Format Berkas Peserta</div>
+              <div class="toggle-sub-title">4 format instrumen resmi dalam format DOCX</div>
+            </div>
           </div>
-          <div class="menu-info">
-            <div class="menu-title">TOR &amp; Petunjuk Teknis</div>
-            <div class="menu-desc">Kerangka acuan kerja, tata tertib, dan silabus materi</div>
-          </div>
-          <div class="menu-arrow">
-            <i data-lucide="download"></i>
-          </div>
-        </a>
-      </div>
-      <div class="menu-card">
-        <button type="button" class="menu-btn trigger-acc">
-          <div class="menu-icon">
-            <i data-lucide="credit-card"></i>
-          </div>
-          <div class="menu-info">
-            <div class="menu-title">Administrasi &amp; Pembayaran</div>
-            <div class="menu-desc">Biaya kontribusi, rekening resmi, &amp; pembayaran DANA</div>
-          </div>
-          <div class="menu-arrow">
-            <i data-lucide="chevron-right"></i>
-          </div>
+          <i data-lucide="chevron-right" class="toggle-chevron" style="width: 18px; height: 18px;"></i>
         </button>
-        <div class="drawer-wrapper">
-          <div class="drawer-inner">
-            <div class="drawer-body">
-              <div class="admin-card-box">
-                <div class="tier-grid">
-                  <div class="tier-card">
-                    <span class="tier-label">Internal</span>
-                    <span class="tier-sub">Kader PAC Dander</span>
-                    <span class="tier-amount">Rp 85.000</span>
-                  </div>
-                  <div class="tier-card">
-                    <span class="tier-label">Eksternal</span>
-                    <span class="tier-sub">Delegasi Luar PAC</span>
-                    <span class="tier-amount">Rp 120.000</span>
-                  </div>
-                </div>
-                <div class="rek-card">
-                  <div>
-                    <div class="bank-brand">BANK BRI</div>
-                    <div class="rek-digits" id="rek-val">6123-01-012345-53-1</div>
-                    <div class="rek-holder">a.n PAC IPNU IPPNU DANDER</div>
-                  </div>
-                  <button type="button" class="btn-copy-action" id="btn-copy">
-                    <i data-lucide="copy" style="width: 12px; height: 12px;"></i> Salin
-                  </button>
-                </div>
-                <div class="dana-action-grid">
-                  <a href="https://link.dana.id/minta/081234567890?amount=85000" target="_blank" rel="noopener noreferrer" class="btn-dana">
-                    <i data-lucide="wallet"></i>
-                    <span>DANA Internal</span>
-                    <span class="dana-price">Rp 85.000</span>
-                  </a>
-                  <a href="https://link.dana.id/minta/081234567890?amount=120000" target="_blank" rel="noopener noreferrer" class="btn-dana">
-                    <i data-lucide="wallet"></i>
-                    <span>DANA Eksternal</span>
-                    <span class="dana-price">Rp 120.000</span>
-                  </a>
-                </div>
-                <p class="admin-note">* Harap simpan bukti transaksi transfer atau bukti DANA untuk diunggah pada menu Upload Berkas.</p>
-              </div>
+        <div class="accordion-expansion">
+          <div class="accordion-expansion-inner">
+            <div class="accordion-body-padding">
+              <div class="download-items-flow" id="download-list"></div>
             </div>
           </div>
         </div>
       </div>
-    </nav>
-    <div class="section-divider">
-      <span>Informasi &amp; Lokasi Kegiatan</span>
     </div>
-    <nav class="vertical-menu">
-      <div class="menu-card">
-        <a href="https://pelajarnudander.github.io/LakmudIV-pac-ipnu-ippnu-dander/cek-data.html" class="menu-btn">
-          <div class="menu-icon">
-            <i data-lucide="search-check"></i>
+
+    <!-- POIN 4: BIAYA KONTRIBUSI PESERTA (SEABANK ONLY & NOMINAL BARU) -->
+    <div class="clean-section-divider">Teknis &amp; Administrasi</div>
+
+    <div class="content-stack">
+      <!-- TOR -->
+      <div class="accordion-card">
+        <a href="https://lakmudiv26-pelajarnudander.pages.dev/FILE/TOR-LAKMUD-IV-PAC-IPNU-IPPNU-DANDER.pdf" download class="accordion-toggle-btn">
+          <div class="toggle-left">
+            <div class="toggle-icon-wrap">
+              <i data-lucide="file-text" style="width: 20px; height: 20px;"></i>
+            </div>
+            <div class="toggle-titles">
+              <div class="toggle-main-title">TOR &amp; Petunjuk Teknis</div>
+              <div class="toggle-sub-title">Tata tertib, silabus materi, &amp; alur kaderisasi</div>
+            </div>
           </div>
-          <div class="menu-info">
-            <div class="menu-title">Status &amp; Validasi Peserta</div>
-            <div class="menu-desc">Pemeriksaan status verifikasi berkas dan kelulusan</div>
-          </div>
-          <div class="menu-arrow">
-            <i data-lucide="arrow-up-right"></i>
-          </div>
+          <i data-lucide="download" style="width: 18px; height: 18px; color: var(--text-muted);"></i>
         </a>
       </div>
-      <div class="menu-card">
-        <button type="button" class="menu-btn trigger-acc">
-          <div class="menu-icon">
-            <i data-lucide="map-pin"></i>
+
+      <!-- Menu Pembayaran Peserta -->
+      <div class="accordion-card">
+        <button type="button" class="accordion-toggle-btn trigger-acc">
+          <div class="toggle-left">
+            <div class="toggle-icon-wrap">
+              <i data-lucide="credit-card" style="width: 20px; height: 20px;"></i>
+            </div>
+            <div class="toggle-titles">
+              <div class="toggle-main-title">Biaya Kontribusi Peserta</div>
+              <div class="toggle-sub-title">Administrasi pembayaran peserta &amp; rekening resmi SeaBank</div>
+            </div>
           </div>
-          <div class="menu-info">
-            <div class="menu-title">Pusat Kegiatan &amp; Lokasi</div>
-            <div class="menu-desc">Gedung MWC NU Kecamatan Dander, Bojonegoro</div>
-          </div>
-          <div class="menu-arrow">
-            <i data-lucide="chevron-right"></i>
-          </div>
+          <i data-lucide="chevron-right" class="toggle-chevron" style="width: 18px; height: 18px;"></i>
         </button>
-        <div class="drawer-wrapper">
-          <div class="drawer-inner">
-            <div class="drawer-body">
-              <div class="location-box">
-                <div class="location-card-info">
-                  <i data-lucide="navigation-2" style="width: 16px; height: 16px;"></i>
-                  <div>
-                    <div class="loc-name">Gedung MWC NU Dander</div>
-                    <div class="loc-address">Jl. Raya Dander No. 45, Kecamatan Dander, Kabupaten Bojonegoro, Jawa Timur</div>
+        <div class="accordion-expansion">
+          <div class="accordion-expansion-inner">
+            <div class="accordion-body-padding">
+              <!-- Nominal Baru: 90.000 & 120.000 -->
+              <div class="tier-clean-grid">
+                <div class="tier-clean-card">
+                  <div class="tier-name-tag">Internal PAC Dander</div>
+                  <div class="tier-nominal">Rp 90.000</div>
+                </div>
+                <div class="tier-clean-card">
+                  <div class="tier-name-tag">Delegasi Eksternal</div>
+                  <div class="tier-nominal">Rp 120.000</div>
+                </div>
+              </div>
+
+              <!-- Rekening SeaBank Saja -->
+              <div class="bank-plate-row">
+                <div>
+                  <div class="bank-brand-title">
+                    <span>SEABANK (BANK RESMI)</span>
                   </div>
+                  <div class="bank-digits" id="rek-num">9019-8765-4321</div>
+                  <div style="font-size:0.67rem; color:var(--text-muted);">a.n PAC IPNU IPPNU DANDER</div>
                 </div>
-                <div class="map-frame">
-                  <iframe title="Peta Lokasi" src="https://www.openstreetmap.org/export/embed.html?bbox=111.83%2C-7.30%2C111.90%2C-7.22&amp;layer=mapnik" loading="lazy"></iframe>
+                <button type="button" class="btn-copy-account" id="btn-copy">
+                  <i data-lucide="copy" style="width: 12px; height: 12px;"></i> Salin Rekening
+                </button>
+              </div>
+
+              <!-- Pengiriman File Bukti Transaksi -->
+              <a href="https://lakmudiv26-pelajarnudander.pages.dev/upload.html" class="btn-submit-proof">
+                <i data-lucide="upload" style="width: 15px; height: 15px;"></i> Kirim Bukti Transaksi Pembayaran
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POIN 6: PUSAT KEGIATAN & PETA DETAIL LUAS -->
+    <div class="clean-section-divider">Lokasi Kegiatan</div>
+
+    <div class="content-stack">
+      <div class="accordion-card open">
+        <button type="button" class="accordion-toggle-btn trigger-acc">
+          <div class="toggle-left">
+            <div class="toggle-icon-wrap">
+              <i data-lucide="map-pin" style="width: 20px; height: 20px;"></i>
+            </div>
+            <div class="toggle-titles">
+              <div class="toggle-main-title">Pusat Kegiatan: Gedung MWC NU Dander</div>
+              <div class="toggle-sub-title">Gedung MWC NU Kecamatan Dander, Bojonegoro</div>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" class="toggle-chevron" style="width: 18px; height: 18px;"></i>
+        </button>
+        <div class="accordion-expansion">
+          <div class="accordion-expansion-inner">
+            <div class="accordion-body-padding">
+              <div class="map-wide-card">
+                <div class="venue-address-detail">
+                  <strong>Gedung Majelis Wakil Cabang (MWC) NU Dander</strong><br />
+                  Jl. Raya Dander No. 45, Desa Dander, Kecamatan Dander, Kabupaten Bojonegoro, Jawa Timur.
                 </div>
-                <a href="https://maps.google.com/?q=Dander+Bojonegoro" target="_blank" rel="noopener noreferrer" class="btn-nav-map">
-                  <i data-lucide="map" style="width: 14px; height: 14px;"></i> Buka di Google Maps
+                <!-- Peta diperbesar lebar dan zoom-in detail ke titik jalan gedung -->
+                <div class="map-wide-frame">
+                  <iframe 
+                    title="Peta Detail Lokasi MWC NU Dander" 
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=111.8550%2C-7.2650%2C111.8850%2C-7.2350&amp;layer=mapnik&amp;marker=-7.2505%2C111.8700" 
+                    loading="lazy">
+                  </iframe>
+                </div>
+                <a href="https://maps.google.com/?q=MWC+NU+Dander+Bojonegoro" target="_blank" rel="noopener noreferrer" class="btn-open-maps">
+                  <i data-lucide="external-link" style="width: 15px; height: 15px;"></i> Buka Rute Detail di Google Maps
                 </a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="menu-card">
-        <button type="button" class="menu-btn trigger-acc">
-          <div class="menu-icon">
-            <i data-lucide="calendar-clock"></i>
-          </div>
-          <div class="menu-info">
-            <div class="menu-title">Timeline &amp; Alur Kegiatan</div>
-            <div class="menu-desc">Jadwal pendaftaran, screening, hingga pelaksanaan</div>
-          </div>
-          <div class="menu-arrow">
-            <i data-lucide="chevron-right"></i>
-          </div>
-        </button>
-        <div class="drawer-wrapper">
-          <div class="drawer-inner">
-            <div class="drawer-body">
-              <div class="timeline-list">
-                <div class="timeline-item">
-                  <div class="timeline-badge">1</div>
-                  <div class="timeline-texts">
-                    <span class="timeline-title">Pendaftaran &amp; Unggah Berkas</span>
-                    <span class="timeline-date">Tahap registrasi online calon peserta</span>
-                  </div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-badge">2</div>
-                  <div class="timeline-texts">
-                    <span class="timeline-title">Screening &amp; Validasi Berkas</span>
-                    <span class="timeline-date">Uji kelayakan dan verifikasi instrumen</span>
-                  </div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-badge">3</div>
-                  <div class="timeline-texts">
-                    <span class="timeline-title">Pengumuman Peserta Lolos</span>
-                    <span class="timeline-date">Penerbitan surat keputusan peserta resmi</span>
-                  </div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-badge">4</div>
-                  <div class="timeline-texts">
-                    <span class="timeline-title">Forum Kaderisasi LAKMUD IV</span>
-                    <span class="timeline-date">Pelaksanaan forum kaderisasi hingga pembaiatan</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-    <section class="video-card">
-      <div class="video-header">
-        <i data-lucide="play-circle"></i>
+    </div>
+
+    <!-- VIDEO TUTORIAL -->
+    <div class="video-card-white">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-weight:800; font-size:0.84rem; color:var(--text-main);">
+        <i data-lucide="play-circle" style="color:var(--primary-red); width:18px; height:18px;"></i>
         <span>Panduan Tutorial Peserta</span>
       </div>
-      <div class="video-tabs">
-        <button type="button" class="video-tab active" data-tab="pendaftaran">1. Registrasi</button>
-        <button type="button" class="video-tab" data-tab="berkas">2. Berkas</button>
-        <button type="button" class="video-tab" data-tab="cekdata">3. Verifikasi</button>
+      <div class="video-switch-tabs">
+        <button type="button" class="vid-tab-btn active" data-vid="registrasi">1. Alur Registrasi</button>
+        <button type="button" class="vid-tab-btn" data-vid="upload">2. Unggah Berkas</button>
       </div>
-      <div class="video-box">
-        <iframe id="video-frame" src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Tutorial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      <div class="video-embed-box">
+        <iframe id="video-frame" src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Video Panduan" allowfullscreen loading="lazy"></iframe>
       </div>
-      <div class="video-caption" id="video-caption">Langkah 1: Pengisian Formulir Pendaftaran Online</div>
-    </section>
-    <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-brand">PAC IPNU IPPNU DANDER</div>
-        <div class="footer-links">
-          <a href="https://instagram.com/pac_ipnu_ippnu_dander" target="_blank" rel="noopener noreferrer">
-            <i data-lucide="instagram" style="width: 12px; height: 12px;"></i> Instagram
-          </a>
-          <a href="https://pacdander.or.id" target="_blank" rel="noopener noreferrer">
-            <i data-lucide="globe" style="width: 12px; height: 12px;"></i> Website
-          </a>
+    </div>
+
+    <!-- FOOTER BERSIH -->
+    <footer class="clean-footer">
+      <div class="footer-flex-row">
+        <div class="footer-brand-title">PAC IPNU IPPNU DANDER</div>
+        <div class="footer-links-group">
+          <a href="https://instagram.com/pac_ipnu_ippnu_dander" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://facebook.com/pacipnuippnudander" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="https://pacdander.or.id" target="_blank" rel="noopener noreferrer">Portal Resmi</a>
         </div>
       </div>
       <div class="footer-copyright">&copy; Panitia LAKMUD IV PAC IPNU IPPNU Dander. All Rights Reserved.</div>
     </footer>
   </div>
-  <div class="support-anchor">
-    <div class="popover" id="popover">
-      <div class="popover-head">
-        <span>Narahubung Panitia</span>
-        <button type="button" id="btn-close-popover"><i data-lucide="x" style="width: 14px; height: 14px;"></i></button>
+
+  <!-- FLOATING BANTUAN -->
+  <div class="floating-help-wrap">
+    <div class="popover-help" id="popoverHelp">
+      <div class="popover-top-bar">
+        <span>Bantuan Panitia</span>
+        <button type="button" id="btnCloseHelp" style="background:none; border:none; color:var(--text-muted); cursor:pointer;">
+          <i data-lucide="x" style="width: 15px; height: 15px;"></i>
+        </button>
       </div>
-      <div class="admin-list">
-        <a href="https://wa.me/6281234567890?text=Halo%20Rekan%20Panitia%20LAKMUD%20IV" target="_blank" rel="noopener noreferrer" class="admin-link">
+      <div>
+        <a href="https://wa.me/6281234567890?text=Halo%20Rekan%20Panitia%20LAKMUD%20IV" target="_blank" rel="noopener noreferrer" class="admin-link-card">
           <span>Narahubung Rekan</span>
-          <i data-lucide="message-circle" style="width: 13px; height: 13px; color: var(--accent-navy);"></i>
+          <i data-lucide="message-circle" style="width: 14px; height: 14px; color: var(--primary-navy);"></i>
         </a>
-        <a href="https://wa.me/6289876543210?text=Halo%20Rekanita%20Panitia%20LAKMUD%20IV" target="_blank" rel="noopener noreferrer" class="admin-link">
+        <a href="https://wa.me/6289876543210?text=Halo%20Rekanita%20Panitia%20LAKMUD%20IV" target="_blank" rel="noopener noreferrer" class="admin-link-card">
           <span>Narahubung Rekanita</span>
-          <i data-lucide="message-circle" style="width: 13px; height: 13px; color: var(--accent-spirit);"></i>
+          <i data-lucide="message-circle" style="width: 14px; height: 14px; color: var(--primary-red);"></i>
         </a>
       </div>
     </div>
-    <button type="button" class="btn-support" id="btn-support">
-      <i data-lucide="message-circle"></i>
+    <button type="button" class="btn-help-trigger" id="btnHelp">
+      <i data-lucide="message-square" style="width: 15px; height: 15px; color: var(--primary-red);"></i>
       <span>Bantuan</span>
     </button>
   </div>
+
   <script>
     const CONFIG = {
+      baseUrl: "https://lakmudiv26-pelajarnudander.pages.dev/",
+      eventDate: new Date("2026-11-20T08:00:00+07:00").getTime(),
+      // POIN 5: 4 FILE DOCX RESMI
       docs: [
-        { label: "Surat Rekomendasi PR/PK", format: "DOCX Document", url: "assets/documents/1-Format-Surat-Rekomendasi.docx" },
-        { label: "Biodata & Riwayat Kader", format: "DOCX Document", url: "assets/documents/2-Form-Biodata-Kader.docx" },
-        { label: "Surat Komitmen Kesediaan", format: "DOCX Document", url: "assets/documents/3-Surat-Pernyataan-Kesediaan.docx" },
-        { label: "Surat Izin Orang Tua/Wali", format: "DOCX Document", url: "assets/documents/4-Surat-Izin-Orang-Tua.docx" },
-        { label: "Format & Ketentuan Esai", format: "PDF Document", url: "assets/documents/5-Format-Esai-Makalah-Lakmud.pdf" }
+        { title: "Surat Pernyataan Peserta", format: "Format DOCX", file: "FILE/DOCS/Surat-Pernyataan-Peserta.docx" },
+        { title: "Surat Izin Orangtua", format: "Format DOCX", file: "FILE/DOCS/Surat-Izin-Orangtua.docx" },
+        { title: "Biodata dan Riwayat", format: "Format DOCX", file: "FILE/DOCS/Biodata-Dan-Riwayat.docx" },
+        { title: "Makalah / Esai", format: "Format DOCX", file: "FILE/DOCS/Format-Makalah-Esai.docx" }
       ],
       photos: [
-        "assets/images/foto-1.jpg",
-        "assets/images/foto-2.jpg",
-        "assets/images/foto-3.jpg",
-        "assets/images/foto-4.jpg",
-        "assets/images/foto-5.jpg"
+        "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=900&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=900&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=900&auto=format&fit=crop&q=80"
       ],
-      fallbacks: [
-        "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&auto=format&fit=crop&q=80"
-      ],
-      vids: {
-        pendaftaran: { url: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ", cap: "Langkah 1: Pengisian Formulir Pendaftaran Online" },
-        berkas: { url: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ", cap: "Langkah 2: Format & Pengiriman Berkas Persyaratan" },
-        cekdata: { url: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ", cap: "Langkah 3: Melacak Status Validasi & Verifikasi" }
+      videos: {
+        registrasi: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ",
+        upload: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
       }
     };
+
+    // POIN 3: SCROLL ENGINE UJUNG KE UJUNG PENUH
     window.addEventListener('scroll', () => {
       const top = document.documentElement.scrollTop || document.body.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const percent = (top / height) * 100;
-      const bar = document.getElementById('scrollProgress');
-      if (bar) bar.style.width = percent + '%';
+      const pct = height > 0 ? (top / height) * 100 : 0;
+      const fill = document.getElementById('mobileScrollFill');
+      if (fill) fill.style.height = pct + '%';
     }, { passive: true });
-    function showToast(msg) {
-      const t = document.getElementById("toast");
-      document.getElementById("toast-text").textContent = msg;
-      t.classList.add("show");
-      setTimeout(() => t.classList.remove("show"), 2000);
+
+    function triggerToast(text) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
     }
+
     document.addEventListener("DOMContentLoaded", () => {
-      const dList = document.getElementById("download-list");
-      if (dList) {
-        dList.innerHTML = CONFIG.docs.map(d => `
-          <a href="${d.url}" download class="doc-card">
-            <div class="doc-card-left">
-              <div class="doc-badge-icon"><i data-lucide="file-text" style="width: 16px; height: 16px;"></i></div>
-              <div class="doc-texts">
-                <span class="doc-title">${d.label}</span>
-                <span class="doc-format">${d.format}</span>
+      // 1. Render 4 Format Berkas DOCX
+      const dlList = document.getElementById("download-list");
+      if (dlList) {
+        dlList.innerHTML = CONFIG.docs.map(doc => `
+          <div class="download-row-card">
+            <div class="download-lead">
+              <div class="file-type-icon">
+                <i data-lucide="file-text" style="width: 19px; height: 19px;"></i>
+              </div>
+              <div>
+                <div class="file-name-text">${doc.title}</div>
+                <div class="file-format-tag">${doc.format}</div>
               </div>
             </div>
-            <div class="doc-btn-download">
-              <i data-lucide="download" style="width: 12px; height: 12px;"></i> Unduh
-            </div>
-          </a>
+            <a href="${CONFIG.baseUrl}${doc.file}" download class="btn-download-action">
+              <i data-lucide="download" style="width: 13px; height: 13px;"></i> Unduh DOCX
+            </a>
+          </div>
         `).join("");
       }
+
+      // 2. Countdown Timer
+      function updateTimer() {
+        const now = new Date().getTime();
+        const diff = CONFIG.eventDate - now;
+
+        if (diff <= 0) {
+          document.getElementById("cd-days").textContent = "00";
+          document.getElementById("cd-hours").textContent = "00";
+          document.getElementById("cd-mins").textContent = "00";
+          document.getElementById("cd-secs").textContent = "00";
+          return;
+        }
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById("cd-days").textContent = String(d).padStart(2, '0');
+        document.getElementById("cd-hours").textContent = String(h).padStart(2, '0');
+        document.getElementById("cd-mins").textContent = String(m).padStart(2, '0');
+        document.getElementById("cd-secs").textContent = String(s).padStart(2, '0');
+      }
+      setInterval(updateTimer, 1000);
+      updateTimer();
+
+      // 3. Slider
+      const sTrack = document.getElementById("slider-track");
+      const sDots = document.getElementById("slider-dots");
+      const slides = [];
+      const dots = [];
+
+      CONFIG.photos.forEach((src, idx) => {
+        const img = document.createElement("img");
+        img.className = `slide-photo ${idx === 0 ? 'active' : ''}`;
+        img.src = src;
+        img.alt = "Dokumentasi LAKMUD IV";
+        sTrack.appendChild(img);
+        slides.push(img);
+
+        const dot = document.createElement("div");
+        dot.className = `dot-node ${idx === 0 ? 'active' : ''}`;
+        sDots.appendChild(dot);
+        dots.push(dot);
+      });
+
+      let cur = 0;
+      if (slides.length > 1) {
+        setInterval(() => {
+          slides[cur].classList.remove("active");
+          dots[cur].classList.remove("active");
+          cur = (cur + 1) % slides.length;
+          slides[cur].classList.add("active");
+          dots[cur].classList.add("active");
+        }, 4000);
+      }
+
+      // 4. Accordion Logic
+      document.querySelectorAll(".trigger-acc").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const card = btn.closest(".accordion-card");
+          const isOpen = card.classList.contains("open");
+          document.querySelectorAll(".accordion-card.open").forEach(c => {
+            if (c !== card) c.classList.remove("open");
+          });
+          card.classList.toggle("open", !isOpen);
+        });
+      });
+
+      // 5. Salin Rekening SeaBank
       const btnCopy = document.getElementById("btn-copy");
       if (btnCopy) {
         btnCopy.addEventListener("click", () => {
-          const txt = document.getElementById("rek-val").textContent.trim();
-          navigator.clipboard.writeText(txt).then(() => showToast("Nomor rekening disalin!"));
+          const val = document.getElementById("rek-num").textContent.trim();
+          navigator.clipboard.writeText(val).then(() => triggerToast("Nomor SeaBank tersalin!"));
         });
       }
-      document.querySelectorAll(".trigger-acc").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const parent = btn.closest(".menu-card");
-          const isOpen = parent.classList.contains("open");
-          document.querySelectorAll(".menu-card.open").forEach(c => {
-            if (c !== parent) c.classList.remove("open");
-          });
-          parent.classList.toggle("open", !isOpen);
-        });
-      });
-      const track = document.getElementById("slider-track");
-      const slides = [];
-      CONFIG.photos.forEach((src, idx) => {
-        const img = document.createElement("img");
-        img.className = `slide-img ${idx === 0 ? 'active' : ''}`;
-        img.alt = "Dokumentasi Lakmud";
-        img.decoding = "async";
-        img.src = src;
-        img.onerror = () => { img.src = CONFIG.fallbacks[idx]; };
-        track.appendChild(img);
-        slides.push(img);
-      });
-      let current = 0;
-      setInterval(() => {
-        if (slides.length <= 1) return;
-        slides[current].classList.remove("active");
-        current = (current + 1) % slides.length;
-        slides[current].classList.add("active");
-      }, 3600);
-      const tabs = document.querySelectorAll(".video-tab");
+
+      // 6. Video Tabs
+      const vidBtns = document.querySelectorAll(".vid-tab-btn");
       const vFrame = document.getElementById("video-frame");
-      const vCap = document.getElementById("video-caption");
-      tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-          tabs.forEach(t => t.classList.remove("active"));
-          tab.classList.add("active");
-          const target = tab.dataset.tab;
-          if (CONFIG.vids[target]) {
-            vFrame.src = CONFIG.vids[target].url;
-            vCap.textContent = CONFIG.vids[target].cap;
-          }
+      vidBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          vidBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          const key = btn.dataset.vid;
+          if (CONFIG.videos[key]) vFrame.src = CONFIG.videos[key];
         });
       });
-      const popover = document.getElementById("popover");
-      const btnSupport = document.getElementById("btn-support");
-      const btnClosePopover = document.getElementById("btn-close-popover");
-      if (btnSupport && popover) {
-        btnSupport.addEventListener("click", () => popover.classList.toggle("active"));
+
+      // 7. Help Popover
+      const btnHelp = document.getElementById("btnHelp");
+      const popHelp = document.getElementById("popoverHelp");
+      const btnCloseHelp = document.getElementById("btnCloseHelp");
+
+      if (btnHelp && popHelp) {
+        btnHelp.addEventListener("click", () => popHelp.classList.toggle("active"));
       }
-      if (btnClosePopover && popover) {
-        btnClosePopover.addEventListener("click", () => popover.classList.remove("active"));
+      if (btnCloseHelp && popHelp) {
+        btnCloseHelp.addEventListener("click", () => popHelp.classList.remove("active"));
       }
+
       lucide.createIcons();
     });
   </script>
