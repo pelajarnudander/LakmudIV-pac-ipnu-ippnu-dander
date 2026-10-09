@@ -2,40 +2,40 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>Pendaftaran Peserta LAKMUD IV</title>
-  <meta name="theme-color" content="#0B192C" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Registrasi Kader LAKMUD IV - PAC DANDER</title>
+  <meta name="theme-color" content="#0e2238" />
 
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Icons & Confetti Library -->
+  <!-- Lucide Icons & Confetti CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     :root {
-      --bg: #0b1329;
-      --surface-1: #ffffff;
-      --surface-2: #f8fafc;
-      --navy-900: #0b192c;
-      --navy-800: #1e3e62;
-      --navy-700: #2c5282;
-      --accent: #f97316;
-      --accent-glow: rgba(249, 115, 22, 0.3);
-      --emerald: #10b981;
-      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --primary-red: #d9230f;
+      --primary-red-hover: #b51a08;
+      --primary-red-soft: rgba(217, 35, 15, 0.08);
+      --seabank-orange: #ff5c00;
+      --seabank-soft: rgba(255, 92, 0, 0.1);
+      --primary-navy: #0e2238;
+      --primary-navy-soft: rgba(14, 34, 56, 0.06);
+      --gold-accent: #b45309;
+      --bg-body: #f8fafc;
+      --bg-surface: #ffffff;
+      --border-crisp: #cbd5e1;
+      --border-focus: #0e2238;
       --text-main: #0f172a;
+      --text-sub: #475569;
       --text-muted: #64748b;
-      --border: #e2e8f0;
-      --radius-xl: 24px;
-      --radius-lg: 16px;
-      --radius-md: 12px;
+      --radius-base: 10px;
       --radius-pill: 9999px;
-      --shadow-premium: 0 20px 45px -8px rgba(11, 25, 44, 0.1), 0 6px 16px -4px rgba(11, 25, 44, 0.04);
-      --shadow-glow: 0 10px 30px rgba(249, 115, 22, 0.4);
+      --shadow-soft: 0 4px 18px -2px rgba(14, 34, 56, 0.05);
+      --shadow-glow: 0 8px 24px rgba(217, 35, 15, 0.22);
     }
 
     *, *::before, *::after {
@@ -43,205 +43,222 @@
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* PROTEKSI PRINT KE PDF */
+    @media print {
+      html, body {
+        display: none !important;
+      }
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: radial-gradient(circle at 50% 0%, #ffffff 0%, #edf4fa 60%, #e2eaf2 100%);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-body);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
-      justify-content: center;
-      padding: 24px 14px 50px;
-      line-height: 1.5;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 14px calc(28px + env(safe-area-inset-bottom));
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -webkit-touch-callout: none;
     }
 
-    .container {
+    .app-viewport {
       width: 100%;
-      max-width: 500px;
-      margin: 0 auto;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
-    /* Top Navigation */
-    .top-nav {
+    /* TOP HEADER: RAPI & SEJAJAR */
+    .app-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
+      gap: 10px;
+      width: 100%;
+      padding: 2px 0 8px;
     }
 
-    .btn-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      color: var(--navy-900);
-      padding: 8px 16px;
-      border-radius: var(--radius-pill);
-      font-size: 0.78rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .btn-back:hover {
-      transform: translateX(-3px);
-      border-color: #cbd5e1;
-    }
-
-    .nav-badge {
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      color: var(--navy-800);
-      background: rgba(30, 62, 98, 0.08);
-      padding: 6px 14px;
-      border-radius: var(--radius-pill);
-      text-transform: uppercase;
-    }
-
-    /* Header Form */
-    .header-pendaftaran {
-      text-align: center;
-      padding: 8px 12px 26px;
-    }
-
-    .badge-event {
+    .brand-pill {
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      background: linear-gradient(135deg, rgba(249, 115, 22, 0.12) 0%, rgba(249, 115, 22, 0.04) 100%);
-      border: 1px solid rgba(249, 115, 22, 0.25);
-      color: #ea580c;
-      padding: 6px 14px;
+      height: 36px;
+      padding: 0 14px;
       border-radius: var(--radius-pill);
+      background: #ffffff;
+      border: 1px solid var(--border-crisp);
       font-size: 0.74rem;
       font-weight: 800;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      color: var(--primary-navy);
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
 
-    .main-title {
-      font-size: 2rem;
+    .btn-fullscreen {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-crisp);
+      background: #ffffff;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      white-space: nowrap;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      transition: all 0.2s ease;
+    }
+
+    .btn-fullscreen:hover {
+      background: var(--primary-navy-soft);
+      color: var(--primary-navy);
+    }
+
+    /* HEADLINE SECTION */
+    .section-headline {
+      margin-bottom: 6px;
+    }
+
+    .section-headline h1 {
+      font-size: 1.65rem;
       font-weight: 800;
-      color: var(--navy-900);
+      color: var(--primary-navy);
       letter-spacing: -0.03em;
-      line-height: 1.2;
+      line-height: 1.25;
     }
 
-    .main-subtitle {
+    .section-headline p {
       font-size: 0.84rem;
-      color: var(--text-muted);
-      margin-top: 8px;
-      max-width: 410px;
-      margin-left: auto;
-      margin-right: auto;
+      color: var(--text-sub);
+      margin-top: 6px;
+      line-height: 1.45;
     }
 
-    /* Form Container */
+    /* FORM CARD CONTAINER */
+    .form-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
     .form-card {
-      background: var(--surface-1);
-      border: 1px solid rgba(226, 232, 240, 0.95);
-      border-radius: var(--radius-xl);
-      padding: 28px 22px;
-      box-shadow: var(--shadow-premium);
-      position: relative;
+      background: #ffffff;
+      border: 1px solid rgba(203, 213, 225, 0.8);
+      border-radius: 16px;
+      padding: 22px 18px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
     }
 
     .form-group {
-      margin-bottom: 20px;
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
     }
 
     .label-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-bottom: 8px;
+      align-items: center;
     }
 
     label {
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 800;
-      letter-spacing: 0.03em;
-      color: var(--navy-900);
       text-transform: uppercase;
+      color: var(--primary-navy);
+      letter-spacing: 0.05em;
     }
 
-    .field-status {
+    .field-indicator {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #f1f5f9;
-      color: #94a3b8;
+      gap: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
       opacity: 0;
-      transform: scale(0.6);
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: opacity 0.2s ease;
     }
 
-    .field-status.valid {
-      opacity: 1;
-      transform: scale(1);
-      background: #ecfdf5;
+    .field-indicator.valid {
       color: #10b981;
+      opacity: 1;
     }
 
-    .input-control, textarea {
+    /* KONTROL INPUT STANDAR TINGGI 46PX */
+    .input-control {
       width: 100%;
-      background: var(--surface-2);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 12px 16px;
+      height: 46px;
+      background: #ffffff;
+      border: 1.5px solid var(--border-crisp);
+      border-radius: var(--radius-base);
+      padding: 0 14px;
       font-family: inherit;
-      font-size: 0.86rem;
-      font-weight: 500;
+      font-size: 0.88rem;
+      font-weight: 600;
       color: var(--text-main);
       outline: none;
-      transition: all 0.25s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .input-control:focus, textarea:focus {
-      border-color: var(--navy-800);
-      background: #ffffff;
-      box-shadow: 0 0 0 4px rgba(30, 62, 98, 0.09);
+    .input-control:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(14, 34, 56, 0.08);
     }
 
-    /* Modern Date Selector Group */
+    textarea.input-control {
+      height: auto;
+      min-height: 80px;
+      padding: 12px 14px;
+      line-height: 1.5;
+    }
+
+    /* GRID TANGGAL PRESISI */
     .date-grid {
       display: grid;
-      grid-template-columns: 80px 1fr 90px;
-      gap: 7px;
-      margin-top: 7px;
+      grid-template-columns: 85px 1.4fr 100px;
+      gap: 8px;
+      margin-top: 2px;
     }
 
     .select-modern {
+      height: 46px;
+      background: #ffffff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%23475569" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>') no-repeat right 10px center;
       appearance: none;
-      background: #f8fafc url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%2364748B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>') no-repeat right 12px center;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 11px 26px 11px 12px;
+      -webkit-appearance: none;
+      border: 1.5px solid var(--border-crisp);
+      border-radius: var(--radius-base);
+      padding: 0 28px 0 12px;
       font-family: inherit;
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       font-weight: 600;
       color: var(--text-main);
       outline: none;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
 
     .select-modern:focus {
-      border-color: var(--navy-800);
-      background-color: #ffffff;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(14, 34, 56, 0.08);
     }
 
-    /* WhatsApp Field */
+    /* WHATSAPP INPUT DENGAN PREFIX */
     .input-phone-group {
       position: relative;
       display: flex;
@@ -250,16 +267,17 @@
 
     .phone-prefix {
       position: absolute;
-      left: 10px;
-      display: flex;
+      left: 8px;
+      height: 32px;
+      display: inline-flex;
       align-items: center;
-      gap: 5px;
-      font-size: 0.84rem;
+      gap: 4px;
+      padding: 0 8px;
+      background: #f1f5f9;
+      border-radius: 6px;
+      font-size: 0.8rem;
       font-weight: 800;
-      color: var(--navy-900);
-      background: #e2e8f0;
-      padding: 6px 9px;
-      border-radius: 8px;
+      color: var(--primary-navy);
       pointer-events: none;
     }
 
@@ -269,574 +287,364 @@
       font-weight: 700;
     }
 
-    .phone-helper {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 6px;
-      font-weight: 500;
-    }
-
-    /* Kaos Grid Selector */
-    .size-grid {
+    /* UKURAN KAOS */
+    .shirt-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-top: 6px;
     }
 
-    .size-card {
-      position: relative;
-      background: var(--surface-2);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 11px 8px;
+    .shirt-card {
+      border: 1.5px solid var(--border-crisp);
+      border-radius: var(--radius-base);
+      padding: 10px 4px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      user-select: none;
+      background: #ffffff;
+      transition: all 0.2s ease;
     }
 
-    .size-card:hover {
-      border-color: #cbd5e1;
-      background: #f1f5f9;
-      transform: translateY(-2px);
+    .shirt-card.active {
+      border-color: var(--primary-red);
+      background: var(--primary-red-soft);
     }
 
-    .size-card.active {
-      background: #fff8f5;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-
-    .size-card-title {
+    .shirt-title {
       font-size: 0.92rem;
       font-weight: 800;
-      color: var(--navy-900);
+      color: var(--primary-navy);
     }
 
-    .size-card.active .size-card-title {
-      color: var(--accent);
+    .shirt-card.active .shirt-title {
+      color: var(--primary-red);
     }
 
-    .size-card-desc {
+    .shirt-sub {
       font-size: 0.65rem;
       color: var(--text-muted);
+      font-weight: 600;
       margin-top: 2px;
-      font-weight: 600;
     }
 
-    /* Submit Button Wrapper */
-    .btn-submit-wrap {
-      margin-top: 26px;
-      display: none;
-    }
-
-    .btn-submit-wrap.show {
-      display: block;
-      animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .btn-submit {
+    /* TOMBOL UTAMA */
+    .btn-main {
       width: 100%;
-      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      height: 48px;
+      background: var(--primary-red);
       color: #ffffff;
       border: none;
-      padding: 16px 20px;
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-base);
       font-family: inherit;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 800;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.02em;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       box-shadow: var(--shadow-glow);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
     }
 
-    .btn-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 35px rgba(249, 115, 22, 0.45);
+    .btn-main:hover {
+      background: var(--primary-red-hover);
     }
 
-    .btn-submit:active {
-      transform: scale(0.985);
-    }
-
-    .btn-submit:disabled {
-      opacity: 0.7;
+    .btn-main:disabled {
+      opacity: 0.45;
       cursor: not-allowed;
-      transform: none;
+      box-shadow: none;
     }
 
-    /* =======================================================
-       HOLOGRAPHIC HIGH-TECH LOADING MODAL (INTERNATIONAL-GRADE)
-       ======================================================= */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(11, 25, 44, 0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-    }
-
-    .modal-backdrop.active {
-      display: flex;
-    }
-
-    .modal-box {
+    .btn-outline {
       width: 100%;
-      max-width: 380px;
+      height: 44px;
       background: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: var(--radius-xl);
-      padding: 34px 26px 28px;
-      text-align: center;
-      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.4);
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Modern Circular Gauge */
-    .circular-progress-wrap {
-      position: relative;
-      width: 110px;
-      height: 110px;
-      margin: 0 auto 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .circular-svg {
-      width: 100%;
-      height: 100%;
-      transform: rotate(-90deg);
-    }
-
-    .circular-bg {
-      fill: none;
-      stroke: #f1f5f9;
-      stroke-width: 8;
-    }
-
-    .circular-bar {
-      fill: none;
-      stroke: url(#accent-gradient);
-      stroke-width: 8;
-      stroke-linecap: round;
-      stroke-dasharray: 289.02;
-      stroke-dashoffset: 289.02;
-      transition: stroke-dashoffset 0.25s ease-out;
-    }
-
-    .progress-center-box {
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .progress-center-text {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.45rem;
-      font-weight: 800;
-      color: var(--navy-900);
-      letter-spacing: -0.03em;
-    }
-
-    .progress-center-sub {
-      font-size: 0.6rem;
-      font-weight: 800;
-      color: var(--text-muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-top: -2px;
-    }
-
-    .error-icon-box {
-      display: none;
-      position: absolute;
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      background: #fef2f2;
-      color: #ef4444;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Terminal Process Log Box */
-    .audit-terminal-box {
-      background: #0f172a;
-      border-radius: var(--radius-md);
-      padding: 12px 14px;
-      margin: 18px 0 14px;
-      text-align: left;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      color: #94a3b8;
-      line-height: 1.5;
-      border: 1px solid #1e293b;
-    }
-
-    .audit-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .audit-indicator {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: blinkIndicator 1s infinite alternate;
-    }
-
-    @keyframes blinkIndicator {
-      from { opacity: 0.3; }
-      to { opacity: 1; }
-    }
-
-    .modal-title {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--navy-900);
-      margin-bottom: 6px;
-    }
-
-    .modal-desc {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.45;
-      min-height: 38px;
-    }
-
-    /* Action Buttons in Modal (Duplicate / Error) */
-    .action-group-modal {
-      display: none;
-      flex-direction: column;
-      gap: 9px;
-      margin-top: 16px;
-    }
-
-    .btn-update-existing {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: #ffffff;
-      border: none;
-      padding: 12px 16px;
-      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-crisp);
+      color: var(--text-main);
+      border-radius: var(--radius-base);
       font-size: 0.82rem;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.3);
-    }
-
-    .btn-admin-contact {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: var(--navy-900);
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 0.8rem;
       font-weight: 700;
-      padding: 12px 16px;
-      border-radius: var(--radius-md);
-      width: 100%;
-    }
-
-    .btn-close-modal-text {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 0.76rem;
-      margin-top: 6px;
       cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* =======================================================
-       ULTRA-PREMIUM SUCCESS VIEW (INTERNATIONAL-CLASS TICKET)
-       ======================================================= */
-    .success-view {
-      display: none;
-      text-align: center;
-      background: #ffffff;
-      border: 1px solid rgba(226, 232, 240, 0.95);
-      border-radius: var(--radius-xl);
-      padding: 36px 24px 30px;
-      box-shadow: var(--shadow-premium);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .success-view.active {
-      display: block;
-      animation: bounceCard 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    @keyframes bounceCard {
-      0% { opacity: 0; transform: scale(0.92) translateY(24px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .success-view::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 200px;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, #10b981, transparent);
-      border-radius: var(--radius-pill);
-    }
-
-    .success-hero-badge {
-      position: relative;
-      width: 84px;
-      height: 84px;
-      margin: 0 auto 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .badge-glow-ring {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: rgba(16, 185, 129, 0.18);
-      animation: pulseGlow 2.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
-    }
-
-    @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.25); opacity: 0.25; }
-    }
-
-    .badge-icon-core {
-      position: relative;
-      width: 68px;
-      height: 68px;
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: #ffffff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 25px -4px rgba(16, 185, 129, 0.45);
-      border: 3px solid #ffffff;
-    }
-
-    .success-title {
-      font-size: 1.55rem;
-      font-weight: 800;
-      color: var(--navy-900);
-      letter-spacing: -0.03em;
-    }
-
-    .status-pill-verified {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      color: #047857;
-      padding: 4px 12px;
-      border-radius: var(--radius-pill);
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      margin-top: 8px;
-      text-transform: uppercase;
+      transition: all 0.2s ease;
     }
 
-    .success-desc {
-      font-size: 0.84rem;
-      color: var(--text-muted);
-      margin-top: 12px;
-      line-height: 1.5;
-      padding: 0 6px;
+    .btn-outline:hover {
+      border-color: var(--primary-navy);
+      background: #f8fafc;
     }
 
-    .success-desc strong {
-      color: var(--navy-900);
-      font-weight: 700;
-    }
-
-    /* Hologram Digital Ticket Pass */
-    .digital-pass-card {
-      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-      border: 1.5px dashed #cbd5e1;
-      border-radius: var(--radius-lg);
-      padding: 18px 16px;
-      margin: 22px 0 18px;
+    /* TAHAP 2: BERKAS DOKUMEN */
+    .doc-preview-stage {
       position: relative;
+      width: 100%;
+      min-height: 180px;
+      max-height: 270px;
+      border-radius: var(--radius-base);
+      background: #f8fafc;
+      border: 1.5px dashed var(--border-crisp);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin: 8px 0;
     }
 
-    .pass-tag {
+    .doc-preview-img {
+      max-width: 100%;
+      max-height: 260px;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+
+    .doc-badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
       font-size: 0.7rem;
       font-weight: 800;
-      letter-spacing: 0.09em;
-      color: var(--text-muted);
       text-transform: uppercase;
+      background: #f1f5f9;
+      color: var(--text-muted);
     }
 
-    .pass-code-val {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--navy-900);
-      letter-spacing: 1.5px;
-      margin: 6px 0 12px;
+    .doc-badge-status.success {
+      background: #ecfdf5;
+      color: #059669;
     }
 
-    .btn-copy-code {
-      display: inline-flex;
+    .doc-badge-status.danger {
+      background: #fef2f2;
+      color: #dc2626;
+    }
+
+    .doc-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    /* WATERMARK DINAMIS ANTI-BOCOR */
+    .watermark-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
       align-items: center;
-      gap: 6px;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      color: var(--navy-900);
-      padding: 7px 14px;
-      border-radius: var(--radius-pill);
-      font-size: 0.74rem;
-      font-weight: 700;
+      justify-content: center;
+      pointer-events: none;
+      transform: rotate(-18deg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: rgba(217, 35, 15, 0.22);
+      white-space: nowrap;
+      letter-spacing: 2px;
+      z-index: 10;
+    }
+
+    /* KAMERA LIVE MODAL */
+    .camera-modal {
+      position: fixed;
+      inset: 0;
+      background: #000000;
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+    }
+
+    .camera-modal.active {
+      display: flex;
+    }
+
+    .camera-top-bar {
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #ffffff;
+      background: rgba(0,0,0,0.7);
+      z-index: 10;
+    }
+
+    .camera-stream-wrap {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #video-stream {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .guide-frame {
+      position: absolute;
+      border: 2px dashed rgba(255, 255, 255, 0.85);
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+      pointer-events: none;
+    }
+
+    .guide-frame.pasfoto {
+      width: 210px;
+      height: 280px;
+      border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+    }
+
+    .guide-frame.kk {
+      width: 90%;
+      max-width: 440px;
+      height: 260px;
+      border-radius: 12px;
+    }
+
+    .camera-bottom-bar {
+      padding: 20px 20px calc(24px + env(safe-area-inset-bottom));
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: rgba(0,0,0,0.85);
+      z-index: 10;
+    }
+
+    .btn-shutter {
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      border: 4px solid #ffffff;
+      background: var(--primary-red);
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .btn-copy-code:hover {
-      background: #f8fafc;
-      border-color: #cbd5e1;
+    /* LOADING SINKRONISASI */
+    .loading-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 34, 56, 0.85);
+      backdrop-filter: blur(6px);
+      z-index: 99990;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
-    /* Action Buttons in Success View */
-    .action-group-success {
+    .loading-modal-backdrop.active {
+      display: flex;
+    }
+
+    .loading-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 26px 20px;
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
       display: flex;
       flex-direction: column;
-      gap: 11px;
-      margin-top: 18px;
+      align-items: center;
+      gap: 12px;
     }
 
-    .btn-wa-group-lux {
-      background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    .sonic-spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #e2e8f0;
+      border-top-color: var(--primary-red);
+      border-right-color: var(--seabank-orange);
+      border-radius: 50%;
+      animation: spinSonic 0.65s linear infinite;
+    }
+
+    @keyframes spinSonic { to { transform: rotate(360deg); } }
+
+    /* PRIVACY BLACKOUT SHIELD TERKUAT */
+    .privacy-shield {
+      position: fixed;
+      inset: 0;
+      background: #000000;
       color: #ffffff;
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 800;
-      padding: 14px 20px;
-      border-radius: var(--radius-md);
-      display: flex;
+      z-index: 999999;
+      display: none;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      box-shadow: 0 8px 22px -4px rgba(37, 211, 102, 0.4);
-      transition: all 0.2s ease;
-    }
-
-    .btn-wa-admin-lux {
-      background: #ffffff;
-      border: 1.5px solid var(--navy-900);
-      color: var(--navy-900);
-      text-decoration: none;
-      font-size: 0.84rem;
-      font-weight: 700;
-      padding: 13px 20px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .btn-wa-admin-lux:hover {
-      background: var(--navy-900);
-      color: #ffffff;
-    }
-
-    /* Footer */
-    .footer {
+      padding: 24px;
       text-align: center;
-      padding: 26px 0 10px;
-      margin-top: 20px;
+      gap: 12px;
     }
 
-    .footer-copy {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      font-weight: 500;
+    .privacy-shield.active {
+      display: flex !important;
     }
+
+    .hidden-input { display: none; }
   </style>
 </head>
 <body>
-  <main class="container">
 
-    <!-- Top Navigation -->
-    <div class="top-nav" id="top-nav">
-      <button type="button" class="btn-back" id="btn-universal-back">
-        <i data-lucide="arrow-left" style="width: 15px; height: 15px;"></i>
-        <span>Kembali</span>
-      </button>
-      <div class="nav-badge">
-        Kaderisasi Formal
-      </div>
-    </div>
+  <!-- TIRAI PRIVASI ANTI REKAM & SCREENSHOT -->
+  <div class="privacy-shield" id="privacy-shield">
+    <i data-lucide="shield-alert" style="width: 52px; height: 52px; color: var(--primary-red);"></i>
+    <h3 style="font-size: 1.2rem; font-weight: 800; letter-spacing: -0.02em;">DOKUMEN DILINDUNGI PROTOKOL PRIVASI</h3>
+    <p style="font-size: 0.82rem; color: #94a3b8; max-width: 310px; line-height: 1.45;">
+      Aktivitas tangkapan layar, perekaman, atau pengalihan aplikasi dinonaktifkan demi perlindungan dokumen resmi.
+    </p>
+  </div>
 
-    <!-- Header Formulir -->
-    <header class="header-pendaftaran" id="header-pendaftaran">
-      <div class="badge-event">
-        <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i>
+  <main class="app-viewport">
+
+    <!-- TOP HEADER -->
+    <header class="app-header">
+      <div class="brand-pill">
+        <i data-lucide="award" style="width: 14px; height: 14px; color: var(--primary-red);"></i>
         <span>LAKMUD IV • PAC DANDER</span>
       </div>
-      <h1 class="main-title">Pendaftaran Peserta</h1>
-      <p class="main-subtitle">Lengkapi instrumen data calon peserta untuk proses verifikasi kader tingkat lanjutan.</p>
+      <button type="button" class="btn-fullscreen" id="btn-fullscreen">
+        <i data-lucide="maximize" style="width: 13px; height: 13px;"></i>
+        <span>Layar Penuh</span>
+      </button>
     </header>
 
-    <!-- Formulir Pendaftaran -->
-    <section class="form-card" id="form-container">
-      <form id="reg-form" novalidate>
+    <!-- SECTION TITLE -->
+    <div class="section-headline">
+      <h1 id="title-heading">Pendaftaran Kader</h1>
+      <p id="sub-heading">Isi data autentik calon peserta sesuai identitas kependudukan resmi.</p>
+    </div>
+
+    <!-- ========================================================
+         TAHAP 1: FORMULIR DATA CALON PESERTA
+         ======================================================== -->
+    <section id="pane-step-1" class="form-pane">
+      <div class="form-card">
         
         <div class="form-group">
           <div class="label-row">
             <label for="nama">Nama Lengkap</label>
-            <span class="field-status" id="status-nama"><i data-lucide="check" style="width:12px;height:12px;"></i></span>
+            <span class="field-indicator" id="ind-nama"><i data-lucide="check" style="width:12px;height:12px;"></i> Sesuai</span>
           </div>
-          <input type="text" id="nama" class="input-control" placeholder="Nama lengkap sesuai identitas resmi" required />
+          <input type="text" id="nama" class="input-control" placeholder="Nama lengkap sesuai KTP / KK" required />
         </div>
 
         <div class="form-group">
           <div class="label-row">
             <label>Tempat &amp; Tanggal Lahir</label>
-            <span class="field-status" id="status-ttl"><i data-lucide="check" style="width:12px;height:12px;"></i></span>
+            <span class="field-indicator" id="ind-ttl"><i data-lucide="check" style="width:12px;height:12px;"></i> Sesuai</span>
           </div>
           <input type="text" id="tempat_lahir" class="input-control" placeholder="Kota / Kabupaten Kelahiran" required />
-          
           <div class="date-grid">
             <select id="dob_day" class="select-modern" required>
               <option value="">Tgl</option>
@@ -865,622 +673,852 @@
         <div class="form-group">
           <div class="label-row">
             <label for="alamat">Alamat Lengkap Domisili</label>
-            <span class="field-status" id="status-alamat"><i data-lucide="check" style="width:12px;height:12px;"></i></span>
+            <span class="field-indicator" id="ind-alamat"><i data-lucide="check" style="width:12px;height:12px;"></i> Sesuai</span>
           </div>
-          <textarea id="alamat" rows="2" class="input-control" placeholder="Nama Desa, RT/RW, dan Kecamatan domisili" required></textarea>
+          <textarea id="alamat" rows="2" class="input-control" placeholder="Desa, RT/RW, dan Kecamatan domisili" required></textarea>
         </div>
 
         <div class="form-group">
           <div class="label-row">
-            <label for="delegasi">Asal Pimpinan / Delegasi</label>
-            <span class="field-status" id="status-delegasi"><i data-lucide="check" style="width:12px;height:12px;"></i></span>
+            <label for="delegasi">Asal Delegasi / Pimpinan</label>
+            <span class="field-indicator" id="ind-delegasi"><i data-lucide="check" style="width:12px;height:12px;"></i> Sesuai</span>
           </div>
-          <input type="text" id="delegasi" class="input-control" placeholder="Contoh: PR IPNU IPPNU Sumberagung" required />
+          <input type="text" id="delegasi" class="input-control" placeholder="Contoh: PAC IPNU Dander" required />
         </div>
 
         <div class="form-group">
           <div class="label-row">
-            <label for="whatsapp_input">Nomor WhatsApp Aktif</label>
-            <span class="field-status" id="status-whatsapp"><i data-lucide="check" style="width:12px;height:12px;"></i></span>
+            <label for="whatsapp">Nomor WhatsApp Aktif</label>
+            <span class="field-indicator" id="ind-wa"><i data-lucide="check" style="width:12px;height:12px;"></i> Valid</span>
           </div>
           <div class="input-phone-group">
             <div class="phone-prefix">
               <span>🇮🇩</span>
               <span>+62</span>
             </div>
-            <input type="tel" id="whatsapp_input" class="input-control input-phone" placeholder="8xxxxxxxxxxx" maxlength="14" required />
+            <input type="tel" id="whatsapp" class="input-control input-phone" placeholder="8xxxxxxxxxxx" maxlength="13" required />
           </div>
-          <div class="phone-helper" id="phone-hint">Awalan 0 otomatis diubah ke +62 (Wajib 11 - 13 digit angka).</div>
         </div>
 
         <div class="form-group">
           <div class="label-row">
             <label for="email">Email Aktif</label>
-            <span class="field-status" id="status-email"><i data-lucide="check" style="width:12px;height:12px;"></i></span>
+            <span class="field-indicator" id="ind-email"><i data-lucide="check" style="width:12px;height:12px;"></i> Valid</span>
           </div>
-          <input type="email" id="email" class="input-control" placeholder="nama@gmail.com" required />
+          <input type="email" id="email" class="input-control" placeholder="kader@gmail.com" required />
         </div>
 
         <div class="form-group">
           <div class="label-row">
             <label>Ukuran Kaos Peserta</label>
-            <span class="field-status" id="status-kaos"><i data-lucide="check" style="width:12px;height:12px;"></i></span>
+            <span class="field-indicator" id="ind-kaos"><i data-lucide="check" style="width:12px;height:12px;"></i> Terpilih</span>
           </div>
-          <div class="size-grid" id="size-cards-wrap">
-            <div class="size-card" data-size="S">
-              <div class="size-card-title">S</div>
-              <div class="size-card-desc">47 × 67 cm</div>
-            </div>
-            <div class="size-card" data-size="M">
-              <div class="size-card-title">M</div>
-              <div class="size-card-desc">50 × 70 cm</div>
-            </div>
-            <div class="size-card" data-size="L">
-              <div class="size-card-title">L</div>
-              <div class="size-card-desc">53 × 73 cm</div>
-            </div>
-            <div class="size-card" data-size="XL">
-              <div class="size-card-title">XL</div>
-              <div class="size-card-desc">56 × 75 cm</div>
-            </div>
-            <div class="size-card" data-size="XXL">
-              <div class="size-card-title">XXL</div>
-              <div class="size-card-desc">59 × 77 cm</div>
-            </div>
-            <div class="size-card" data-size="custom">
-              <div class="size-card-title">Custom</div>
-              <div class="size-card-desc">Ketik Manual</div>
-            </div>
+          <div class="shirt-grid" id="shirt-selector">
+            <div class="shirt-card" data-size="S"><div class="shirt-title">S</div><div class="shirt-sub">47×67</div></div>
+            <div class="shirt-card" data-size="M"><div class="shirt-title">M</div><div class="shirt-sub">50×70</div></div>
+            <div class="shirt-card" data-size="L"><div class="shirt-title">L</div><div class="shirt-sub">53×73</div></div>
+            <div class="shirt-card" data-size="XL"><div class="shirt-title">XL</div><div class="shirt-sub">56×75</div></div>
+            <div class="shirt-card" data-size="XXL"><div class="shirt-title">XXL</div><div class="shirt-sub">59×77</div></div>
+            <div class="shirt-card" data-size="Custom"><div class="shirt-title">Custom</div><div class="shirt-sub">Manual</div></div>
           </div>
-          <input type="text" id="ukuran_custom" class="input-control" placeholder="Tuliskan ukuran kustom Anda (Contoh: 3XL / 4XL)" style="display:none; margin-top:8px;" />
+          <input type="text" id="kaos_custom" class="input-control" placeholder="Tuliskan ukuran kustom (Contoh: 3XL)" style="display:none; margin-top:8px;" />
         </div>
 
         <div class="form-group">
           <div class="label-row">
             <label for="motivasi">Komitmen &amp; Motivasi Kader</label>
-            <span class="field-status" id="status-motivasi"><i data-lucide="check" style="width:12px;height:12px;"></i></span>
+            <span class="field-indicator" id="ind-motivasi"><i data-lucide="check" style="width:12px;height:12px;"></i> Sesuai</span>
           </div>
-          <textarea id="motivasi" rows="3" class="input-control" placeholder="Tuliskan komitmen Anda mengikuti kaderisasi formal Lakmud" required></textarea>
+          <textarea id="motivasi" rows="2" class="input-control" placeholder="Tuliskan komitmen mengikuti kaderisasi formal Lakmud IV" required></textarea>
         </div>
 
-        <div class="btn-submit-wrap" id="btn-submit-container">
-          <button type="submit" class="btn-submit" id="btn-submit-form">
-            <span>KIRIM PENDAFTARAN RESMI</span>
-            <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+        <button type="button" class="btn-main" id="btn-lanjut-step-2" disabled>
+          <span>Lanjut ke Unggah Berkas &amp; KK</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAHAP 2: UNGGAH PASFOTO & DOKUMEN KK
+         ======================================================== -->
+    <section id="pane-step-2" class="form-pane" style="display: none;">
+      
+      <!-- CARD 1: FOTO 3X4 -->
+      <div class="form-card" id="card-foto">
+        <div class="label-row">
+          <div>
+            <label style="font-size: 0.8rem;">1. Pasfoto Resmi 3×4</label>
+            <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">Wajib latar belakang merah resmi</div>
+          </div>
+          <span class="doc-badge-status" id="badge-status-foto">Belum Ada</span>
+        </div>
+
+        <div class="doc-preview-stage" id="stage-foto">
+          <img id="img-preview-foto" class="doc-preview-img" style="display: none;" alt="Preview Foto 3x4" />
+          <div id="placeholder-foto" style="text-align: center; color: var(--text-muted); padding: 18px;">
+            <i data-lucide="user-check" style="width: 36px; height: 36px; stroke-width: 1.5; color: var(--text-muted); margin-bottom: 6px;"></i>
+            <div style="font-size: 0.78rem; font-weight: 600;">Ambil foto kamera atau pilih file galeri</div>
+          </div>
+        </div>
+
+        <div class="doc-actions-grid" id="actions-foto">
+          <button type="button" class="btn-outline" id="btn-camera-foto">
+            <i data-lucide="camera" style="width: 15px; height: 15px; color: var(--primary-red);"></i>
+            <span>Buka Kamera</span>
+          </button>
+          <label class="btn-outline" style="margin: 0; cursor: pointer;">
+            <i data-lucide="image" style="width: 15px; height: 15px; color: var(--seabank-orange);"></i>
+            <span>Pilih File Galeri</span>
+            <input type="file" id="input-file-foto" accept="image/png, image/jpeg, image/jpg" class="hidden-input" />
+          </label>
+        </div>
+
+        <div id="wrap-recolor-foto" style="display: none; margin-top: 4px;">
+          <button type="button" class="btn-outline" id="btn-make-red-bg" style="border-color: var(--primary-red); color: var(--primary-red); background: var(--primary-red-soft);">
+            <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i>
+            <span>Jadikan Background Merah Pasfoto</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- CARD 2: BERKAS KK -->
+      <div class="form-card" id="card-kk">
+        <div class="label-row">
+          <div>
+            <label style="font-size: 0.8rem;">2. Berkas Kartu Keluarga (KK)</label>
+            <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">Pastikan teks NIK dan nama jelas tanpa buram</div>
+          </div>
+          <span class="doc-badge-status" id="badge-status-kk">Belum Ada</span>
+        </div>
+
+        <div class="doc-preview-stage" id="stage-kk">
+          <img id="img-preview-kk" class="doc-preview-img" style="display: none;" alt="Preview KK" />
+          <div class="watermark-overlay" id="wm-kk" style="display: none;">LAKMUD IV • PAC DANDER • BERKAS TERVERIFIKASI</div>
+          <div id="placeholder-kk" style="text-align: center; color: var(--text-muted); padding: 18px;">
+            <i data-lucide="file-text" style="width: 36px; height: 36px; stroke-width: 1.5; color: var(--text-muted); margin-bottom: 6px;"></i>
+            <div style="font-size: 0.78rem; font-weight: 600;">Ambil dokumen KK utuh dan presisi</div>
+          </div>
+        </div>
+
+        <div class="doc-actions-grid" id="actions-kk">
+          <button type="button" class="btn-outline" id="btn-camera-kk">
+            <i data-lucide="scan" style="width: 15px; height: 15px; color: var(--primary-red);"></i>
+            <span>Foto Kamera KK</span>
+          </button>
+          <label class="btn-outline" style="margin: 0; cursor: pointer;">
+            <i data-lucide="upload" style="width: 15px; height: 15px; color: var(--primary-navy);"></i>
+            <span>Upload Berkas KK</span>
+            <input type="file" id="input-file-kk" accept="image/png, image/jpeg, image/jpg" class="hidden-input" />
+          </label>
+        </div>
+
+        <!-- FORM ISIAN KK HASIL AUDIT -->
+        <div id="wrap-extracted-kk" style="display: none; border-top: 1px dashed var(--border-crisp); padding-top: 14px; margin-top: 6px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 0.74rem; font-weight: 800; color: var(--primary-navy); text-transform: uppercase;">Hasil Verifikasi Data KK:</span>
+            <span style="font-size: 0.68rem; color: var(--text-muted);">Dapat diedit manual</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="form-group">
+              <label for="kk_nik_keluarga">NIK Kartu Keluarga (16 Digit)</label>
+              <input type="text" id="kk_nik_keluarga" class="input-control" maxlength="16" placeholder="3522xxxxxxxxxxxx" required />
+            </div>
+
+            <div class="form-group">
+              <label for="kk_nik_peserta">NIK Peserta (16 Digit)</label>
+              <input type="text" id="kk_nik_peserta" class="input-control" maxlength="16" placeholder="3522xxxxxxxxxxxx" required />
+            </div>
+
+            <div class="form-group">
+              <label for="kk_nama_peserta">Nama Lengkap Peserta</label>
+              <input type="text" id="kk_nama_peserta" class="input-control" required />
+            </div>
+
+            <div class="form-group">
+              <label for="kk_ttl_peserta">Tempat &amp; Tgl Lahir Peserta (Sesuai KK)</label>
+              <input type="text" id="kk_ttl_peserta" class="input-control" required />
+            </div>
+
+            <div class="form-group">
+              <label for="kk_alamat_peserta">Alamat Lengkap (Sesuai KK)</label>
+              <textarea id="kk_alamat_peserta" rows="2" class="input-control" required></textarea>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="form-group">
+                <label for="kk_ayah">Nama Ayah</label>
+                <input type="text" id="kk_ayah" class="input-control" placeholder="Nama Ayah" required />
+              </div>
+              <div class="form-group">
+                <label for="kk_ibu">Nama Ibu</label>
+                <input type="text" id="kk_ibu" class="input-control" placeholder="Nama Ibu" required />
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="form-group">
+                <label for="kk_anak_ke">Anak Ke-</label>
+                <input type="number" id="kk_anak_ke" class="input-control" placeholder="Contoh: 1" min="1" required />
+              </div>
+              <div class="form-group">
+                <label for="kk_saudara">Jumlah Saudara</label>
+                <input type="number" id="kk_saudara" class="input-control" placeholder="Contoh: 3" min="0" required />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TOMBOL EKSEKUSI DATA BENAR -->
+      <button type="button" class="btn-main" id="btn-submit-berkas" style="display: none;">
+        <i data-lucide="check-circle" style="width: 17px; height: 17px;"></i>
+        <span id="btn-submit-label">DATA BENAR (KIRIM BERKAS)</span>
+      </button>
+
+      <button type="button" class="btn-outline" id="btn-back-step-1">
+        <i data-lucide="arrow-left" style="width: 15px; height: 15px;"></i>
+        <span>Kembali ke Data Diri</span>
+      </button>
+
+    </section>
+
+    <!-- ========================================================
+         TAHAP 3: TIKET DIGITAL RESMI (SUKSES)
+         ======================================================== -->
+    <section id="pane-step-3" class="form-pane" style="display: none;">
+      <div class="form-card" style="text-align: center; padding: 30px 20px;">
+        
+        <div style="width: 60px; height: 60px; border-radius: 50%; background: #ecfdf5; color: #059669; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+          <i data-lucide="check" style="width: 32px; height: 32px; stroke-width: 3;"></i>
+        </div>
+
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--primary-navy);">Pendaftaran Berhasil!</h2>
+        <p style="font-size: 0.82rem; color: var(--text-sub); margin-top: 4px;">
+          Berkas dan data calon kader atas nama <strong id="res-nama-kader"></strong> telah resmi tercatat di database panitia.
+        </p>
+
+        <div style="background: #f8fafc; border: 1.5px dashed var(--border-crisp); border-radius: 12px; padding: 14px; margin: 16px 0;">
+          <div style="font-size: 0.7rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Kode Registrasi Resmi:</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; font-weight: 800; color: var(--primary-navy); letter-spacing: 2px; margin: 4px 0 8px;" id="res-kode-registrasi">LMD-IV-000000</div>
+          <button type="button" class="btn-outline" id="btn-copy-code" style="height: 36px; font-size: 0.74rem;">
+            <i data-lucide="copy" style="width: 13px; height: 13px;"></i>
+            <span id="label-copy">Salin Kode Registrasi</span>
           </button>
         </div>
 
-      </form>
-    </section>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a id="link-wa-group" href="#" target="_blank" class="btn-main" style="text-decoration: none; background: #25d366; box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);">
+            <i data-lucide="users" style="width: 16px; height: 16px;"></i>
+            <span>1. Masuk Grup WhatsApp Peserta</span>
+          </a>
 
-    <!-- Tampilan Sukses Tiket Digital -->
-    <section class="success-view" id="success-container">
-      
-      <div class="success-hero-badge">
-        <div class="badge-glow-ring"></div>
-        <div class="badge-icon-core">
-          <i data-lucide="check" style="width: 34px; height: 34px; stroke-width: 2.8;"></i>
+          <a id="link-wa-admin" href="#" target="_blank" class="btn-outline" style="text-decoration: none;">
+            <i data-lucide="message-circle" style="width: 16px; height: 16px; color: var(--primary-navy);"></i>
+            <span>2. Konfirmasi ke Admin Pelaksana</span>
+          </a>
         </div>
+
       </div>
-
-      <h2 class="success-title">Pendaftaran Berhasil!</h2>
-      <div>
-        <span class="status-pill-verified">
-          <i data-lucide="shield-check" style="width: 13px; height: 13px;"></i>
-          Terverifikasi Cloud Database
-        </span>
-      </div>
-
-      <p class="success-desc">
-        Selamat, berkas calon peserta atas nama <strong id="res-nama"></strong> telah sukses tercatat pada pangkalan data panitia pelaksana.
-      </p>
-
-      <!-- Digital Confirmation Pass -->
-      <div class="digital-pass-card">
-        <div class="pass-tag">KODE REGISTRASI RESMI</div>
-        <div class="pass-code-val" id="res-code">LMD-IV-0000000</div>
-        <button type="button" class="btn-copy-code" id="btn-copy-code">
-          <i data-lucide="copy" style="width: 14px; height: 14px;" id="copy-icon"></i>
-          <span id="copy-text">Salin Kode Registrasi</span>
-        </button>
-      </div>
-
-      <!-- Action Buttons -->
-      <div class="action-group-success">
-        <a id="link-wa-group" href="#" target="_blank" rel="noopener noreferrer" class="btn-wa-group-lux">
-          <i data-lucide="users" style="width: 18px; height: 18px;"></i>
-          <span>1. Masuk Grup WhatsApp Peserta</span>
-          <i data-lucide="arrow-up-right" style="width: 16px; height: 16px; margin-left: auto;"></i>
-        </a>
-        
-        <a id="link-wa-admin" href="#" target="_blank" rel="noopener noreferrer" class="btn-wa-admin-lux">
-          <i data-lucide="message-circle" style="width: 16px; height: 16px;"></i>
-          <span>2. Konfirmasi Pendaftaran ke Admin</span>
-        </a>
-      </div>
-
     </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-copy">&copy; Panitia Pelaksana LAKMUD IV PAC DANDER. Seluruh hak cipta dilindungi.</div>
-    </footer>
 
   </main>
 
-  <!-- HOLOGRAPHIC LOADING & AUDIT TERMINAL MODAL -->
-  <div class="modal-backdrop" id="modal-backdrop">
-    <div class="modal-box">
-      
-      <!-- Circular Meter -->
-      <div class="circular-progress-wrap" id="progress-wrapper">
-        <svg class="circular-svg" viewBox="0 0 110 110">
-          <defs>
-            <linearGradient id="accent-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#f97316" />
-              <stop offset="100%" stop-color="#ea580c" />
-            </linearGradient>
-          </defs>
-          <circle class="circular-bg" cx="55" cy="55" r="46" />
-          <circle class="circular-bar" id="circular-progress-bar" cx="55" cy="55" r="46" />
-        </svg>
-        
-        <div class="progress-center-box" id="progress-center-box">
-          <span class="progress-center-text" id="modal-percent">0%</span>
-          <span class="progress-center-sub">SINKRONISASI</span>
-        </div>
+  <!-- MODAL KAMERA LIVE -->
+  <div class="camera-modal" id="camera-modal">
+    <div class="camera-top-bar">
+      <span style="font-size: 0.85rem; font-weight: 800;" id="camera-title">Posisikan Pasfoto 3x4</span>
+      <button type="button" id="btn-close-camera" style="background: none; border: none; color: #ffffff; cursor: pointer;">
+        <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+      </button>
+    </div>
 
-        <div class="error-icon-box" id="error-icon-disc">
-          <i data-lucide="alert-triangle" style="width: 44px; height: 44px;"></i>
-        </div>
-      </div>
+    <div class="camera-stream-wrap">
+      <video id="video-stream" autoplay playsinline muted></video>
+      <div class="guide-frame pasfoto" id="camera-guide"></div>
+    </div>
 
-      <div class="modal-title" id="modal-title">Enkripsi Berkas...</div>
-      <div class="modal-desc" id="modal-desc">Memeriksa kelengkapan format berkas calon kader...</div>
-
-      <!-- High-Tech Audit Log Terminal -->
-      <div class="audit-terminal-box" id="audit-terminal">
-        <div class="audit-row">
-          <div class="audit-indicator"></div>
-          <span id="terminal-log-text">SECURE PROTOCOL INITIALIZED...</span>
-        </div>
-      </div>
-
-      <!-- Action Group on Error / Duplicate -->
-      <div class="action-group-modal" id="modal-action-box">
-        <button type="button" class="btn-update-existing" id="btn-confirm-update" style="display: none;">
-          <i data-lucide="refresh-cw" style="width: 15px; height: 15px;"></i>
-          <span>Perbarui Data Saya di Database</span>
-        </button>
-
-        <a href="https://wa.me/6281234567890?text=Halo%20Admin%20LAKMUD%2C%20saya%20membutuhkan%20bantuan%20pendaftaran" target="_blank" rel="noopener noreferrer" class="btn-admin-contact" id="btn-admin-action">
-          <i data-lucide="message-circle" style="width: 15px; height: 15px;"></i>
-          <span>Hubungi Panitia Pelaksana</span>
-        </a>
-        
-        <button type="button" class="btn-close-modal-text" id="btn-close-modal">
-          Tutup dan Periksa Formulir
-        </button>
-      </div>
-
+    <div class="camera-bottom-bar">
+      <button type="button" id="btn-switch-cam" class="btn-outline" style="border-radius: 50%; width: 44px; height: 44px; padding: 0;">
+        <i data-lucide="refresh-cw" style="width: 18px; height: 18px;"></i>
+      </button>
+      <button type="button" class="btn-shutter" id="btn-capture">
+        <i data-lucide="camera" style="width: 26px; height: 26px; color: #ffffff;"></i>
+      </button>
+      <div style="width: 44px;"></div>
     </div>
   </div>
 
+  <!-- LOADING SINKRONISASI -->
+  <div class="loading-modal-backdrop" id="loading-modal">
+    <div class="loading-card">
+      <div class="sonic-spinner"></div>
+      <h3 style="font-size: 1rem; font-weight: 800; color: var(--primary-navy);" id="loading-title">Mengunggah Berkas...</h3>
+      <p style="font-size: 0.78rem; color: var(--text-sub); line-height: 1.4;" id="loading-desc">
+        Mengompresi dan mentransmisikan berkas ke Google Drive Folder secara aman...
+      </p>
+    </div>
+  </div>
+
+  <canvas id="proc-canvas" style="display: none;"></canvas>
+
   <script>
     const CONFIG = {
-      SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzqBxUJFGXmyQ8ffa4Gyca3tXG41Vd0_7wqomdmftGhHjN_7QAE9nLRLsEwzqaxHh0HBw/exec",
+      ENDPOINT_URL: "https://script.google.com/macros/s/AKfycbw1ecAXVHCDQuqlkKOVxVljo6spnbQigQensRgfAahCRc81LEmEVuNly8jS9Pgdo1Jamw/exec",
       WA_ADMIN: "6281234567890",
       WA_GROUP: "https://chat.whatsapp.com/GANTIKAN_DENGAN_LINK_GRUP_ANDA"
     };
 
-    let selectedShirtSize = "";
-    let cachedPayload = null; // Menyimpan payload untuk fitur 'Update Data'
+    const SESSION_DATA = {
+      formData: {},
+      fotoBase64: "",
+      kkBase64: "",
+      kkMetode: "File Galeri",
+      isUploaded: false
+    };
 
-    // Tanggal & Tahun Dinamis
+    /* INSIALISASI TANGGAL LAHIR */
     const daySelect = document.getElementById("dob_day");
     const yearSelect = document.getElementById("dob_year");
-
     for (let i = 1; i <= 31; i++) {
-      const val = i < 10 ? `0${i}` : `${i}`;
-      daySelect.innerHTML += `<option value="${val}">${val}</option>`;
+      const v = i < 10 ? `0${i}` : `${i}`;
+      daySelect.innerHTML += `<option value="${v}">${v}</option>`;
     }
-
     const currentYear = new Date().getFullYear();
     for (let y = currentYear - 13; y >= currentYear - 35; y--) {
       yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
     }
 
-    // Size Cards Selector
-    const sizeCards = document.querySelectorAll(".size-card");
-    const customShirtInput = document.getElementById("ukuran_custom");
-
-    sizeCards.forEach(card => {
+    /* PILIHAN KAOS */
+    let selectedShirt = "";
+    const shirtCards = document.querySelectorAll(".shirt-card");
+    const customShirtInput = document.getElementById("kaos_custom");
+    shirtCards.forEach(card => {
       card.addEventListener("click", () => {
-        sizeCards.forEach(c => c.classList.remove("active"));
+        shirtCards.forEach(c => c.classList.remove("active"));
         card.classList.add("active");
-        selectedShirtSize = card.getAttribute("data-size");
-
-        if (selectedShirtSize === "custom") {
+        selectedShirt = card.getAttribute("data-size");
+        if (selectedShirt === "Custom") {
           customShirtInput.style.display = "block";
           customShirtInput.required = true;
           customShirtInput.focus();
         } else {
           customShirtInput.style.display = "none";
           customShirtInput.required = false;
-          customShirtInput.value = "";
         }
-        validateForm();
+        validateStep1();
       });
     });
+    customShirtInput.addEventListener("input", validateStep1);
 
-    customShirtInput.addEventListener("input", validateForm);
-
-    // Auto-Format WhatsApp (+62 & 11-13 Digit)
-    const waInput = document.getElementById("whatsapp_input");
-    const phoneHint = document.getElementById("phone-hint");
-
+    /* FORMAT WHATSAPP */
+    const waInput = document.getElementById("whatsapp");
     waInput.addEventListener("input", () => {
-      let val = waInput.value.replace(/\D/g, "");
-
-      if (val.startsWith("62")) {
-        val = val.substring(2);
-      } else if (val.startsWith("0")) {
-        val = val.substring(1);
-      }
-
-      waInput.value = val;
-      const fullLength = val.length + 2; 
-
-      if (val.length > 0 && (fullLength < 11 || fullLength > 13)) {
-        phoneHint.style.color = "#ef4444";
-        phoneHint.textContent = `Nomor harus 11 - 13 digit (saat ini: ${fullLength} digit)`;
-      } else if (fullLength >= 11 && fullLength <= 13) {
-        phoneHint.style.color = "#10b981";
-        phoneHint.textContent = `✓ Format nomor valid (${fullLength} digit: +62${val})`;
-      } else {
-        phoneHint.style.color = "var(--text-muted)";
-        phoneHint.textContent = "Awalan 0 otomatis diubah ke +62 (Wajib 11 - 13 digit angka).";
-      }
-
-      validateForm();
+      let v = waInput.value.replace(/\D/g, "");
+      if (v.startsWith("62")) v = v.substring(2);
+      if (v.startsWith("0")) v = v.substring(1);
+      waInput.value = v;
+      validateStep1();
     });
 
-    // Validasi Form Real-time
-    function validateForm() {
-      const vNama = document.getElementById("nama").value.trim().length >= 3;
-      const vTempat = document.getElementById("tempat_lahir").value.trim().length >= 2;
-      const vDay = document.getElementById("dob_day").value !== "";
-      const vMonth = document.getElementById("dob_month").value !== "";
-      const vYear = document.getElementById("dob_year").value !== "";
-      const vTtl = vTempat && vDay && vMonth && vYear;
+    /* VALIDASI FORM TAHAP 1 */
+    function validateStep1() {
+      const namaVal = document.getElementById("nama").value.trim().length >= 3;
+      const ttlVal = document.getElementById("tempat_lahir").value.trim().length >= 2 &&
+                     daySelect.value !== "" && document.getElementById("dob_month").value !== "" && yearSelect.value !== "";
+      const alamatVal = document.getElementById("alamat").value.trim().length >= 5;
+      const delegasiVal = document.getElementById("delegasi").value.trim().length >= 3;
+      const rawWa = waInput.value.replace(/\D/g, "");
+      const waVal = rawWa.length >= 9 && rawWa.length <= 13;
+      const emailVal = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById("email").value.trim());
+      const kaosVal = selectedShirt !== "" && (selectedShirt !== "Custom" || customShirtInput.value.trim().length > 0);
+      const motivasiVal = document.getElementById("motivasi").value.trim().length >= 5;
 
-      const vAlamat = document.getElementById("alamat").value.trim().length >= 5;
-      const vDelegasi = document.getElementById("delegasi").value.trim().length >= 3;
-      
-      const rawDigits = waInput.value.replace(/\D/g, "");
-      const fullDigitsLength = rawDigits.length + 2; 
-      const vWa = rawDigits.length >= 9 && fullDigitsLength >= 11 && fullDigitsLength <= 13;
+      document.getElementById("ind-nama").classList.toggle("valid", namaVal);
+      document.getElementById("ind-ttl").classList.toggle("valid", ttlVal);
+      document.getElementById("ind-alamat").classList.toggle("valid", alamatVal);
+      document.getElementById("ind-delegasi").classList.toggle("valid", delegasiVal);
+      document.getElementById("ind-wa").classList.toggle("valid", waVal);
+      document.getElementById("ind-email").classList.toggle("valid", emailVal);
+      document.getElementById("ind-kaos").classList.toggle("valid", kaosVal);
+      document.getElementById("ind-motivasi").classList.toggle("valid", motivasiVal);
 
-      const vEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById("email").value.trim());
-      const vKaos = selectedShirtSize !== "" && (selectedShirtSize !== "custom" || customShirtInput.value.trim().length > 0);
-      const vMotivasi = document.getElementById("motivasi").value.trim().length >= 5;
-
-      document.getElementById("status-nama").classList.toggle("valid", vNama);
-      document.getElementById("status-ttl").classList.toggle("valid", vTtl);
-      document.getElementById("status-alamat").classList.toggle("valid", vAlamat);
-      document.getElementById("status-delegasi").classList.toggle("valid", vDelegasi);
-      document.getElementById("status-whatsapp").classList.toggle("valid", vWa);
-      document.getElementById("status-email").classList.toggle("valid", vEmail);
-      document.getElementById("status-kaos").classList.toggle("valid", vKaos);
-      document.getElementById("status-motivasi").classList.toggle("valid", vMotivasi);
-
-      const allValid = vNama && vTtl && vAlamat && vDelegasi && vWa && vEmail && vKaos && vMotivasi;
-      document.getElementById("btn-submit-container").classList.toggle("show", allValid);
-      return allValid;
+      const isValid = namaVal && ttlVal && alamatVal && delegasiVal && waVal && emailVal && kaosVal && motivasiVal;
+      document.getElementById("btn-lanjut-step-2").disabled = !isValid;
+      return isValid;
     }
 
     ["nama", "tempat_lahir", "dob_day", "dob_month", "dob_year", "alamat", "delegasi", "email", "motivasi"].forEach(id => {
       const el = document.getElementById(id);
-      el.addEventListener("input", validateForm);
-      el.addEventListener("change", validateForm);
+      el.addEventListener("input", validateStep1);
+      el.addEventListener("change", validateStep1);
     });
 
-    document.getElementById("btn-universal-back").addEventListener("click", () => {
-      if (window.history.length > 1 && document.referrer.includes(window.location.hostname)) {
-        window.history.back();
-      } else {
-        window.location.href = "index.html";
-      }
-    });
+    /* PERPINDAHAN TAHAP */
+    document.getElementById("btn-lanjut-step-2").addEventListener("click", () => {
+      if (!validateStep1()) return;
 
-    // Circular Progress Controller
-    const modal = document.getElementById("modal-backdrop");
-    const percentTxt = document.getElementById("modal-percent");
-    const circularBar = document.getElementById("circular-progress-bar");
-    const titleTxt = document.getElementById("modal-title");
-    const descTxt = document.getElementById("modal-desc");
-    const terminalLog = document.getElementById("terminal-log-text");
-    const modalActions = document.getElementById("modal-action-box");
-    const errorIconDisc = document.getElementById("error-icon-disc");
-    const progressCenterBox = document.getElementById("progress-center-box");
-    const btnConfirmUpdate = document.getElementById("btn-confirm-update");
-    const totalCircumference = 2 * Math.PI * 46;
-
-    function setCircularProgress(percent) {
-      percentTxt.textContent = `${Math.floor(percent)}%`;
-      const offset = totalCircumference - (percent / 100) * totalCircumference;
-      circularBar.style.strokeDashoffset = offset;
-    }
-
-    function animateProgressTo(targetPercent, duration, onComplete) {
-      const startPercent = parseFloat(percentTxt.textContent) || 0;
-      const startTime = performance.now();
-
-      function step(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        const current = startPercent + (targetPercent - startPercent) * easeOut;
-        
-        setCircularProgress(current);
-
-        if (progress < 1) {
-          requestAnimationFrame(step);
-        } else if (onComplete) {
-          onComplete();
-        }
-      }
-      requestAnimationFrame(step);
-    }
-
-    // Engine Eksekusi Request dengan Auto-Retry & Timeout Handling
-    async function sendRegistrationPayload(payload, isRetry = false) {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 detik batas waktu
-
-      try {
-        const response = await fetch(CONFIG.SCRIPT_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-          },
-          body: JSON.stringify(payload),
-          signal: controller.signal
-        });
-        clearTimeout(timeoutId);
-
-        const textResponse = await response.text();
-        return JSON.parse(textResponse);
-      } catch (err) {
-        clearTimeout(timeoutId);
-        if (!isRetry) {
-          terminalLog.textContent = "SYNCHRONIZING CONCURRENT QUEUE...";
-          await new Promise(r => setTimeout(r, 1500));
-          return await sendRegistrationPayload(payload, true);
-        }
-        throw err;
-      }
-    }
-
-    // Eksekutor Registrasi (Dapat dipanggil ulang saat update data)
-    async function executeRegistration(payload) {
-      const submitBtn = document.getElementById("btn-submit-form");
-      submitBtn.disabled = true;
-
-      // Inisialisasi Tampilan Modal
-      setCircularProgress(0);
-      modalActions.style.display = "none";
-      btnConfirmUpdate.style.display = "none";
-      errorIconDisc.style.display = "none";
-      progressCenterBox.style.display = "flex";
-      circularBar.style.display = "block";
-      modal.classList.add("active");
-
-      // TAHAP 1 (0% - 25%): Validasi & Enkripsi
-      titleTxt.textContent = "Validasi Instrumen...";
-      descTxt.textContent = "Memverifikasi struktur dan integritas berkas calon kader...";
-      terminalLog.textContent = "LOCAL_DATA_VERIFIED: OK";
-      animateProgressTo(25, 600);
-
-      // TAHAP 2 (25% - 55%): Membuka Kanal Cloud
-      setTimeout(() => {
-        titleTxt.textContent = "Kanal Database Cloud...";
-        descTxt.textContent = "Menghubungkan ke server basis data terpusat...";
-        terminalLog.textContent = "OPENING SECURE PIPELINE TO GOOGLE CLOUD...";
-        animateProgressTo(55, 800);
-      }, 700);
-
-      // TAHAP 3 (55% - 85%): Concurrency Lock & Audit Duplikasi
-      setTimeout(() => {
-        titleTxt.textContent = "Penyaringan Duplikasi...";
-        descTxt.textContent = "Mengunci antrean server dan mencocokkan identitas unik...";
-        terminalLog.textContent = "AUDITING IDENTITY & CONCURRENCY QUEUE...";
-        animateProgressTo(85, 900);
-      }, 1600);
-
-      try {
-        const result = await sendRegistrationPayload(payload);
-
-        // 1. DUPLIKASI DATA
-        if (result.status === "duplicate") {
-          submitBtn.disabled = false;
-          errorIconDisc.style.display = "flex";
-          progressCenterBox.style.display = "none";
-          circularBar.style.display = "none";
-          lucide.createIcons();
-
-          titleTxt.textContent = "Identitas Terdaftar";
-          descTxt.textContent = result.message;
-          terminalLog.textContent = "DUPLICATE_IDENTIFIER_MATCHED";
-          
-          btnConfirmUpdate.style.display = "flex";
-          modalActions.style.display = "flex";
-          return;
-        }
-
-        // 2. SERVER SIBUK
-        if (result.status === "busy") {
-          submitBtn.disabled = false;
-          errorIconDisc.style.display = "flex";
-          progressCenterBox.style.display = "none";
-          circularBar.style.display = "none";
-          lucide.createIcons();
-
-          titleTxt.textContent = "Antrean Penuh";
-          descTxt.textContent = result.message;
-          terminalLog.textContent = "SERVER_LOCK_TIMEOUT: BUSY";
-          modalActions.style.display = "flex";
-          return;
-        }
-
-        // 3. ERROR SERVER
-        if (result.status === "error") {
-          throw new Error(result.message || "Gagal memproses data pada basis data server.");
-        }
-
-        // 4. SUKSES PENDAFTARAN BARU ATAU UPDATE
-        if ((result.status === "success" || result.status === "updated") && result.code) {
-          titleTxt.textContent = result.status === "updated" ? "Data Sukses Diperbarui!" : "Pendaftaran Berhasil!";
-          descTxt.textContent = "Tiket digital resmi berhasil diterbitkan oleh sistem.";
-          terminalLog.textContent = "TRANSACTION_COMMITTED: " + result.code;
-
-          animateProgressTo(100, 600, () => {
-            setTimeout(() => {
-              modal.classList.remove("active");
-              showSuccessView(result.code, result.nama);
-              submitBtn.disabled = false;
-            }, 400);
-          });
-        } else {
-          throw new Error("Respon tiket resmi dari server tidak terverifikasi.");
-        }
-
-      } catch (err) {
-        console.error("Transmission Error:", err);
-        submitBtn.disabled = false;
-        errorIconDisc.style.display = "flex";
-        progressCenterBox.style.display = "none";
-        circularBar.style.display = "none";
-        lucide.createIcons();
-
-        titleTxt.textContent = "Kendala Jaringan Server";
-        descTxt.textContent = err.name === "AbortError" 
-          ? "Koneksi terputus karena server sibuk. Silakan coba kembali." 
-          : "Gagal terhubung ke database. " + (err.message || "");
-        terminalLog.textContent = "NETWORK_EXCEPTION_OCCURRED";
-        modalActions.style.display = "flex";
-      }
-    }
-
-    // Submit Handler Formulir
-    document.getElementById("reg-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      if (!validateForm()) return;
-
-      const fullWaNumber = `+62${waInput.value.replace(/\D/g, "")}`;
+      const fullWa = `+62${waInput.value.replace(/\D/g, "")}`;
       const fullDob = `${document.getElementById("dob_year").value}-${document.getElementById("dob_month").value}-${document.getElementById("dob_day").value}`;
-      const finalKaos = selectedShirtSize === "custom" ? customShirtInput.value.trim() : selectedShirtSize;
+      const finalKaos = selectedShirt === "Custom" ? customShirtInput.value.trim() : selectedShirt;
 
-      cachedPayload = {
+      SESSION_DATA.formData = {
         nama: document.getElementById("nama").value.trim(),
         tempatLahir: document.getElementById("tempat_lahir").value.trim(),
         tanggalLahir: fullDob,
         alamat: document.getElementById("alamat").value.trim(),
         delegasi: document.getElementById("delegasi").value.trim(),
-        whatsapp: fullWaNumber,
+        whatsapp: fullWa,
         email: document.getElementById("email").value.trim(),
         ukuranKaos: finalKaos,
-        motivasi: document.getElementById("motivasi").value.trim(),
+        motivasi: document.getElementById("motivasi").value.trim()
+      };
+
+      document.getElementById("kk_nama_peserta").value = SESSION_DATA.formData.nama;
+      document.getElementById("kk_ttl_peserta").value = `${SESSION_DATA.formData.tempatLahir}, ${SESSION_DATA.formData.tanggalLahir}`;
+      document.getElementById("kk_alamat_peserta").value = SESSION_DATA.formData.alamat;
+
+      document.getElementById("pane-step-1").style.display = "none";
+      document.getElementById("pane-step-2").style.display = "flex";
+      document.getElementById("title-heading").textContent = "Verifikasi Dokumen";
+      document.getElementById("sub-heading").textContent = "Unggah pasfoto merah dan dokumen KK untuk diaudit secara teliti.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("btn-back-step-1").addEventListener("click", () => {
+      document.getElementById("pane-step-2").style.display = "none";
+      document.getElementById("pane-step-1").style.display = "flex";
+      document.getElementById("title-heading").textContent = "Pendaftaran Kader";
+      document.getElementById("sub-heading").textContent = "Isi data autentik calon peserta sesuai identitas kependudukan resmi.";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    /* KAMERA LIVE STREAM */
+    let currentStream = null;
+    let cameraTarget = "foto";
+    let facingMode = "user";
+
+    const cameraModal = document.getElementById("camera-modal");
+    const videoStream = document.getElementById("video-stream");
+    const cameraGuide = document.getElementById("camera-guide");
+    const cameraTitle = document.getElementById("camera-title");
+
+    async function startCamera(target) {
+      cameraTarget = target;
+      facingMode = target === "foto" ? "user" : "environment";
+      cameraGuide.className = target === "foto" ? "guide-frame pasfoto" : "guide-frame kk";
+      cameraTitle.textContent = target === "foto" ? "Posisikan Pasfoto 3x4" : "Posisikan Dokumen KK Lengkap";
+
+      try {
+        if (currentStream) currentStream.getTracks().forEach(t => t.stop());
+        currentStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: facingMode, width: { ideal: 1920 }, height: { ideal: 1080 } },
+          audio: false
+        });
+        videoStream.srcObject = currentStream;
+        cameraModal.classList.add("active");
+      } catch (err) {
+        alert("Tidak dapat mengakses kamera perangkat. Silakan pilih opsi unggah berkas dari Galeri.");
+      }
+    }
+
+    document.getElementById("btn-camera-foto").addEventListener("click", () => startCamera("foto"));
+    document.getElementById("btn-camera-kk").addEventListener("click", () => {
+      SESSION_DATA.kkMetode = "Kamera Langsung";
+      startCamera("kk");
+    });
+
+    document.getElementById("btn-close-camera").addEventListener("click", stopCamera);
+    function stopCamera() {
+      if (currentStream) {
+        currentStream.getTracks().forEach(t => t.stop());
+        currentStream = null;
+      }
+      cameraModal.classList.remove("active");
+    }
+
+    document.getElementById("btn-switch-cam").addEventListener("click", async () => {
+      facingMode = facingMode === "user" ? "environment" : "user";
+      if (currentStream) currentStream.getTracks().forEach(t => t.stop());
+      try {
+        currentStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: facingMode }, audio: false });
+        videoStream.srcObject = currentStream;
+      } catch (e) {}
+    });
+
+    document.getElementById("btn-capture").addEventListener("click", () => {
+      const canvas = document.getElementById("proc-canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = videoStream.videoWidth;
+      canvas.height = videoStream.videoHeight;
+      ctx.drawImage(videoStream, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.92);
+      stopCamera();
+
+      if (cameraTarget === "foto") processFoto3x4(dataUrl);
+      else processDokumenKK(dataUrl);
+    });
+
+    document.getElementById("input-file-foto").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) return alert("Ukuran file maksimal 5 MB.");
+      const reader = new FileReader();
+      reader.onload = (evt) => processFoto3x4(evt.target.result);
+      reader.readAsDataURL(file);
+    });
+
+    document.getElementById("input-file-kk").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) return alert("Ukuran file maksimal 5 MB.");
+      SESSION_DATA.kkMetode = "File Galeri";
+      const reader = new FileReader();
+      reader.onload = (evt) => processDokumenKK(evt.target.result);
+      reader.readAsDataURL(file);
+    });
+
+    /* PROSES FOTO 3X4 */
+    function processFoto3x4(dataUrl) {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.getElementById("proc-canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 600;
+        canvas.height = 800;
+
+        const aspectTarget = 3 / 4;
+        const aspectSrc = img.width / img.height;
+        let sWidth = img.width, sHeight = img.height, sx = 0, sy = 0;
+
+        if (aspectSrc > aspectTarget) {
+          sWidth = img.height * aspectTarget;
+          sx = (img.width - sWidth) / 2;
+        } else {
+          sHeight = img.width / aspectTarget;
+          sy = (img.height - sHeight) / 2;
+        }
+
+        ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, 600, 800);
+        const isRedBackground = auditRedBackground(ctx, 600, 800);
+        const finalDataUrl = canvas.toDataURL("image/jpeg", 0.90);
+
+        const imgPrev = document.getElementById("img-preview-foto");
+        imgPrev.src = finalDataUrl;
+        imgPrev.style.display = "block";
+        document.getElementById("placeholder-foto").style.display = "none";
+
+        const badge = document.getElementById("badge-status-foto");
+        const wrapRecolor = document.getElementById("wrap-recolor-foto");
+
+        if (isRedBackground) {
+          badge.className = "doc-badge-status success";
+          badge.innerHTML = `<i data-lucide="check" style="width:12px;height:12px;"></i> Lolos Validasi Merah`;
+          wrapRecolor.style.display = "none";
+          SESSION_DATA.fotoBase64 = finalDataUrl;
+        } else {
+          badge.className = "doc-badge-status danger";
+          badge.innerHTML = `<i data-lucide="alert-circle" style="width:12px;height:12px;"></i> Background Belum Merah`;
+          wrapRecolor.style.display = "block";
+          SESSION_DATA.fotoBase64 = finalDataUrl;
+        }
+        lucide.createIcons();
+        checkReadyForSubmission();
+      };
+      img.src = dataUrl;
+    }
+
+    function auditRedBackground(ctx, w, h) {
+      const samplePoints = [[15, 15], [w - 15, 15], [30, 80], [w - 30, 80]];
+      let redVotes = 0;
+      samplePoints.forEach(([x, y]) => {
+        const pixel = ctx.getImageData(x, y, 1, 1).data;
+        const [r, g, b] = pixel;
+        if (r > 130 && g < 90 && b < 90 && r > (g + b) * 0.9) redVotes++;
+      });
+      return redVotes >= 2;
+    }
+
+    document.getElementById("btn-make-red-bg").addEventListener("click", () => {
+      const canvas = document.getElementById("proc-canvas");
+      const ctx = canvas.getContext("2d");
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imgData.data;
+
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i], g = data[i + 1], b = data[i + 2];
+        const y = Math.floor((i / 4) / canvas.width);
+        if (y < canvas.height * 0.45 && (r > 100 || g > 100 || b > 100)) {
+          if (Math.abs(r - g) < 40 && Math.abs(g - b) < 40) {
+            data[i] = 217;
+            data[i + 1] = 35;
+            data[i + 2] = 15;
+          }
+        }
+      }
+      ctx.putImageData(imgData, 0, 0);
+
+      const modifiedUrl = canvas.toDataURL("image/jpeg", 0.90);
+      document.getElementById("img-preview-foto").src = modifiedUrl;
+      SESSION_DATA.fotoBase64 = modifiedUrl;
+
+      const badge = document.getElementById("badge-status-foto");
+      badge.className = "doc-badge-status success";
+      badge.innerHTML = `<i data-lucide="check" style="width:12px;height:12px;"></i> Background Disesuaikan`;
+      document.getElementById("wrap-recolor-foto").style.display = "none";
+      lucide.createIcons();
+      checkReadyForSubmission();
+    });
+
+    /* PROSES BERKAS KK & BLUR DETECTION */
+    function processDokumenKK(dataUrl) {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.getElementById("proc-canvas");
+        const ctx = canvas.getContext("2d");
+
+        const maxDim = 1600;
+        let w = img.width, h = img.height;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
+          else { w = Math.round((w * maxDim) / h); h = maxDim; }
+        }
+        canvas.width = w;
+        canvas.height = h;
+        ctx.drawImage(img, 0, 0, w, h);
+
+        const isSharp = auditSharpness(ctx, w, h);
+        const finalKKUrl = canvas.toDataURL("image/jpeg", 0.88);
+
+        const imgPrev = document.getElementById("img-preview-kk");
+        imgPrev.src = finalKKUrl;
+        imgPrev.style.display = "block";
+        document.getElementById("placeholder-kk").style.display = "none";
+        document.getElementById("wm-kk").style.display = "flex";
+
+        const badge = document.getElementById("badge-status-kk");
+        const wrapExtracted = document.getElementById("wrap-extracted-kk");
+
+        if (isSharp) {
+          badge.className = "doc-badge-status success";
+          badge.innerHTML = `<i data-lucide="check" style="width:12px;height:12px;"></i> Berkas Jelas &amp; Tajam`;
+          wrapExtracted.style.display = "block";
+          SESSION_DATA.kkBase64 = finalKKUrl;
+        } else {
+          badge.className = "doc-badge-status danger";
+          badge.innerHTML = `<i data-lucide="x" style="width:12px;height:12px;"></i> Buram / Foto Ulang`;
+          wrapExtracted.style.display = "none";
+          SESSION_DATA.kkBase64 = "";
+          alert("PERINGATAN AUDIT: Foto dokumen terdeteksi buram atau kurang cahaya. Teks tidak dapat dibaca panitia. Silakan foto ulang dengan stabil dan pencahayaan terang.");
+        }
+
+        lucide.createIcons();
+        checkReadyForSubmission();
+      };
+      img.src = dataUrl;
+    }
+
+    function auditSharpness(ctx, w, h) {
+      const imgData = ctx.getImageData(0, 0, Math.min(w, 600), Math.min(h, 450));
+      const data = imgData.data;
+      let totalVariation = 0, count = 0;
+
+      for (let i = 0; i < data.length - 8; i += 8) {
+        const lum1 = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+        const lum2 = data[i + 4] * 0.299 + data[i + 5] * 0.587 + data[i + 6] * 0.114;
+        totalVariation += Math.abs(lum1 - lum2);
+        count++;
+      }
+      return (totalVariation / (count || 1)) > 6.8;
+    }
+
+    function checkReadyForSubmission() {
+      const btn = document.getElementById("btn-submit-berkas");
+      if (SESSION_DATA.fotoBase64.length > 50 && SESSION_DATA.kkBase64.length > 50) {
+        btn.style.display = "inline-flex";
+      } else {
+        btn.style.display = "none";
+      }
+    }
+
+    /* PENGIRIMAN DATA KE SERVER */
+    const submitBtn = document.getElementById("btn-submit-berkas");
+    const submitLabel = document.getElementById("btn-submit-label");
+    const loadingModal = document.getElementById("loading-modal");
+
+    submitBtn.addEventListener("click", async () => {
+      if (SESSION_DATA.isUploaded) {
+        showSuccessView();
+        return;
+      }
+
+      const nikKk = document.getElementById("kk_nik_keluarga").value.trim();
+      const nikPeserta = document.getElementById("kk_nik_peserta").value.trim();
+      const ayah = document.getElementById("kk_ayah").value.trim();
+      const ibu = document.getElementById("kk_ibu").value.trim();
+      const anakKe = document.getElementById("kk_anak_ke").value.trim();
+      const saudara = document.getElementById("kk_saudara").value.trim();
+
+      if (nikKk.length !== 16 || nikPeserta.length !== 16) {
+        return alert("NIK Kartu Keluarga dan NIK Peserta harus berjumlah tepat 16 digit angka.");
+      }
+      if (!ayah || !ibu || !anakKe || !saudara) {
+        return alert("Harap lengkapi semua kolom data verifikasi Kartu Keluarga.");
+      }
+
+      submitBtn.disabled = true;
+      loadingModal.classList.add("active");
+
+      const payload = {
+        ...SESSION_DATA.formData,
+        fotoBase64: SESSION_DATA.fotoBase64,
+        kkBase64: SESSION_DATA.kkBase64,
+        nikKk: nikKk,
+        nikPeserta: nikPeserta,
+        namaPesertaKk: document.getElementById("kk_nama_peserta").value.trim(),
+        ttlPesertaKk: document.getElementById("kk_ttl_peserta").value.trim(),
+        alamatKk: document.getElementById("kk_alamat_peserta").value.trim(),
+        namaAyah: ayah,
+        namaIbu: ibu,
+        anakKe: anakKe,
+        saudara: saudara,
+        metodeUpload: SESSION_DATA.kkMetode,
+        statusVerifikasiData: "Tervalidasi Otomatis & Koreksi Peserta",
         isUpdate: false
       };
 
-      executeRegistration(cachedPayload);
-    });
+      try {
+        const response = await fetch(CONFIG.ENDPOINT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
 
-    // Tombol Konfirmasi Update Data (Jika peserta/admin ingin memperbarui data yang sudah ada)
-    btnConfirmUpdate.addEventListener("click", () => {
-      if (cachedPayload) {
-        cachedPayload.isUpdate = true;
-        executeRegistration(cachedPayload);
+        if (result.status === "success" || result.status === "updated") {
+          SESSION_DATA.isUploaded = true;
+          SESSION_DATA.finalCode = result.code;
+          SESSION_DATA.finalNama = result.nama;
+
+          loadingModal.classList.remove("active");
+          submitBtn.disabled = false;
+          submitBtn.style.background = "#10b981";
+          submitBtn.style.boxShadow = "0 8px 24px rgba(16, 185, 129, 0.3)";
+          submitLabel.textContent = "SELESAIKAN REGISTRASI";
+          alert("Berkas dan Data KK berhasil terkirim ke server! Silakan tekan tombol 'SELESAIKAN REGISTRASI' untuk menerbitkan tiket.");
+        } else if (result.status === "duplicate") {
+          loadingModal.classList.remove("active");
+          submitBtn.disabled = false;
+          alert("Identitas Anda sudah pernah terdaftar di sistem dengan kode: " + result.existingCode);
+        } else {
+          throw new Error(result.message || "Gagal sinkronisasi ke server.");
+        }
+      } catch (err) {
+        loadingModal.classList.remove("active");
+        submitBtn.disabled = false;
+        alert("Kendala Jaringan: " + err.message + ". Silakan periksa koneksi Anda.");
       }
     });
 
-    document.getElementById("btn-close-modal").addEventListener("click", () => {
-      modal.classList.remove("active");
-    });
+    /* TAHAP SUKSES */
+    function showSuccessView() {
+      document.getElementById("pane-step-2").style.display = "none";
+      document.getElementById("pane-step-3").style.display = "flex";
+      document.getElementById("title-heading").textContent = "Pendaftaran Berhasil";
+      document.getElementById("sub-heading").textContent = "Simpan kode registrasi resmi Anda sebagai bukti verifikasi berkas.";
 
-    // Salin Kode Registrasi
-    document.getElementById("btn-copy-code").addEventListener("click", () => {
-      const codeText = document.getElementById("res-code").textContent;
-      navigator.clipboard.writeText(codeText).then(() => {
-        const copyTextEl = document.getElementById("copy-text");
-        copyTextEl.textContent = "Tersalin!";
-        copyTextEl.style.color = "#10b981";
-        setTimeout(() => {
-          copyTextEl.textContent = "Salin Kode Registrasi";
-          copyTextEl.style.color = "inherit";
-        }, 2000);
-      });
-    });
+      document.getElementById("res-nama-kader").textContent = SESSION_DATA.finalNama || SESSION_DATA.formData.nama;
+      document.getElementById("res-kode-registrasi").textContent = SESSION_DATA.finalCode || "LMD-IV-REGULER";
 
-    // Tampilan Sukses Tiket Digital
-    function showSuccessView(code, nama) {
-      document.getElementById("form-container").style.display = "none";
-      document.getElementById("header-pendaftaran").style.display = "none";
-
-      const successView = document.getElementById("success-container");
-      successView.classList.add("active");
-
-      document.getElementById("res-nama").textContent = nama;
-      document.getElementById("res-code").textContent = code;
       document.getElementById("link-wa-group").href = CONFIG.WA_GROUP;
-
       const textWA = encodeURIComponent(
-        `Assalamu'alaikum Panitia LAKMUD IV,\n\nSaya telah mendaftar sebagai calon peserta:\n` +
-        `• *Nama:* ${nama}\n` +
-        `• *Kode Registrasi:* ${code}\n\n` +
-        `Mohon konfirmasi verifikasi data saya. Terima kasih!`
+        `Assalamu'alaikum Panitia LAKMUD IV PAC DANDER,\n\nSaya telah melengkapi pendaftaran & berkas:\n` +
+        `• *Nama:* ${SESSION_DATA.finalNama}\n` +
+        `• *Kode Registrasi:* ${SESSION_DATA.finalCode}\n\n` +
+        `Mohon verifikasi berkas pendaftaran saya. Terima kasih!`
       );
       document.getElementById("link-wa-admin").href = `https://wa.me/${CONFIG.WA_ADMIN}?text=${textWA}`;
 
       window.scrollTo({ top: 0, behavior: "smooth" });
-
-      if (typeof confetti === "function") {
-        confetti({
-          particleCount: 110,
-          spread: 85,
-          origin: { y: 0.55 },
-          colors: ['#f97316', '#10b981', '#1e3e62', '#fbbf24']
-        });
-
-        setTimeout(() => {
-          confetti({
-            particleCount: 70,
-            angle: 60,
-            spread: 70,
-            origin: { x: 0, y: 0.65 },
-            colors: ['#f97316', '#10b981', '#ffffff']
-          });
-        }, 300);
-
-        setTimeout(() => {
-          confetti({
-            particleCount: 70,
-            angle: 120,
-            spread: 70,
-            origin: { x: 1, y: 0.65 },
-            colors: ['#f97316', '#10b981', '#ffffff']
-          });
-        }, 550);
-      }
-
-      lucide.createIcons();
+      if (typeof confetti === "function") confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
     }
+
+    document.getElementById("btn-copy-code").addEventListener("click", () => {
+      const code = document.getElementById("res-kode-registrasi").textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        document.getElementById("label-copy").textContent = "Tersalin!";
+        setTimeout(() => document.getElementById("label-copy").textContent = "Salin Kode Registrasi", 2000);
+      });
+    });
+
+    /* ========================================================
+       SISTEM PRIVASI & ANTI-SCREENSHOT BERLAPIS TERKUAT
+       ======================================================== */
+    const privacyShield = document.getElementById("privacy-shield");
+
+    function activateShield() {
+      privacyShield.classList.add("active");
+      try { navigator.clipboard.writeText(""); } catch (e) {} // Kosongkan clipboard seketika
+    }
+
+    function deactivateShield() {
+      privacyShield.classList.remove("active");
+    }
+
+    // 1. Deteksi saat berpindah aplikasi / buka Snipping Tool / Split Screen
+    window.addEventListener("blur", activateShield);
+    window.addEventListener("focus", deactivateShield);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) activateShield();
+      else deactivateShield();
+    });
+
+    // 2. Blokir shortcut tangkapan layar, inspect element, print, dan simpan halaman
+    window.addEventListener("keydown", (e) => {
+      // Tombol PrintScreen (PrtScn)
+      if (e.key === "PrintScreen" || e.keyCode === 44) {
+        activateShield();
+        e.preventDefault();
+        return false;
+      }
+      // Windows: Win+Shift+S (Snipping Tool) atau Ctrl+P (Print) / Ctrl+S / Ctrl+U
+      if ((e.ctrlKey || e.metaKey) && (e.key === "p" || e.key === "s" || e.key === "u" || e.key === "P" || e.key === "S" || e.key === "U")) {
+        activateShield();
+        e.preventDefault();
+        return false;
+      }
+      // F12 atau Ctrl+Shift+I (DevTools)
+      if (e.key === "F12" || ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "I" || e.key === "i" || e.key === "J" || e.key === "j" || e.key === "C" || e.key === "c"))) {
+        activateShield();
+        e.preventDefault();
+        return false;
+      }
+      // Mac: Cmd+Shift+3, Cmd+Shift+4, Cmd+Shift+5
+      if (e.metaKey && e.shiftKey && ["3", "4", "5"].includes(e.key)) {
+        activateShield();
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // 3. Blokir klik kanan & seret gambar (Drag & Drop)
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
+    document.addEventListener("dragstart", (e) => e.preventDefault());
+
+    // 4. Layar Penuh
+    document.getElementById("btn-fullscreen").addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    });
 
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
-      circularBar.style.strokeDasharray = totalCircumference;
-      circularBar.style.strokeDashoffset = totalCircumference;
     });
   </script>
 </body>
