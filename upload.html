@@ -2,329 +2,346 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>Pengiriman Berkas — LAKMUD IV PAC IPNU IPPNU Dander</title>
-  <meta name="theme-color" content="#0B192C" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <title>Pengiriman Berkas — LAKMUD IV PAC DANDER</title>
+  <meta name="theme-color" content="#d9230f" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     :root {
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --navy-dark: #0b192c;
-      --navy: #1e3e62;
-      --orange: #e35a27;
-      --orange-soft: rgba(227, 90, 39, 0.08);
+      --primary-red: #d9230f;
+      --primary-red-hover: #b51a08;
+      --primary-red-soft: rgba(217, 35, 15, 0.08);
+      --seabank-orange: #ff5c00;
+      --seabank-soft: rgba(255, 92, 0, 0.1);
+      --primary-navy: #0e2238;
+      --primary-navy-soft: rgba(14, 34, 56, 0.06);
+      --gold-accent: #b45309;
+      --bg-body: #ffffff;
+      --bg-surface: #ffffff;
+      --bg-muted: #f8fafc;
+      --border-crisp: #e2e8f0;
       --text-main: #0f172a;
+      --text-sub: #475569;
       --text-muted: #64748b;
-      --border: #e2e8f0;
-      --shadow: 0 4px 14px -2px rgba(11, 25, 44, 0.06);
-      --radius: 14px;
-      --radius-sm: 8px;
+      --radius-2xl: 20px;
+      --radius-xl: 14px;
       --radius-pill: 9999px;
+      --shadow-soft: 0 4px 20px -2px rgba(14, 34, 56, 0.06);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; padding: 16px 12px 24px; }
-    .container { width: 100%; max-width: 480px; margin: 0 auto; }
-    .header-nav { position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; min-height: 40px; }
-    .btn-back { position: absolute; left: 0; display: inline-flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--border); color: var(--navy-dark); padding: 7px 12px; border-radius: var(--radius-pill); font-size: 0.75rem; font-weight: 700; cursor: pointer; text-decoration: none; box-shadow: var(--shadow); }
-    .header-profile { text-align: center; padding: 6px 0 16px; }
-    .emblem { width: 76px; height: 76px; margin: 0 auto 10px; background: #ffffff; border-radius: 50%; border: 2px solid var(--border); padding: 6px; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; }
-    .emblem img { width: 100%; height: 100%; object-fit: contain; }
-    .title-group { display: flex; align-items: baseline; justify-content: center; gap: 6px; }
-    .title-text { font-size: 2rem; font-weight: 800; color: var(--navy-dark); line-height: 1; }
-    .title-roman { font-family: 'Cinzel', serif; font-size: 1.9rem; font-weight: 700; color: var(--orange); line-height: 1; }
-    .org-subtitle { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--navy); margin-top: 4px; }
-    .divider { width: 50px; height: 2px; background: var(--orange); margin: 10px auto 8px; border-radius: var(--radius-pill); opacity: 0.7; }
-    .theme { font-size: 0.76rem; color: var(--text-muted); font-style: italic; line-height: 1.35; padding: 0 10px; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 16px; box-shadow: var(--shadow); margin-top: 10px; }
-    .form-group { margin-bottom: 14px; }
-    .label-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
-    label { font-size: 0.76rem; font-weight: 700; color: var(--navy-dark); }
-    .input-control { width: 100%; background: #fafbfc; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-family: inherit; font-size: 0.8rem; color: var(--text-main); outline: none; transition: border-color 0.2s ease; }
-    .input-control:focus { border-color: var(--navy); background: #ffffff; }
-    .btn-action-full { width: 100%; background: linear-gradient(135deg, var(--orange) 0%, #c44314 100%); color: #ffffff; border: none; padding: 12px 16px; border-radius: var(--radius-sm); font-family: inherit; font-size: 0.85rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(227, 90, 39, 0.3); margin-top: 10px; }
-    .btn-action-full:active { transform: scale(0.98); }
-    .user-pill { background: #f1f5f9; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 16px; }
-    .user-pill-name { font-size: 0.85rem; font-weight: 800; color: var(--navy-dark); }
-    .user-pill-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 1px; }
-    .upload-item { background: #fafbfc; border: 1px dashed var(--border); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 10px; transition: border-color 0.2s ease; }
-    .upload-item.filled { border-color: #0284c7; background: #f0f9ff; }
-    .upload-item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-    .upload-title { font-size: 0.76rem; font-weight: 700; color: var(--navy-dark); display: flex; align-items: center; gap: 6px; }
-    .upload-badge { font-size: 0.65rem; font-weight: 700; color: #0284c7; display: none; }
-    .upload-item.filled .upload-badge { display: inline-flex; align-items: center; gap: 3px; }
-    .file-input { width: 100%; font-size: 0.74rem; color: var(--text-muted); }
-    .file-info { font-size: 0.66rem; color: var(--text-muted); margin-top: 4px; }
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(11, 25, 44, 0.7); backdrop-filter: blur(4px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 16px; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-muted); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    
+    /* Layout Responsif Lebar Penuh pada Mobile */
+    .app-viewport { width: 100%; max-width: 520px; flex: 1; display: flex; flex-direction: column; padding: 0; background: var(--bg-surface); box-shadow: var(--shadow-soft); position: relative; }
+    @media (min-width: 521px) { .app-viewport { margin: 2vh auto; border-radius: var(--radius-2xl); border: 1px solid var(--border-crisp); min-height: auto; } }
+    
+    .nav-top { padding: 16px 20px; border-bottom: 1px solid var(--border-crisp); display: flex; align-items: center; background: var(--bg-surface); z-index: 10; border-radius: var(--radius-2xl) var(--radius-2xl) 0 0; }
+    .btn-back { display: inline-flex; align-items: center; gap: 6px; background: transparent; border: none; color: var(--primary-navy); font-size: 0.85rem; font-weight: 800; cursor: pointer; text-decoration: none; padding: 0; }
+    
+    .content-body { padding: 24px 20px; flex: 1; display: flex; flex-direction: column; }
+    
+    .form-group { margin-bottom: 18px; }
+    label { font-size: 0.74rem; font-weight: 800; color: var(--primary-navy); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px; }
+    .input-control { width: 100%; background: var(--bg-muted); border: 1.5px solid var(--border-crisp); border-radius: var(--radius-xl); padding: 14px 16px; font-family: inherit; font-size: 0.88rem; font-weight: 600; color: var(--text-main); outline: none; transition: all 0.2s ease; }
+    .input-control:focus { border-color: var(--primary-navy); background: var(--bg-surface); box-shadow: 0 0 0 4px var(--primary-navy-soft); }
+    
+    .btn-main { width: 100%; background: var(--primary-red); color: #ffffff; border: none; padding: 15px 16px; border-radius: var(--radius-xl); font-family: inherit; font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 8px 24px rgba(217, 35, 15, 0.25); margin-top: 10px; transition: transform 0.15s ease; }
+    .btn-main:active { transform: translateY(2px); }
+    .btn-wa { background: #25d366; box-shadow: 0 8px 24px rgba(37, 211, 102, 0.25); }
+    
+    .user-pill { background: var(--primary-navy-soft); border-radius: var(--radius-xl); padding: 16px; margin-bottom: 20px; }
+    .user-pill-name { font-size: 1rem; font-weight: 800; color: var(--primary-navy); }
+    .user-pill-sub { font-size: 0.78rem; font-weight: 600; color: var(--text-sub); margin-top: 4px; }
+    
+    .upload-item { background: var(--bg-surface); border: 1.5px dashed var(--border-crisp); border-radius: var(--radius-xl); padding: 16px; margin-bottom: 12px; transition: all 0.2s ease; position: relative; overflow: hidden; }
+    .upload-item.filled { border-style: solid; border-color: #059669; background: #ecfdf5; }
+    .upload-title { font-size: 0.8rem; font-weight: 800; color: var(--primary-navy); display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .upload-badge { position: absolute; right: 16px; top: 16px; font-size: 0.7rem; font-weight: 800; color: #059669; display: none; align-items: center; gap: 4px; background: #d1fae5; padding: 4px 10px; border-radius: var(--radius-pill); }
+    .upload-item.filled .upload-badge { display: inline-flex; }
+    
+    .file-input { width: 100%; font-size: 0.78rem; font-weight: 600; color: var(--text-sub); margin-top: 6px; }
+    .file-info { font-size: 0.7rem; color: var(--text-muted); margin-top: 6px; background: var(--bg-muted); padding: 6px 10px; border-radius: 6px; display: inline-block; }
+    
+    /* Loading Modal Modern (Tanpa Kotak Kaku) */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(14, 34, 56, 0.85); backdrop-filter: blur(8px); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 24px; }
     .modal-backdrop.active { display: flex; }
-    .modal-box { width: 100%; max-width: 380px; background: var(--card); border-radius: var(--radius); padding: 22px 18px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
-    .progress-ring { width: 54px; height: 54px; margin: 0 auto 12px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 800; color: var(--navy-dark); background: #f1f5f9; border: 3px solid var(--border); }
-    .progress-ring.error { background: #fef2f2; border-color: #ef4444; color: #ef4444; }
-    .progress-bar-wrap { width: 100%; height: 7px; background: #f1f5f9; border-radius: var(--radius-pill); overflow: hidden; margin: 10px 0; }
-    .progress-bar-fill { height: 100%; width: 0%; background: var(--orange); transition: width 0.15s ease; }
-    .btn-secondary { background: var(--navy-dark); color: #ffffff; text-decoration: none; font-size: 0.76rem; font-weight: 700; padding: 9px 12px; border-radius: var(--radius-sm); display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: 100%; margin-top: 8px; }
-    .btn-orange-outline { background: var(--orange-soft); color: var(--orange); border: 1px solid rgba(227, 90, 39, 0.3); text-decoration: none; font-size: 0.76rem; font-weight: 700; padding: 9px 12px; border-radius: var(--radius-sm); display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: 100%; margin-top: 8px; }
-    .footer { text-align: center; padding: 24px 0 10px; margin-top: 14px; border-top: 1px solid var(--border); }
-    .footer-org { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); }
-    .footer-quote { font-size: 0.72rem; color: var(--text-muted); font-style: italic; margin: 3px 0 10px; }
-    .footer-links { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
-    .footer-links a { color: var(--text-main); text-decoration: none; font-size: 0.72rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
-    .footer-copy { font-size: 0.65rem; color: var(--text-muted); }
+    .modern-loading-box { background: transparent; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    
+    .smooth-spinner { width: 64px; height: 64px; border: 4px solid rgba(255, 255, 255, 0.15); border-top-color: var(--seabank-orange); border-right-color: var(--primary-red); border-radius: 50%; animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; margin-bottom: 24px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    .loading-text { font-size: 1.1rem; font-weight: 800; color: #ffffff; letter-spacing: 0.02em; }
+    .loading-subtext { font-size: 0.85rem; font-weight: 500; color: #cbd5e1; margin-top: 8px; max-width: 260px; line-height: 1.4; }
+    
+    .progress-bar-wrap { width: 220px; height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: var(--radius-pill); overflow: hidden; margin-top: 20px; }
+    .progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--seabank-orange), var(--primary-red)); transition: width 0.3s ease; }
+    
+    /* Modal Khusus Alert */
+    .alert-box { width: 100%; max-width: 340px; background: var(--bg-surface); border-radius: var(--radius-2xl); padding: 26px 20px; text-align: center; display: none; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    
+    .info-card { background: var(--primary-red-soft); border: 1px dashed rgba(217, 35, 15, 0.3); padding: 20px; border-radius: var(--radius-xl); text-align: center; margin-top: 10px; }
   </style>
 </head>
 <body>
-  <main class="container">
-    <div class="header-nav">
+
+  <main class="app-viewport">
+    <div class="nav-top">
       <button type="button" class="btn-back" id="btn-back">
-        <i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i>
-        <span>Kembali</span>
+        <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+        <span>Pengiriman Berkas</span>
       </button>
     </div>
-    <header class="header-profile">
-      <div class="emblem">
-        <img src="assets/images/logo-lakmud.png" alt="Logo LAKMUD IV" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'46\' fill=\'%231E3E62\'/><path d=\'M35 24C35 24 45 44 45 64C45 74 35 79 35 79C35 79 65 74 65 50C65 35 50 24 35 24Z\' fill=\'%23E35A27\'/></svg>';" />
-      </div>
-      <div class="title-group">
-        <span class="title-text">Lakmud</span>
-        <span class="title-roman">IV</span>
-      </div>
-      <h1 class="org-subtitle">PAC IPNU IPPNU DANDER</h1>
-      <div class="divider"></div>
-      <p class="theme">"Mencetak Kader yang Reflektif, Strategis, dan Transformatif"</p>
-    </header>
-    <section class="card" id="section-auth">
-      <h2 style="font-size: 0.92rem; font-weight: 800; color: var(--navy-dark); margin-bottom: 4px;">Pengecekan Identitas Peserta</h2>
-      <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 14px;">Masukkan Asal Delegasi dan Tanggal Lahir yang Anda daftarkan.</p>
-      <form id="form-auth">
-        <div class="form-group">
-          <div class="label-row"><label for="auth-delegasi">ASAL DELEGASI</label></div>
-          <input type="text" id="auth-delegasi" class="input-control" placeholder="Contoh: PR IPNU IPPNU Sumberagung" required />
-        </div>
-        <div class="form-group">
-          <div class="label-row"><label for="auth-tanggal">TANGGAL LAHIR</label></div>
-          <input type="date" id="auth-tanggal" class="input-control" required />
-        </div>
-        <button type="submit" class="btn-action-full" id="btn-auth">
-          <span>Masuk &amp; Kirim Berkas</span>
-          <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
-        </button>
-      </form>
-    </section>
-    <section class="card" id="section-upload" style="display: none;">
-      <div class="user-pill">
-        <div class="user-pill-name" id="display-user-name">Nama Peserta</div>
-        <div class="user-pill-sub" id="display-user-info">Kode Registrasi • Delegasi</div>
-      </div>
-      <form id="form-upload">
-        <div class="upload-item" id="item-foto">
-          <div class="upload-item-header">
-            <span class="upload-title"><i data-lucide="image"></i> 1. Pas Foto 3x4 (Latar Polos)</span>
-            <span class="upload-badge"><i data-lucide="check-circle-2" style="width:12px;height:12px;"></i> Siap</span>
+
+    <div class="content-body">
+      <!-- TAHAP 1: FORM LOGIN/PENGECEKAN -->
+      <section id="section-auth">
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 6px;">Autentikasi Delegasi</h2>
+        <p style="font-size: 0.85rem; font-weight: 500; color: var(--text-sub); margin-bottom: 24px; line-height: 1.5;">Masukkan data sesuai saat pendaftaran biodata pertama kali.</p>
+        
+        <form id="form-auth">
+          <div class="form-group">
+            <label for="auth-delegasi">Asal Delegasi / Ranting</label>
+            <input type="text" id="auth-delegasi" class="input-control" placeholder="Contoh: PAC IPNU Dander" required />
           </div>
-          <input type="file" id="file-foto" class="file-input" accept="image/*" />
-          <div class="file-info">Folder: 1. Foto 3:4 (Maks. 5 MB).</div>
-        </div>
-        <div class="upload-item" id="item-rekom">
-          <div class="upload-item-header">
-            <span class="upload-title"><i data-lucide="file-text"></i> 2. Surat Rekomendasi PR/PK</span>
-            <span class="upload-badge"><i data-lucide="check-circle-2" style="width:12px;height:12px;"></i> Siap</span>
+          <div class="form-group">
+            <label for="auth-tanggal">Tanggal Lahir Peserta</label>
+            <input type="date" id="auth-tanggal" class="input-control" required />
           </div>
-          <input type="file" id="file-rekom" class="file-input" accept=".pdf,image/*" />
-          <div class="file-info">Folder: 2. Surat Rekomendasi.</div>
+          <button type="submit" class="btn-main" id="btn-auth" style="margin-top: 32px;">
+            <span>Lanjutkan Unggah Berkas</span>
+            <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+          </button>
+        </form>
+      </section>
+
+      <!-- TAHAP 2: FORM UNGGAH FILE -->
+      <section id="section-upload" style="display: none;">
+        <div class="user-pill">
+          <div class="user-pill-name" id="display-user-name">Nama Peserta</div>
+          <div class="user-pill-sub" id="display-user-info">Kode Registrasi • Delegasi</div>
         </div>
-        <div class="upload-item" id="item-biodata">
-          <div class="upload-item-header">
-            <span class="upload-title"><i data-lucide="file-text"></i> 3. Form Biodata &amp; Riwayat Kader</span>
-            <span class="upload-badge"><i data-lucide="check-circle-2" style="width:12px;height:12px;"></i> Siap</span>
+
+        <form id="form-upload">
+          
+          <!-- Opsional: Pasfoto jika masih diwajibkan (Menerima Gambar) -->
+          <div class="upload-item" id="item-foto">
+            <div class="upload-title"><i data-lucide="camera" style="color: var(--seabank-orange);"></i> 1. Pasfoto Resmi 3x4</div>
+            <span class="upload-badge"><i data-lucide="check" style="width:12px;height:12px;"></i> Siap</span>
+            <input type="file" id="file-foto" class="file-input" accept="image/png, image/jpeg, image/jpg" />
+            <div class="file-info">Format: JPG/PNG.</div>
           </div>
-          <input type="file" id="file-biodata" class="file-input" accept=".pdf,image/*" />
-          <div class="file-info">Folder: 3. Form Biodata.</div>
-        </div>
-        <div class="upload-item" id="item-kesediaan">
-          <div class="upload-item-header">
-            <span class="upload-title"><i data-lucide="file-text"></i> 4. Surat Pernyataan Kesediaan</span>
-            <span class="upload-badge"><i data-lucide="check-circle-2" style="width:12px;height:12px;"></i> Siap</span>
+
+          <!-- DOKUMEN WAJIB (HANYA MENERIMA PDF / DOCX) -->
+          <div class="upload-item" id="item-rekom">
+            <div class="upload-title"><i data-lucide="file-text" style="color: var(--primary-navy);"></i> 2. Surat Rekomendasi / Tugas</div>
+            <span class="upload-badge"><i data-lucide="check" style="width:12px;height:12px;"></i> Siap</span>
+            <!-- Input hanya menerima file dokumen -->
+            <input type="file" id="file-rekom" class="file-input" accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+            <div class="file-info">Format Wajib: PDF / Word.</div>
           </div>
-          <input type="file" id="file-kesediaan" class="file-input" accept=".pdf,image/*" />
-          <div class="file-info">Folder: 4. Surat Pernyataan.</div>
-        </div>
-        <div class="upload-item" id="item-izin">
-          <div class="upload-item-header">
-            <span class="upload-title"><i data-lucide="file-text"></i> 5. Surat Izin Orang Tua / Wali</span>
-            <span class="upload-badge"><i data-lucide="check-circle-2" style="width:12px;height:12px;"></i> Siap</span>
+
+          <div class="upload-item" id="item-kesediaan">
+            <div class="upload-title"><i data-lucide="file-text" style="color: var(--primary-navy);"></i> 3. Surat Pernyataan Peserta</div>
+            <span class="upload-badge"><i data-lucide="check" style="width:12px;height:12px;"></i> Siap</span>
+            <input type="file" id="file-kesediaan" class="file-input" accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+            <div class="file-info">Format Wajib: PDF / Word.</div>
           </div>
-          <input type="file" id="file-izin" class="file-input" accept=".pdf,image/*" />
-          <div class="file-info">Folder: 5. Surat Izin Ortu.</div>
-        </div>
-        <div class="upload-item" id="item-esai">
-          <div class="upload-item-header">
-            <span class="upload-title"><i data-lucide="file-text"></i> 6. Naskah Esai Makalah Lakmud</span>
-            <span class="upload-badge"><i data-lucide="check-circle-2" style="width:12px;height:12px;"></i> Siap</span>
+
+          <div class="upload-item" id="item-izin">
+            <div class="upload-title"><i data-lucide="file-text" style="color: var(--primary-navy);"></i> 4. Surat Izin Orang Tua</div>
+            <span class="upload-badge"><i data-lucide="check" style="width:12px;height:12px;"></i> Siap</span>
+            <input type="file" id="file-izin" class="file-input" accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+            <div class="file-info">Format Wajib: PDF / Word.</div>
           </div>
-          <input type="file" id="file-esai" class="file-input" accept=".pdf" />
-          <div class="file-info">Folder: 6. Esai Makalah (Format PDF).</div>
+
+          <div class="upload-item" id="item-biodata">
+            <div class="upload-title"><i data-lucide="file-text" style="color: var(--primary-navy);"></i> 5. Form Biodata & Riwayat</div>
+            <span class="upload-badge"><i data-lucide="check" style="width:12px;height:12px;"></i> Siap</span>
+            <input type="file" id="file-biodata" class="file-input" accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+            <div class="file-info">Format Wajib: PDF / Word.</div>
+          </div>
+
+          <div class="upload-item" id="item-esai">
+            <div class="upload-title"><i data-lucide="book-open" style="color: var(--primary-navy);"></i> 6. Naskah Esai LAKMUD</div>
+            <span class="upload-badge"><i data-lucide="check" style="width:12px;height:12px;"></i> Siap</span>
+            <input type="file" id="file-esai" class="file-input" accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+            <div class="file-info">Format Wajib: PDF / Word.</div>
+          </div>
+
+          <button type="submit" class="btn-main" id="btn-submit-upload" style="display: none; margin-top: 24px;">
+            <i data-lucide="upload-cloud" style="width: 18px; height: 18px;"></i>
+            <span>Transmisikan Berkas Permanen</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- TAHAP 3: SUKSES UPLOAD BARU -->
+      <section id="section-success" style="display: none; text-align: center; padding-top: 40px;">
+        <div style="width: 72px; height: 72px; background: #ecfdf5; border-radius: 50%; color: #059669; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+          <i data-lucide="check" style="width: 40px; height: 40px; stroke-width: 3;"></i>
         </div>
-        <button type="submit" class="btn-action-full" id="btn-submit-upload" style="display: none;">
-          <span>Kirim Berkas Sekarang</span>
-          <i data-lucide="upload-cloud" style="width: 16px; height: 16px;"></i>
-        </button>
-      </form>
-    </section>
-    <section class="card" id="section-success" style="display: none; text-align: center;">
-      <div style="width: 56px; height: 56px; background: var(--orange-soft); border-radius: 50%; color: var(--orange); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
-        <i data-lucide="check" style="width: 28px; height: 28px;"></i>
-      </div>
-      <h2 style="font-size: 1.1rem; font-weight: 800; color: var(--navy-dark);">BERKAS BERHASIL DIKIRIM!</h2>
-      <p style="font-size: 0.74rem; color: var(--text-muted); margin: 4px 0 14px;">
-        Terima kasih Rekan/Rekanita <strong id="success-user-name" style="color:var(--orange);"></strong>, berkas persyaratan telah aman tersimpan di folder Google Drive panitia.
-      </p>
-      <a id="link-wa-confirm" href="#" target="_blank" rel="noopener noreferrer" class="btn-action-full">
-        <i data-lucide="message-circle" style="width: 16px; height: 16px;"></i>
-        <span>Konfirmasi Pengiriman Berkas ke Admin</span>
-      </a>
-      <a href="cek-data.html" class="btn-secondary" style="margin-top: 8px;">
-        <i data-lucide="search-check" style="width: 14px; height: 14px;"></i>
-        <span>Pantau Status Verifikasi di Cek Data</span>
-      </a>
-    </section>
-    <footer class="footer">
-      <div class="footer-org">PAC IPNU IPPNU DANDER</div>
-      <div class="footer-quote">"Mencetak Kader yang Reflektif, Strategis, dan Transformatif"</div>
-      <div class="footer-links">
-        <a href="https://instagram.com/pac_ipnu_ippnu_dander" target="_blank" rel="noopener noreferrer"><i data-lucide="instagram" style="width: 12px; height: 12px;"></i> Instagram</a>
-        <span>•</span>
-        <a href="https://pacdander.or.id" target="_blank" rel="noopener noreferrer"><i data-lucide="globe" style="width: 12px; height: 12px;"></i> Website</a>
-      </div>
-      <div class="footer-copy">&copy; Panitia LAKMUD IV PAC IPNU IPPNU Dander.</div>
-    </footer>
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--primary-navy);">Berkas Disimpan!</h2>
+        <p style="font-size: 0.88rem; color: var(--text-sub); margin: 8px 0 24px; line-height: 1.5;">
+          Seluruh berkas persyaratan <strong id="success-user-name" style="color: var(--primary-red);"></strong> telah resmi masuk ke pangkalan data Google Drive panitia pelaksana.
+        </p>
+        <a id="link-wa-confirm" href="#" target="_blank" rel="noopener noreferrer" class="btn-main btn-wa" style="text-decoration: none;">
+          <i data-lucide="message-circle" style="width: 18px; height: 18px;"></i>
+          <span>Konfirmasi ke Admin Panitia</span>
+        </a>
+      </section>
+
+      <!-- TAHAP 4: NOTIFIKASI SUDAH PERNAH UPLOAD -->
+      <section id="section-already-complete" style="display: none; text-align: center; padding-top: 20px;">
+        <div style="width: 64px; height: 64px; background: var(--bg-muted); border: 2px solid var(--border-crisp); border-radius: 50%; color: var(--seabank-orange); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+           <i data-lucide="shield-check" style="width: 32px; height: 32px; stroke-width: 2.5;"></i>
+        </div>
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--primary-navy);">Data Telah Terkunci</h2>
+        
+        <div class="info-card">
+          <p style="font-size: 0.88rem; font-weight: 600; color: var(--primary-navy); line-height: 1.6; text-align: justify;" id="text-already-complete">
+            Rekan/Rekanita <strong>Nama</strong>, delegasi <strong>PAC</strong>, kelahiran <strong>Tgl</strong>. Anda sudah berhasil mengirim seluruh berkas final pada sistem kami.
+          </p>
+        </div>
+
+        <p style="font-size: 0.8rem; color: var(--text-sub); margin: 20px 0; line-height: 1.5;">
+          Apabila terdapat dokumen yang salah unggah atau tidak sesuai, Anda harus melakukan *reset manual* melalui tim verifikator panitia.
+        </p>
+        
+        <a id="link-wa-help" href="#" target="_blank" rel="noopener noreferrer" class="btn-main" style="text-decoration: none; background: var(--primary-navy); box-shadow: 0 8px 24px rgba(14, 34, 56, 0.2);">
+          <i data-lucide="headphones" style="width: 18px; height: 18px;"></i>
+          <span>Pusat Bantuan & Perbaikan Data</span>
+        </a>
+      </section>
+
+    </div>
   </main>
+
+  <!-- LOADING BACKDROP MODERN -->
   <div class="modal-backdrop" id="modal">
-    <div class="modal-box">
-      <div class="progress-ring" id="modal-ring">
-        <span id="modal-pct">0%</span>
-      </div>
-      <div style="font-size: 0.95rem; font-weight: 800; color: var(--navy-dark);" id="modal-title">Memeriksa Data...</div>
-      <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;" id="modal-desc">Mencocokkan Asal Delegasi dan Tanggal Lahir</div>
+    
+    <!-- Animasi Modern Default -->
+    <div class="modern-loading-box" id="loading-view">
+      <div class="smooth-spinner"></div>
+      <div class="loading-text" id="modal-title">Sinkronisasi Data</div>
+      <div class="loading-subtext" id="modal-desc">Mohon tunggu, sistem sedang menyiapkan jalur terenkripsi...</div>
       <div class="progress-bar-wrap" id="modal-bar-wrap">
         <div class="progress-bar-fill" id="modal-bar-fill"></div>
       </div>
-      <div id="modal-actions" style="display: none; margin-top: 10px;">
-        <a href="registrasi.html" class="btn-orange-outline" id="btn-goto-reg">
-          <i data-lucide="user-plus" style="width: 14px; height: 14px;"></i>
-          <span>Daftar Sekarang (Isi Biodata)</span>
-        </a>
-        <a href="https://wa.me/6281234567890?text=Halo%20Admin%20LAKMUD%20IV%2C%20data%20saya%20tidak%20ditemukan%20saat%20upload%20berkas" target="_blank" rel="noopener noreferrer" class="btn-secondary">
-          <i data-lucide="message-circle" style="width: 14px; height: 14px;"></i>
-          <span>Hubungi WA Admin Panitia</span>
-        </a>
-        <button type="button" id="btn-close-modal" style="background:none; border:none; color:var(--text-muted); font-size:0.72rem; margin-top:8px; cursor:pointer;">
-          Tutup &amp; Coba Lagi
-        </button>
-      </div>
     </div>
+
+    <!-- Kotak Alert Khusus Error -->
+    <div class="alert-box" id="alert-view">
+      <div style="width: 56px; height: 56px; border-radius: 50%; background: #fef2f2; color: #dc2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+         <i data-lucide="alert-triangle" style="width: 28px; height: 28px; stroke-width: 2.5;"></i>
+      </div>
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 8px;" id="alert-title">Data Tidak Ditemukan</h3>
+      <p style="font-size: 0.85rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 24px;" id="alert-desc">
+        Kombinasi delegasi dan tanggal lahir salah.
+      </p>
+      <button type="button" class="btn-main" style="background: var(--text-sub); box-shadow: none;" id="btn-close-alert">Kembali & Periksa</button>
+    </div>
+
   </div>
+
   <script>
     const CONFIG = {
+      // GANTI URL INI DENGAN DEPLOYMENT BARU JIKA BACKEND DIUPDATE
       SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxJcUFCfA1Vkd8ZZIUp3A15bV-qz4qRZbefoRnE3lBqREAIr_EAG07Jdd44aBRWzYL1kA/exec",
       WA_ADMIN: "6281234567890"
     };
+
     let currentUser = null;
     let requiredFilesList = [];
+    let savedTglInput = "";
+
     document.getElementById("btn-back").addEventListener("click", () => {
-      if (document.getElementById("section-upload").style.display === "block") {
-        document.getElementById("section-upload").style.display = "none";
-        document.getElementById("section-auth").style.display = "block";
-      } else if (window.history.length > 1 && document.referrer.includes(window.location.hostname)) {
-        window.history.back();
-      } else {
-        window.location.href = "index.html";
-      }
+      location.reload(); // Reset state
     });
+
     const modal = document.getElementById("modal");
-    const ring = document.getElementById("modal-ring");
-    const pctTxt = document.getElementById("modal-pct");
-    const titleTxt = document.getElementById("modal-title");
-    const descTxt = document.getElementById("modal-desc");
+    const loadingView = document.getElementById("loading-view");
+    const alertView = document.getElementById("alert-view");
     const barFill = document.getElementById("modal-bar-fill");
-    const actionsBox = document.getElementById("modal-actions");
-    function setModal(pct, title, desc) {
-      pctTxt.textContent = pct + "%";
+    
+    function showLoading(title, desc, pct) {
+      modal.classList.add("active");
+      loadingView.style.display = "flex";
+      alertView.style.display = "none";
+      document.getElementById("modal-title").textContent = title;
+      document.getElementById("modal-desc").textContent = desc;
       barFill.style.width = pct + "%";
-      if (title) titleTxt.textContent = title;
-      if (desc) descTxt.textContent = desc;
     }
-    function animateProgress(start, end, duration, title, desc, callback) {
-      const startTime = performance.now();
-      function step(now) {
-        const p = Math.min((now - startTime) / duration, 1);
-        const val = Math.floor(start + (end - start) * p);
-        setModal(val, title, desc);
-        if (p < 1) requestAnimationFrame(step);
-        else if (callback) callback();
-      }
-      requestAnimationFrame(step);
+
+    function updateProgress(pct, title, desc) {
+      barFill.style.width = pct + "%";
+      if(title) document.getElementById("modal-title").textContent = title;
+      if(desc) document.getElementById("modal-desc").textContent = desc;
     }
+
+    function showAlert(title, desc) {
+      modal.classList.add("active");
+      loadingView.style.display = "none";
+      alertView.style.display = "block";
+      document.getElementById("alert-title").textContent = title;
+      document.getElementById("alert-desc").textContent = desc;
+    }
+
+    document.getElementById("btn-close-alert").addEventListener("click", () => {
+      modal.classList.remove("active");
+    });
+
+    /* TAHAP 1: PENGECEKAN DATA */
     document.getElementById("form-auth").addEventListener("submit", async (e) => {
       e.preventDefault();
       const delegasi = document.getElementById("auth-delegasi").value.trim();
-      const tanggalLahir = document.getElementById("auth-tanggal").value;
-      modal.classList.add("active");
-      ring.className = "progress-ring";
-      actionsBox.style.display = "none";
-      document.getElementById("modal-bar-wrap").style.display = "block";
-      animateProgress(0, 85, 800, "Mengecek Data...", "Mencari identitas Anda pada database pendaftaran...", async () => {
-        try {
-          const res = await fetch(CONFIG.SCRIPT_URL, {
-            method: "POST",
-            body: JSON.stringify({ action: "check_auth", delegasi: delegasi, tanggalLahir: tanggalLahir })
-          });
-          const data = await res.json();
+      savedTglInput = document.getElementById("auth-tanggal").value;
+      
+      showLoading("Mencari Data...", "Pengecekan di database server...", 20);
+
+      try {
+        const res = await fetch(CONFIG.SCRIPT_URL, {
+          method: "POST",
+          body: JSON.stringify({ action: "check_auth", delegasi: delegasi, tanggalLahir: savedTglInput })
+        });
+        const data = await res.json();
+        
+        updateProgress(100, "Selesai", "Data berhasil diambil.");
+        
+        setTimeout(() => {
+          modal.classList.remove("active");
+          
           if (data.status === "found") {
             if (data.isComplete) {
-              setModal(100, "Berkas Lengkap!", "Semua berkas Anda sudah tersimpan.");
-              setTimeout(() => {
-                modal.classList.remove("active");
-                alert("Rekan/Rekanita " + data.user.nama + " sudah lengkap mengirimkan 6 berkas. Membuka menu Cek Data...");
-                window.location.href = "cek-data.html";
-              }, 1200);
-              return;
-            }
-            setModal(100, "Data Ditemukan!", "Menyiapkan formulir berkas...");
-            currentUser = data.user;
-            requiredFilesList = data.missingFiles || [];
-            setTimeout(() => {
-              modal.classList.remove("active");
+              // Jika sudah pernah upload lengkap
+              showAlreadyComplete(data.user, savedTglInput, data.timestamp);
+            } else {
+              // Jika belum upload/kurang
+              currentUser = data.user;
+              requiredFilesList = data.missingFiles || [];
               showUploadSection(currentUser, requiredFilesList);
-            }, 500);
+            }
           } else {
-            ring.className = "progress-ring error";
-            ring.innerHTML = `<i data-lucide="x" style="width:24px;height:24px;"></i>`;
-            lucide.createIcons();
-            setModal(0, "Data Tidak Ditemukan", "Asal Delegasi dan Tanggal Lahir tidak cocok.");
-            document.getElementById("modal-bar-wrap").style.display = "none";
-            actionsBox.style.display = "block";
+            showAlert("Identitas Tidak Ditemukan", "Asal Delegasi atau Tanggal Lahir tidak cocok dengan database awal. Pastikan tidak ada salah pengetikan nama ranting.");
           }
-        } catch (err) {
-          ring.className = "progress-ring error";
-          ring.innerHTML = `<i data-lucide="alert-circle" style="width:24px;height:24px;"></i>`;
-          lucide.createIcons();
-          setModal(0, "Gangguan Jaringan", "Gagal menghubungi server database.");
-          document.getElementById("modal-bar-wrap").style.display = "none";
-          actionsBox.style.display = "block";
-        }
-      });
+        }, 600);
+
+      } catch (err) {
+        showAlert("Gangguan Jaringan", "Gagal menghubungi server database. Pastikan internet Anda stabil.");
+      }
     });
-    document.getElementById("btn-close-modal").addEventListener("click", () => modal.classList.remove("active"));
+
+    /* TAHAP 2: MENAMPILKAN FORM UNGGAH */
     function showUploadSection(user, missingList) {
       document.getElementById("section-auth").style.display = "none";
-      const upSec = document.getElementById("section-upload");
-      upSec.style.display = "block";
+      document.getElementById("section-upload").style.display = "block";
+      
       document.getElementById("display-user-name").textContent = user.nama;
       document.getElementById("display-user-info").textContent = `${user.code} • ${user.delegasi}`;
+      
       const allKeys = ["foto", "rekom", "biodata", "kesediaan", "izin", "esai"];
       allKeys.forEach(k => {
         const itemEl = document.getElementById(`item-${k}`);
@@ -340,6 +357,8 @@
       checkAllFilesReady();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+
+    /* SISTEM DETEKSI INPUT FILE & DOKUMEN */
     const fileInputs = {
       foto: document.getElementById("file-foto"),
       rekom: document.getElementById("file-rekom"),
@@ -348,6 +367,7 @@
       izin: document.getElementById("file-izin"),
       esai: document.getElementById("file-esai")
     };
+
     Object.keys(fileInputs).forEach(key => {
       const input = fileInputs[key];
       const itemBox = document.getElementById(`item-${key}`);
@@ -360,70 +380,76 @@
         checkAllFilesReady();
       });
     });
+
     function checkAllFilesReady() {
       const neededInputs = requiredFilesList.map(k => fileInputs[k]).filter(Boolean);
       const allReady = neededInputs.length > 0 && neededInputs.every(inp => inp.files.length > 0);
       document.getElementById("btn-submit-upload").style.display = allReady ? "flex" : "none";
     }
-    function compressImageFile(file, maxWidth = 1200, quality = 0.75) {
+
+    // Fungsi memproses file (Bypass kompresi jika itu PDF/Word)
+    function processFile(file) {
       return new Promise((resolve) => {
+        // Jika file adalah PDF / Word / Bukan gambar, JANGAN KOMPRESI, langsung konversi ke Base64
         if (!file.type.startsWith("image/")) {
           const reader = new FileReader();
           reader.onload = () => resolve({
             name: file.name,
-            type: file.type || "application/pdf",
+            type: file.type || "application/octet-stream",
             base64: reader.result.split(",")[1]
           });
           reader.readAsDataURL(file);
           return;
         }
+        
+        // Jika file adalah gambar (Pasfoto), Lakukan Kompresi Ringan
         const img = new Image();
         const reader = new FileReader();
         reader.onload = (e) => {
           img.src = e.target.result;
           img.onload = () => {
             const canvas = document.createElement("canvas");
-            let w = img.width;
-            let h = img.height;
-            if (w > maxWidth) {
-              h = Math.round((h * maxWidth) / w);
-              w = maxWidth;
-            }
-            canvas.width = w;
-            canvas.height = h;
+            const maxWidth = 1000;
+            let w = img.width, h = img.height;
+            if (w > maxWidth) { h = Math.round((h * maxWidth) / w); w = maxWidth; }
+            canvas.width = w; canvas.height = h;
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, w, h);
-            const dataURL = canvas.toDataURL("image/jpeg", quality);
             resolve({
               name: file.name.replace(/\.[^.]+$/, ".jpg"),
               type: "image/jpeg",
-              base64: dataURL.split(",")[1]
+              base64: canvas.toDataURL("image/jpeg", 0.85).split(",")[1]
             });
           };
         };
         reader.readAsDataURL(file);
       });
     }
+
+    /* PENGIRIMAN DATA UPLOAD */
     document.getElementById("form-upload").addEventListener("submit", async (e) => {
       e.preventDefault();
-      modal.classList.add("active");
-      ring.className = "progress-ring";
-      actionsBox.style.display = "none";
-      document.getElementById("modal-bar-wrap").style.display = "block";
-      setModal(10, "Mengompresi Berkas...", "Menyiapkan dokumen agar ringan dan cepat...");
+      
+      showLoading("Menyiapkan Berkas...", "Membaca dan mengenkripsi dokumen...", 10);
+      
       try {
         const processedFiles = {};
         let stepPct = 10;
         const keysToUpload = requiredFilesList.length > 0 ? requiredFilesList : Object.keys(fileInputs);
+        
+        const pctIncrement = 60 / keysToUpload.length;
+
         for (const key of keysToUpload) {
           if (fileInputs[key].files.length > 0) {
             const file = fileInputs[key].files[0];
-            processedFiles[key] = await compressImageFile(file);
-            stepPct += 10;
-            setModal(stepPct, "Memproses Berkas...", `Memproses berkas ${key}...`);
+            processedFiles[key] = await processFile(file);
+            stepPct += pctIncrement;
+            updateProgress(stepPct, "Memproses Dokumen...", `Menyiapkan ${key}...`);
           }
         }
-        setModal(65, "Mengunggah ke Drive...", "Menyimpan berkas ke 6 folder Drive resmi...");
+        
+        updateProgress(80, "Transmisi Ke Server...", "Mentransfer dokumen ke pangkalan Drive resmi...");
+        
         const payload = {
           action: "upload_files",
           code: currentUser.code,
@@ -431,48 +457,65 @@
           delegasi: currentUser.delegasi,
           files: processedFiles
         };
+
         const res = await fetch(CONFIG.SCRIPT_URL, {
           method: "POST",
           body: JSON.stringify(payload)
         });
         const result = await res.json();
+        
         if (result.status === "success") {
-          setModal(100, "Pengiriman Berhasil!", "Seluruh berkas aman tersimpan.");
+          updateProgress(100, "Berhasil!", "Seluruh dokumen telah disimpan.");
           setTimeout(() => {
             modal.classList.remove("active");
             showSuccessUpload();
-          }, 600);
+          }, 800);
         } else {
           throw new Error(result.message || "Gagal menyimpan berkas");
         }
       } catch (err) {
-        ring.className = "progress-ring error";
-        ring.innerHTML = `<i data-lucide="alert-circle" style="width:24px;height:24px;"></i>`;
-        lucide.createIcons();
-        setModal(0, "Gagal Mengunggah", "Terjadi kendala saat mengirim berkas. Silakan coba kembali.");
-        document.getElementById("modal-bar-wrap").style.display = "none";
-        actionsBox.style.display = "block";
+        showAlert("Gagal Mengunggah", "Koneksi terputus saat memindahkan berkas. Pastikan sinyal stabil dan coba lagi.");
       }
     });
+
+    /* TAMPILAN SUDAH PERNAH UPLOAD LENGKAP */
+    function showAlreadyComplete(user, tglLahir, timestampString) {
+      document.getElementById("section-auth").style.display = "none";
+      document.getElementById("section-already-complete").style.display = "block";
+      
+      const timeStr = timestampString || "waktu pendaftaran awal";
+      
+      document.getElementById("text-already-complete").innerHTML = 
+        `Rekan/Rekanita <strong style="color:var(--primary-red);">${user.nama}</strong>, delegasi <strong style="color:var(--primary-navy);">${user.delegasi}</strong>, kelahiran <strong style="color:var(--primary-navy);">${tglLahir}</strong>. Anda sudah mengirimkan seluruh berkas file pada <em>${timeStr}</em>.`;
+
+      const textWA = encodeURIComponent(
+        `Halo Admin LAKMUD IV,\n\nNama saya *${user.nama}* dari delegasi *${user.delegasi}*. Saya ingin memperbaiki data/berkas saya yang sudah terkirim sebelumnya. Mohon bantuannya.`
+      );
+      document.getElementById("link-wa-help").href = `https://wa.me/${CONFIG.WA_ADMIN}?text=${textWA}`;
+    }
+
+    /* TAMPILAN BERHASIL UPLOAD */
     function showSuccessUpload() {
       document.getElementById("section-upload").style.display = "none";
-      const succSec = document.getElementById("section-success");
-      succSec.style.display = "block";
+      document.getElementById("section-success").style.display = "block";
+      
       document.getElementById("success-user-name").textContent = currentUser.nama;
+      
       const textWA = encodeURIComponent(
-        `Assalamu'alaikum Panitia LAKMUD IV PAC IPNU IPPNU Dander,\n\nSaya telah berhasil mengunggah berkas persyaratan:\n` +
+        `Assalamu'alaikum Panitia LAKMUD IV,\n\nSaya telah berhasil mentransmisikan seluruh berkas wajib:\n` +
         `• *Nama:* ${currentUser.nama}\n` +
         `• *Kode Registrasi:* ${currentUser.code}\n` +
         `• *Asal Delegasi:* ${currentUser.delegasi}\n\n` +
-        `Mohon untuk diverifikasi berkas pendaftaran saya. Terima kasih!`
+        `Mohon verifikasi kelengkapan berkas saya. Terima kasih!`
       );
       document.getElementById("link-wa-confirm").href = `https://wa.me/${CONFIG.WA_ADMIN}?text=${textWA}`;
+      
       if (typeof confetti === "function") {
-        confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
+        confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 }, colors: ['#d9230f', '#ff5c00', '#0e2238'] });
       }
-      lucide.createIcons();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
     });
