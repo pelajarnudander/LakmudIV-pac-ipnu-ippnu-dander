@@ -3,522 +3,451 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
-  <title>Pengiriman Berkas — LAKMUD IV PAC DANDER</title>
-  <meta name="theme-color" content="#d9230f" />
+  <title>Portal Transmisi LAKMUD IV</title>
+  
+  <!-- SEO & Theme -->
+  <meta name="theme-color" content="#ffffff" />
+  
+  <!-- Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Icons & Effects -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
   <style>
-    :root {
-      --primary-red: #d9230f;
-      --primary-red-hover: #b51a08;
-      --primary-red-soft: rgba(217, 35, 15, 0.08);
-      --seabank-orange: #ff5c00;
-      --seabank-soft: rgba(255, 92, 0, 0.1);
-      --primary-navy: #0e2238;
-      --primary-navy-soft: rgba(14, 34, 56, 0.06);
-      --gold-accent: #b45309;
-      --bg-body: #ffffff;
-      --bg-surface: #ffffff;
-      --bg-muted: #f8fafc;
-      --border-crisp: #e2e8f0;
-      --text-main: #0f172a;
-      --text-sub: #475569;
-      --text-muted: #64748b;
-      --radius-2xl: 20px;
-      --radius-xl: 14px;
-      --radius-pill: 9999px;
-      --shadow-soft: 0 4px 20px -2px rgba(14, 34, 56, 0.06);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-muted); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
-    
-    /* Layout Responsif Lebar Penuh pada Mobile */
-    .app-viewport { width: 100%; max-width: 520px; flex: 1; display: flex; flex-direction: column; padding: 0; background: var(--bg-surface); box-shadow: var(--shadow-soft); position: relative; }
-    @media (min-width: 521px) { .app-viewport { margin: 2vh auto; border-radius: var(--radius-2xl); border: 1px solid var(--border-crisp); min-height: auto; } }
-    
-    .nav-top { padding: 16px 20px; border-bottom: 1px solid var(--border-crisp); display: flex; align-items: center; background: var(--bg-surface); z-index: 10; border-radius: var(--radius-2xl) var(--radius-2xl) 0 0; }
-    .btn-back { display: inline-flex; align-items: center; gap: 6px; background: transparent; border: none; color: var(--primary-navy); font-size: 0.85rem; font-weight: 800; cursor: pointer; text-decoration: none; padding: 0; }
-    
-    .content-body { padding: 24px 20px; flex: 1; display: flex; flex-direction: column; }
-    
-    .form-group { margin-bottom: 18px; }
-    label { font-size: 0.74rem; font-weight: 800; color: var(--primary-navy); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px; }
-    .input-control { width: 100%; background: var(--bg-muted); border: 1.5px solid var(--border-crisp); border-radius: var(--radius-xl); padding: 14px 16px; font-family: inherit; font-size: 0.88rem; font-weight: 600; color: var(--text-main); outline: none; transition: all 0.2s ease; }
-    .input-control:focus { border-color: var(--primary-navy); background: var(--bg-surface); box-shadow: 0 0 0 4px var(--primary-navy-soft); }
-    
-    .btn-main { width: 100%; background: var(--primary-red); color: #ffffff; border: none; padding: 15px 16px; border-radius: var(--radius-xl); font-family: inherit; font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 8px 24px rgba(217, 35, 15, 0.25); margin-top: 10px; transition: transform 0.15s ease; }
-    .btn-main:active { transform: translateY(2px); }
-    .btn-wa { background: #25d366; box-shadow: 0 8px 24px rgba(37, 211, 102, 0.25); }
-    
-    .user-pill { background: var(--primary-navy-soft); border-radius: var(--radius-xl); padding: 16px; margin-bottom: 20px; }
-    .user-pill-name { font-size: 1rem; font-weight: 800; color: var(--primary-navy); }
-    .user-pill-sub { font-size: 0.78rem; font-weight: 600; color: var(--text-sub); margin-top: 4px; }
-    
-    .upload-item { background: var(--bg-surface); border: 1.5px dashed var(--border-crisp); border-radius: var(--radius-xl); padding: 16px; margin-bottom: 12px; transition: all 0.2s ease; position: relative; overflow: hidden; }
-    .upload-item.filled { border-style: solid; border-color: #059669; background: #ecfdf5; }
-    .upload-title { font-size: 0.8rem; font-weight: 800; color: var(--primary-navy); display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-    .upload-badge { position: absolute; right: 16px; top: 16px; font-size: 0.7rem; font-weight: 800; color: #059669; display: none; align-items: center; gap: 4px; background: #d1fae5; padding: 4px 10px; border-radius: var(--radius-pill); }
-    .upload-item.filled .upload-badge { display: inline-flex; }
-    
-    .file-input { width: 100%; font-size: 0.78rem; font-weight: 600; color: var(--text-sub); margin-top: 6px; }
-    .file-info { font-size: 0.7rem; color: var(--text-muted); margin-top: 6px; background: var(--bg-muted); padding: 6px 10px; border-radius: 6px; display: inline-block; }
-    
-    /* Loading Modal Modern (Tanpa Kotak Kaku) */
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(14, 34, 56, 0.85); backdrop-filter: blur(8px); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 24px; }
-    .modal-backdrop.active { display: flex; }
-    .modern-loading-box { background: transparent; display: flex; flex-direction: column; align-items: center; text-align: center; }
-    
-    .smooth-spinner { width: 64px; height: 64px; border: 4px solid rgba(255, 255, 255, 0.15); border-top-color: var(--seabank-orange); border-right-color: var(--primary-red); border-radius: 50%; animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite; margin-bottom: 24px; }
+    /* SAMA PERSIS SEPERTI MILIK ANDA */
+    :root { --bg-body: #f4f4f5; --bg-surface: #ffffff; --text-primary: #09090b; --text-secondary: #71717a; --accent: #000000; --accent-hover: #27272a; --border: #e4e4e7; --success: #10b981; --danger: #ef4444; --ring: rgba(0, 0, 0, 0.08); --radius-lg: 24px; --radius-md: 16px; --radius-sm: 12px; --shadow-float: 0 20px 40px -15px rgba(0,0,0,0.05); --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--bg-body); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, transparent 70%); }
+    .app-container { width: 100%; min-height: 100vh; display: flex; flex-direction: column; background: var(--bg-surface); }
+    @media (min-width: 1024px) { body { padding: 40px 20px; } .app-container { flex-direction: row; max-width: 1100px; min-height: 650px; height: 70vh; border-radius: var(--radius-lg); box-shadow: var(--shadow-float); overflow: hidden; } .brand-panel { width: 45%; padding: 60px; display: flex !important; } .content-panel { width: 55%; border-radius: 0; } }
+    .brand-panel { background: var(--accent); color: white; display: none; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+    .brand-panel::before { content: ''; position: absolute; inset: 0; background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, transparent 100%); }
+    .brand-logo i { width: 40px; height: 40px; stroke-width: 1.5; }
+    .brand-text h1 { font-size: 2.5rem; font-weight: 700; letter-spacing: -1px; margin-bottom: 12px; line-height: 1.1; }
+    .brand-text p { color: #a1a1aa; font-size: 1rem; line-height: 1.6; }
+    .content-panel { flex: 1; padding: 32px 24px; overflow-y: auto; display: flex; flex-direction: column; }
+    @media (min-width: 1024px) { .content-panel { padding: 60px 48px; } }
+    .mobile-header { margin-bottom: 32px; }
+    @media (min-width: 1024px) { .mobile-header { display: none; } }
+    .mobile-header i { width: 32px; height: 32px; margin-bottom: 16px; color: var(--accent); }
+    .mobile-header h1 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.5px; }
+    .mobile-header p { color: var(--text-secondary); font-size: 0.9rem; margin-top: 8px; }
+    .section { display: none; opacity: 0; animation: fadeInUp 0.6s var(--transition) forwards; }
+    .section.active { display: block; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    .form-group { margin-bottom: 24px; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 8px; color: var(--text-primary); }
+    .form-control { width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.95rem; transition: var(--transition); background: #fafafa; color: var(--text-primary); }
+    .form-control:focus { outline: none; border-color: var(--accent); background: white; box-shadow: 0 0 0 4px var(--ring); }
+    .btn { width: 100%; padding: 16px; border-radius: var(--radius-sm); border: none; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: var(--transition); }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 10px 20px -10px rgba(0,0,0,0.3); }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-primary); }
+    .btn-outline:hover { background: #f4f4f5; }
+    .account-card { display: flex; justify-content: space-between; align-items: center; padding: 18px; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 12px; cursor: pointer; transition: var(--transition); background: white; }
+    .account-card:hover:not(.locked) { border-color: var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .account-card.locked { opacity: 0.5; cursor: not-allowed; background: #fafafa; }
+    .acc-info h4 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+    .acc-info p { font-size: 0.8rem; color: var(--text-secondary); }
+    .upload-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 32px; }
+    @media (min-width: 768px) { .upload-grid { grid-template-columns: 1fr 1fr; } }
+    .file-box { position: relative; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px 16px; text-align: center; transition: var(--transition); background: #fafafa; overflow: hidden; }
+    .file-box:hover { border-color: var(--accent); background: white; }
+    .file-box.filled { border-color: var(--accent); background: #fafafa; }
+    .file-icon { margin-bottom: 12px; color: var(--text-secondary); transition: var(--transition); }
+    .file-box.filled .file-icon { color: var(--accent); transform: scale(1.1); }
+    .file-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
+    .file-name { font-size: 0.75rem; color: var(--text-secondary); display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .file-input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2; }
+    .overlay { position: fixed; inset: 0; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: var(--transition); }
+    .overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-content { text-align: center; transform: translateY(20px); transition: var(--transition); max-width: 320px; padding: 24px; }
+    .overlay.active .modal-content { transform: translateY(0); }
+    .spinner { width: 48px; height: 48px; margin: 0 auto 24px; border: 3px solid rgba(0,0,0,0.1); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    
-    .loading-text { font-size: 1.1rem; font-weight: 800; color: #ffffff; letter-spacing: 0.02em; }
-    .loading-subtext { font-size: 0.85rem; font-weight: 500; color: #cbd5e1; margin-top: 8px; max-width: 260px; line-height: 1.4; }
-    
-    .progress-bar-wrap { width: 220px; height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: var(--radius-pill); overflow: hidden; margin-top: 20px; }
-    .progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--seabank-orange), var(--primary-red)); transition: width 0.3s ease; }
-    
-    /* Modal Khusus Alert */
-    .alert-box { width: 100%; max-width: 340px; background: var(--bg-surface); border-radius: var(--radius-2xl); padding: 26px 20px; text-align: center; display: none; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-    
-    .info-card { background: var(--primary-red-soft); border: 1px dashed rgba(217, 35, 15, 0.3); padding: 20px; border-radius: var(--radius-xl); text-align: center; margin-top: 10px; }
+    .modal-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }
+    .modal-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
+    .result-icon { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; }
+    .icon-success { background: #ecfdf5; color: var(--success); }
+    .icon-error { background: #fef2f2; color: var(--danger); }
   </style>
 </head>
 <body>
 
-  <main class="app-viewport">
-    <div class="nav-top">
-      <button type="button" class="btn-back" id="btn-back">
-        <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
-        <span>Pengiriman Berkas</span>
-      </button>
+  <div class="app-container">
+    <div class="brand-panel">
+      <div class="brand-logo"><i data-lucide="scan-line"></i></div>
+      <div class="brand-text">
+        <h1>Transmisi LAKMUD IV</h1>
+        <p>Sistem Deteksi & Transmisi Berkas Cerdas berstandar keamanan tinggi. Silakan otentikasi identitas Anda.</p>
+      </div>
     </div>
 
-    <div class="content-body">
-      <!-- TAHAP 1: FORM LOGIN/PENGECEKAN -->
-      <section id="section-auth">
-        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 6px;">Autentikasi Delegasi</h2>
-        <p style="font-size: 0.85rem; font-weight: 500; color: var(--text-sub); margin-bottom: 24px; line-height: 1.5;">Masukkan data sesuai saat pendaftaran biodata pertama kali.</p>
-        
+    <div class="content-panel">
+      <div class="mobile-header">
+        <i data-lucide="scan-line"></i>
+        <h1>LAKMUD IV</h1>
+        <p>Sistem Transmisi Berkas Cerdas</p>
+      </div>
+
+      <section id="sec-auth" class="section active">
+        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 24px;">Verifikasi Data</h2>
         <form id="form-auth">
           <div class="form-group">
-            <label for="auth-delegasi">Asal Delegasi / Ranting</label>
-            <input type="text" id="auth-delegasi" class="input-control" placeholder="Contoh: PAC IPNU Dander" required />
+            <label>Nama Lengkap</label>
+            <input type="text" id="auth-nama" class="form-control" placeholder="Sesuai pendaftaran" required autocomplete="off" />
           </div>
           <div class="form-group">
-            <label for="auth-tanggal">Tanggal Lahir Peserta</label>
-            <input type="date" id="auth-tanggal" class="input-control" required />
+            <label>Asal Delegasi / Ranting</label>
+            <input type="text" id="auth-delegasi" class="form-control" placeholder="Contoh: PAC IPNU Dander" required autocomplete="off" />
           </div>
-          <button type="submit" class="btn-main" id="btn-auth" style="margin-top: 32px;">
-            <span>Lanjutkan Unggah Berkas</span>
-            <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+          <div class="form-group">
+            <label>Tanggal Lahir</label>
+            <input type="date" id="auth-tgl" class="form-control" required />
+          </div>
+          <button type="submit" class="btn btn-primary" style="margin-top: 32px;">
+            Sinkronisasi <i data-lucide="arrow-right" style="width: 18px;"></i>
           </button>
         </form>
       </section>
 
-      <!-- TAHAP 2: FORM UNGGAH FILE -->
-      <section id="section-upload" style="display: none;">
-        <div class="user-pill">
-          <div class="user-pill-name" id="display-user-name">Nama Peserta</div>
-          <div class="user-pill-sub" id="display-user-info">Kode Registrasi • Delegasi</div>
+      <section id="sec-multiple" class="section">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;">
+          <button onclick="location.reload()" style="background:none; border:none; cursor:pointer; color:var(--text-secondary);"><i data-lucide="arrow-left"></i></button>
+          <h2 style="font-size: 1.25rem; font-weight: 600;">Pilih Identitas</h2>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5;">
+          Sistem mendeteksi kemiripan data. Pilih akun otentik Anda di bawah ini.
+        </p>
+        <div id="twins-container"></div>
+      </section>
+
+      <section id="sec-upload" class="section">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 32px;">
+          <button onclick="location.reload()" style="background:none; border:none; cursor:pointer; color:var(--text-secondary);"><i data-lucide="arrow-left"></i></button>
+          <div>
+            <h2 style="font-size: 1.25rem; font-weight: 600;">Unggah Berkas</h2>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);" id="upload-user-name">Nama Peserta</p>
+          </div>
         </div>
 
         <form id="form-upload">
-          
-          <!-- Opsional: Pasfoto jika masih diwajibkan (Menerima Gambar) -->
-          <div class="upload-item" id="item-foto">
-            <div class="upload-title"><i data-lucide="camera" style="color: var(--seabank-orange);"></i> 1. Pasfoto Resmi 3x4</div>
-            <span class="upload-badge"><i data-lucide="check" style="width:12px;height:12px;"></i> Siap</span>
-            <input type="file" id="file-foto" class="file-input" accept="image/png, image/jpeg, image/jpg" />
-            <div class="file-info">Format: JPG/PNG.</div>
+          <div class="upload-grid">
+            <div class="file-box" id="box-foto">
+              <i data-lucide="camera" class="file-icon" id="icon-foto" style="width:28px; height:28px; stroke-width:1.5;"></i>
+              <div class="file-title">Pasfoto Resmi</div>
+              <div class="file-name" id="name-foto">Format JPG/PNG</div>
+              <input type="file" class="file-input" id="inp-foto" accept="image/*" />
+            </div>
+            <div class="file-box" id="box-pernyataan">
+              <i data-lucide="file-signature" class="file-icon" id="icon-pernyataan" style="width:28px; height:28px; stroke-width:1.5;"></i>
+              <div class="file-title">Surat Pernyataan</div>
+              <div class="file-name" id="name-pernyataan">Format PDF/Word</div>
+              <input type="file" class="file-input" id="inp-pernyataan" accept=".pdf,.doc,.docx" />
+            </div>
+            <div class="file-box" id="box-kesediaan">
+              <i data-lucide="check-square" class="file-icon" id="icon-kesediaan" style="width:28px; height:28px; stroke-width:1.5;"></i>
+              <div class="file-title">Surat Kesediaan</div>
+              <div class="file-name" id="name-kesediaan">Format PDF/Word</div>
+              <input type="file" class="file-input" id="inp-kesediaan" accept=".pdf,.doc,.docx" />
+            </div>
+            <div class="file-box" id="box-rekomendasi">
+              <i data-lucide="award" class="file-icon" id="icon-rekomendasi" style="width:28px; height:28px; stroke-width:1.5;"></i>
+              <div class="file-title">Surat Delegasi/Tugas</div>
+              <div class="file-name" id="name-rekomendasi">Format PDF/Word</div>
+              <input type="file" class="file-input" id="inp-rekomendasi" accept=".pdf,.doc,.docx" />
+            </div>
+            <div class="file-box" id="box-biodata">
+              <i data-lucide="contact-2" class="file-icon" id="icon-biodata" style="width:28px; height:28px; stroke-width:1.5;"></i>
+              <div class="file-title">Biodata Peserta</div>
+              <div class="file-name" id="name-biodata">Format PDF/Word</div>
+              <input type="file" class="file-input" id="inp-biodata" accept=".pdf,.doc,.docx" />
+            </div>
+            <div class="file-box" id="box-esai">
+              <i data-lucide="book-open" class="file-icon" id="icon-esai" style="width:28px; height:28px; stroke-width:1.5;"></i>
+              <div class="file-title">Naskah Esai</div>
+              <div class="file-name" id="name-esai">Format PDF/Word</div>
+              <input type="file" class="file-input" id="inp-esai" accept=".pdf,.doc,.docx" />
+            </div>
           </div>
-
-          <!-- DOKUMEN WAJIB (HANYA MENERIMA PDF / DOCX) -->
-          <div class="upload-item" id="item-rekom">
-            <div class="upload-title"><i data-lucide="file-text" style="color: var(--primary-navy);"></i> 2. Surat Rekomendasi / Tugas</div>
-            <span class="upload-badge"><i data-lucide="check" style="width:12px;height:12px;"></i> Siap</span>
-            <!-- Input hanya menerima file dokumen -->
-            <input type="file" id="file-rekom" class="file-input" accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
-            <div class="file-info">Format Wajib: PDF / Word.</div>
-          </div>
-
-          <div class="upload-item" id="item-kesediaan">
-            <div class="upload-title"><i data-lucide="file-text" style="color: var(--primary-navy);"></i> 3. Surat Pernyataan Peserta</div>
-            <span class="upload-badge"><i data-lucide="check" style="width:12px;height:12px;"></i> Siap</span>
-            <input type="file" id="file-kesediaan" class="file-input" accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
-            <div class="file-info">Format Wajib: PDF / Word.</div>
-          </div>
-
-          <div class="upload-item" id="item-izin">
-            <div class="upload-title"><i data-lucide="file-text" style="color: var(--primary-navy);"></i> 4. Surat Izin Orang Tua</div>
-            <span class="upload-badge"><i data-lucide="check" style="width:12px;height:12px;"></i> Siap</span>
-            <input type="file" id="file-izin" class="file-input" accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
-            <div class="file-info">Format Wajib: PDF / Word.</div>
-          </div>
-
-          <div class="upload-item" id="item-biodata">
-            <div class="upload-title"><i data-lucide="file-text" style="color: var(--primary-navy);"></i> 5. Form Biodata & Riwayat</div>
-            <span class="upload-badge"><i data-lucide="check" style="width:12px;height:12px;"></i> Siap</span>
-            <input type="file" id="file-biodata" class="file-input" accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
-            <div class="file-info">Format Wajib: PDF / Word.</div>
-          </div>
-
-          <div class="upload-item" id="item-esai">
-            <div class="upload-title"><i data-lucide="book-open" style="color: var(--primary-navy);"></i> 6. Naskah Esai LAKMUD</div>
-            <span class="upload-badge"><i data-lucide="check" style="width:12px;height:12px;"></i> Siap</span>
-            <input type="file" id="file-esai" class="file-input" accept=".pdf, .doc, .docx, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
-            <div class="file-info">Format Wajib: PDF / Word.</div>
-          </div>
-
-          <button type="submit" class="btn-main" id="btn-submit-upload" style="display: none; margin-top: 24px;">
-            <i data-lucide="upload-cloud" style="width: 18px; height: 18px;"></i>
-            <span>Transmisikan Berkas Permanen</span>
+          <button type="submit" class="btn btn-primary" id="btn-submit-upload" style="display: none;">
+            Transmisi Berkas <i data-lucide="upload-cloud" style="width: 18px;"></i>
           </button>
         </form>
       </section>
 
-      <!-- TAHAP 3: SUKSES UPLOAD BARU -->
-      <section id="section-success" style="display: none; text-align: center; padding-top: 40px;">
-        <div style="width: 72px; height: 72px; background: #ecfdf5; border-radius: 50%; color: #059669; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
-          <i data-lucide="check" style="width: 40px; height: 40px; stroke-width: 3;"></i>
+      <section id="sec-result" class="section" style="text-align: center; padding-top: 40px;">
+        <div class="result-icon icon-success" id="res-icon">
+           <i data-lucide="check" style="width: 32px; height: 32px; stroke-width: 3;"></i>
         </div>
-        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--primary-navy);">Berkas Disimpan!</h2>
-        <p style="font-size: 0.88rem; color: var(--text-sub); margin: 8px 0 24px; line-height: 1.5;">
-          Seluruh berkas persyaratan <strong id="success-user-name" style="color: var(--primary-red);"></strong> telah resmi masuk ke pangkalan data Google Drive panitia pelaksana.
-        </p>
-        <a id="link-wa-confirm" href="#" target="_blank" rel="noopener noreferrer" class="btn-main btn-wa" style="text-decoration: none;">
-          <i data-lucide="message-circle" style="width: 18px; height: 18px;"></i>
-          <span>Konfirmasi ke Admin Panitia</span>
-        </a>
+        <h2 id="res-title" style="margin-bottom: 12px; font-weight: 700; font-size: 1.5rem;">Selesai</h2>
+        <p id="res-desc" style="color: var(--text-secondary); margin-bottom: 32px; font-size: 0.95rem; line-height:1.6;"></p>
+        <button class="btn btn-outline" onclick="location.reload()">Selesai & Kembali</button>
       </section>
-
-      <!-- TAHAP 4: NOTIFIKASI SUDAH PERNAH UPLOAD -->
-      <section id="section-already-complete" style="display: none; text-align: center; padding-top: 20px;">
-        <div style="width: 64px; height: 64px; background: var(--bg-muted); border: 2px solid var(--border-crisp); border-radius: 50%; color: var(--seabank-orange); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
-           <i data-lucide="shield-check" style="width: 32px; height: 32px; stroke-width: 2.5;"></i>
-        </div>
-        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--primary-navy);">Data Telah Terkunci</h2>
-        
-        <div class="info-card">
-          <p style="font-size: 0.88rem; font-weight: 600; color: var(--primary-navy); line-height: 1.6; text-align: justify;" id="text-already-complete">
-            Rekan/Rekanita <strong>Nama</strong>, delegasi <strong>PAC</strong>, kelahiran <strong>Tgl</strong>. Anda sudah berhasil mengirim seluruh berkas final pada sistem kami.
-          </p>
-        </div>
-
-        <p style="font-size: 0.8rem; color: var(--text-sub); margin: 20px 0; line-height: 1.5;">
-          Apabila terdapat dokumen yang salah unggah atau tidak sesuai, Anda harus melakukan *reset manual* melalui tim verifikator panitia.
-        </p>
-        
-        <a id="link-wa-help" href="#" target="_blank" rel="noopener noreferrer" class="btn-main" style="text-decoration: none; background: var(--primary-navy); box-shadow: 0 8px 24px rgba(14, 34, 56, 0.2);">
-          <i data-lucide="headphones" style="width: 18px; height: 18px;"></i>
-          <span>Pusat Bantuan & Perbaikan Data</span>
-        </a>
-      </section>
-
     </div>
-  </main>
+  </div>
 
-  <!-- LOADING BACKDROP MODERN -->
-  <div class="modal-backdrop" id="modal">
-    
-    <!-- Animasi Modern Default -->
-    <div class="modern-loading-box" id="loading-view">
-      <div class="smooth-spinner"></div>
-      <div class="loading-text" id="modal-title">Sinkronisasi Data</div>
-      <div class="loading-subtext" id="modal-desc">Mohon tunggu, sistem sedang menyiapkan jalur terenkripsi...</div>
-      <div class="progress-bar-wrap" id="modal-bar-wrap">
-        <div class="progress-bar-fill" id="modal-bar-fill"></div>
+  <div class="overlay" id="overlay">
+    <div class="modal-content" id="modal-loading">
+      <div class="spinner"></div>
+      <div class="modal-title" id="loading-title">Memverifikasi</div>
+      <div class="modal-desc" id="loading-desc">Mohon tunggu sebentar...</div>
+    </div>
+    <div class="modal-content" id="modal-alert" style="display: none; background: white; border-radius: 24px; padding: 32px 24px; box-shadow: var(--shadow-float); border: 1px solid var(--border);">
+      <div class="result-icon icon-error" style="margin-bottom: 16px;">
+        <i data-lucide="alert-circle" style="width: 28px; height: 28px;"></i>
       </div>
+      <div class="modal-title" id="alert-title">Kesalahan</div>
+      <div class="modal-desc" id="alert-desc" style="margin-bottom: 24px;">Data tidak ditemukan.</div>
+      <button class="btn btn-outline" onclick="closeModal()">Mengerti</button>
     </div>
-
-    <!-- Kotak Alert Khusus Error -->
-    <div class="alert-box" id="alert-view">
-      <div style="width: 56px; height: 56px; border-radius: 50%; background: #fef2f2; color: #dc2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
-         <i data-lucide="alert-triangle" style="width: 28px; height: 28px; stroke-width: 2.5;"></i>
-      </div>
-      <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 8px;" id="alert-title">Data Tidak Ditemukan</h3>
-      <p style="font-size: 0.85rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 24px;" id="alert-desc">
-        Kombinasi delegasi dan tanggal lahir salah.
-      </p>
-      <button type="button" class="btn-main" style="background: var(--text-sub); box-shadow: none;" id="btn-close-alert">Kembali & Periksa</button>
-    </div>
-
   </div>
 
   <script>
-    const CONFIG = {
-      // GANTI URL INI DENGAN DEPLOYMENT BARU JIKA BACKEND DIUPDATE
-      SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxJcUFCfA1Vkd8ZZIUp3A15bV-qz4qRZbefoRnE3lBqREAIr_EAG07Jdd44aBRWzYL1kA/exec",
-      WA_ADMIN: "6281234567890"
-    };
+    // --- GANTI URL DI BAWAH INI DENGAN URL DEPLOY YANG BARU ---
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6zjap-UEgb5sEDCIKyyxXefepDqbKg-41MOQEzRUmNkRIakBmr5d4ngBVCgIy-zA2pQ/exec";
 
     let currentUser = null;
-    let requiredFilesList = [];
-    let savedTglInput = "";
-
-    document.getElementById("btn-back").addEventListener("click", () => {
-      location.reload(); // Reset state
-    });
-
-    const modal = document.getElementById("modal");
-    const loadingView = document.getElementById("loading-view");
-    const alertView = document.getElementById("alert-view");
-    const barFill = document.getElementById("modal-bar-fill");
+    let missingList = [];
     
-    function showLoading(title, desc, pct) {
-      modal.classList.add("active");
-      loadingView.style.display = "flex";
-      alertView.style.display = "none";
-      document.getElementById("modal-title").textContent = title;
-      document.getElementById("modal-desc").textContent = desc;
-      barFill.style.width = pct + "%";
+    const ui = {
+      overlay: document.getElementById('overlay'),
+      loading: document.getElementById('modal-loading'),
+      alert: document.getElementById('modal-alert'),
+      sections: ['sec-auth', 'sec-multiple', 'sec-upload', 'sec-result']
+    };
+
+    function switchSection(id) {
+      ui.sections.forEach(sec => {
+        document.getElementById(sec).classList.remove('active');
+        setTimeout(() => document.getElementById(sec).style.display = 'none', 50);
+      });
+      setTimeout(() => {
+        document.getElementById(id).style.display = 'block';
+        setTimeout(() => document.getElementById(id).classList.add('active'), 10);
+      }, 50);
     }
 
-    function updateProgress(pct, title, desc) {
-      barFill.style.width = pct + "%";
-      if(title) document.getElementById("modal-title").textContent = title;
-      if(desc) document.getElementById("modal-desc").textContent = desc;
+    function showLoading(title, desc) {
+      ui.overlay.classList.add('active');
+      ui.loading.style.display = 'block';
+      ui.alert.style.display = 'none';
+      document.getElementById('loading-title').innerText = title;
+      document.getElementById('loading-desc').innerText = desc;
     }
 
     function showAlert(title, desc) {
-      modal.classList.add("active");
-      loadingView.style.display = "none";
-      alertView.style.display = "block";
-      document.getElementById("alert-title").textContent = title;
-      document.getElementById("alert-desc").textContent = desc;
+      ui.overlay.classList.add('active');
+      ui.loading.style.display = 'none';
+      ui.alert.style.display = 'block';
+      document.getElementById('alert-title').innerText = title;
+      document.getElementById('alert-desc').innerText = desc;
     }
 
-    document.getElementById("btn-close-alert").addEventListener("click", () => {
-      modal.classList.remove("active");
-    });
+    function closeModal() { ui.overlay.classList.remove('active'); }
 
-    /* TAHAP 1: PENGECEKAN DATA */
+    // --- FORM 1: AUTH ---
     document.getElementById("form-auth").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const delegasi = document.getElementById("auth-delegasi").value.trim();
-      savedTglInput = document.getElementById("auth-tanggal").value;
-      
-      showLoading("Mencari Data...", "Pengecekan di database server...", 20);
+      const payload = {
+        action: "check_auth",
+        nama: document.getElementById("auth-nama").value,
+        delegasi: document.getElementById("auth-delegasi").value,
+        tanggalLahir: document.getElementById("auth-tgl").value
+      };
+
+      showLoading("Pemindaian Berkas", "Mencocokkan enkripsi data Anda...");
 
       try {
-        const res = await fetch(CONFIG.SCRIPT_URL, {
-          method: "POST",
-          body: JSON.stringify({ action: "check_auth", delegasi: delegasi, tanggalLahir: savedTglInput })
-        });
+        const res = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
         const data = await res.json();
-        
-        updateProgress(100, "Selesai", "Data berhasil diambil.");
-        
-        setTimeout(() => {
-          modal.classList.remove("active");
-          
-          if (data.status === "found") {
-            if (data.isComplete) {
-              // Jika sudah pernah upload lengkap
-              showAlreadyComplete(data.user, savedTglInput, data.timestamp);
-            } else {
-              // Jika belum upload/kurang
-              currentUser = data.user;
-              requiredFilesList = data.missingFiles || [];
-              showUploadSection(currentUser, requiredFilesList);
-            }
-          } else {
-            showAlert("Identitas Tidak Ditemukan", "Asal Delegasi atau Tanggal Lahir tidak cocok dengan database awal. Pastikan tidak ada salah pengetikan nama ranting.");
-          }
-        }, 600);
+        closeModal();
 
-      } catch (err) {
-        showAlert("Gangguan Jaringan", "Gagal menghubungi server database. Pastikan internet Anda stabil.");
+        setTimeout(() => {
+          if (data.status === "not_found") {
+            showAlert("Identitas Tidak Ditemukan", "Pastikan ejaan Nama, Ranting/Delegasi, dan Tanggal Lahir sesuai dengan form pendaftaran awal.");
+          } else if (data.status === "multiple") {
+            renderTwins(data.users);
+          } else if (data.status === "found") {
+            handleFoundUser(data.user, data.isComplete, data.missingFiles);
+          }
+        }, 300);
+
+      } catch(e) {
+        showAlert("Koneksi Terputus", "Sistem gagal terhubung ke server. Periksa jaringan Anda.");
       }
     });
 
-    /* TAHAP 2: MENAMPILKAN FORM UNGGAH */
-    function showUploadSection(user, missingList) {
-      document.getElementById("section-auth").style.display = "none";
-      document.getElementById("section-upload").style.display = "block";
+    // --- MULTIPLE LOGIC ---
+    function renderTwins(users) {
+      const container = document.getElementById("twins-container");
+      container.innerHTML = "";
       
-      document.getElementById("display-user-name").textContent = user.nama;
-      document.getElementById("display-user-info").textContent = `${user.code} • ${user.delegasi}`;
-      
-      const allKeys = ["foto", "rekom", "biodata", "kesediaan", "izin", "esai"];
-      allKeys.forEach(k => {
-        const itemEl = document.getElementById(`item-${k}`);
-        const inputEl = document.getElementById(`file-${k}`);
-        if (missingList.includes(k)) {
-          itemEl.style.display = "block";
-          inputEl.required = true;
+      users.forEach(u => {
+        const card = document.createElement("div");
+        card.className = `account-card ${u.isComplete ? 'locked' : ''}`;
+        
+        const statusHtml = u.isComplete 
+          ? `<div style="color:var(--text-secondary);"><i data-lucide="lock" style="width:16px;"></i></div>`
+          : `<div style="color:var(--accent);"><i data-lucide="chevron-right"></i></div>`;
+
+        card.innerHTML = `
+          <div class="acc-info">
+            <h4>${u.nama}</h4>
+            <p>${u.code} • ${u.delegasi}</p>
+          </div>
+          ${statusHtml}
+        `;
+
+        if (!u.isComplete) {
+          card.onclick = () => handleFoundUser(u, false, u.missingFiles);
         } else {
-          itemEl.style.display = "none";
-          inputEl.required = false;
+          card.onclick = () => showAlert("Berkas Terkunci", "Berkas untuk identitas ini telah lengkap disubmit sebelumnya.");
         }
+        
+        container.appendChild(card);
       });
-      checkAllFilesReady();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      lucide.createIcons();
+      switchSection("sec-multiple");
     }
 
-    /* SISTEM DETEKSI INPUT FILE & DOKUMEN */
-    const fileInputs = {
-      foto: document.getElementById("file-foto"),
-      rekom: document.getElementById("file-rekom"),
-      biodata: document.getElementById("file-biodata"),
-      kesediaan: document.getElementById("file-kesediaan"),
-      izin: document.getElementById("file-izin"),
-      esai: document.getElementById("file-esai")
+    function handleFoundUser(user, isComplete, missing) {
+      if (isComplete) {
+        document.getElementById('res-icon').innerHTML = `<i data-lucide="shield-check" style="width:32px; stroke-width:2.5;"></i>`;
+        document.getElementById('res-title').innerText = "Data Terlindungi";
+        document.getElementById('res-desc').innerHTML = `Halo <strong>${user.nama}</strong>, sistem mencatat bahwa seluruh persyaratan berkas Anda <strong>telah lengkap dan divalidasi</strong>.`;
+        switchSection("sec-result");
+        lucide.createIcons();
+      } else {
+        currentUser = user;
+        missingList = missing;
+        document.getElementById("upload-user-name").innerText = `${user.nama} • ${user.code}`;
+        setupUploadForm();
+        switchSection("sec-upload");
+      }
+    }
+
+    // DISAMAKAN DENGAN DI SCRIPT GAS
+    const allKeys = ["foto", "pernyataan", "kesediaan", "rekomendasi", "biodata", "esai"];
+    
+    function setupUploadForm() {
+      allKeys.forEach(k => {
+        const box = document.getElementById(`box-${k}`);
+        const inp = document.getElementById(`inp-${k}`);
+        if (!missingList || missingList.includes(k)) {
+          box.style.display = "block";
+          inp.required = true;
+        } else {
+          box.style.display = "none";
+          inp.required = false;
+        }
+      });
+      checkAllFiles();
+    }
+
+    const iconMap = {
+      'foto': 'camera', 'pernyataan': 'file-signature', 'kesediaan': 'check-square',
+      'rekomendasi': 'award', 'biodata': 'contact-2', 'esai': 'book-open'
     };
 
-    Object.keys(fileInputs).forEach(key => {
-      const input = fileInputs[key];
-      const itemBox = document.getElementById(`item-${key}`);
-      input.addEventListener("change", () => {
-        if (input.files.length > 0) {
-          itemBox.classList.add("filled");
+    allKeys.forEach(key => {
+      document.getElementById(`inp-${key}`).addEventListener("change", function() {
+        const box = document.getElementById(`box-${key}`);
+        const nameEl = document.getElementById(`name-${key}`);
+        const icon = document.getElementById(`icon-${key}`);
+        
+        if (this.files.length > 0) {
+          box.classList.add("filled");
+          nameEl.innerText = this.files[0].name;
+          icon.setAttribute("data-lucide", "check-circle-2");
         } else {
-          itemBox.classList.remove("filled");
+          box.classList.remove("filled");
+          nameEl.innerText = "Format PDF/Word/JPG";
+          icon.setAttribute("data-lucide", iconMap[key]);
         }
-        checkAllFilesReady();
+        lucide.createIcons();
+        checkAllFiles();
       });
     });
 
-    function checkAllFilesReady() {
-      const neededInputs = requiredFilesList.map(k => fileInputs[k]).filter(Boolean);
-      const allReady = neededInputs.length > 0 && neededInputs.every(inp => inp.files.length > 0);
-      document.getElementById("btn-submit-upload").style.display = allReady ? "flex" : "none";
+    function checkAllFiles() {
+      const needs = (missingList || allKeys).map(k => document.getElementById(`inp-${k}`)).filter(i => i.required);
+      const ready = needs.length > 0 && needs.every(i => i.files.length > 0);
+      document.getElementById("btn-submit-upload").style.display = ready ? "flex" : "none";
     }
 
-    // Fungsi memproses file (Bypass kompresi jika itu PDF/Word)
     function processFile(file) {
       return new Promise((resolve) => {
-        // Jika file adalah PDF / Word / Bukan gambar, JANGAN KOMPRESI, langsung konversi ke Base64
         if (!file.type.startsWith("image/")) {
-          const reader = new FileReader();
-          reader.onload = () => resolve({
-            name: file.name,
-            type: file.type || "application/octet-stream",
-            base64: reader.result.split(",")[1]
-          });
-          reader.readAsDataURL(file);
+          const r = new FileReader();
+          r.onload = () => resolve({ name: file.name, type: file.type, base64: r.result.split(",")[1] });
+          r.readAsDataURL(file);
           return;
         }
-        
-        // Jika file adalah gambar (Pasfoto), Lakukan Kompresi Ringan
         const img = new Image();
-        const reader = new FileReader();
-        reader.onload = (e) => {
+        const r = new FileReader();
+        r.onload = (e) => {
           img.src = e.target.result;
           img.onload = () => {
             const canvas = document.createElement("canvas");
-            const maxWidth = 1000;
             let w = img.width, h = img.height;
-            if (w > maxWidth) { h = Math.round((h * maxWidth) / w); w = maxWidth; }
+            if (w > 1000) { h = Math.round((h * 1000) / w); w = 1000; }
             canvas.width = w; canvas.height = h;
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, w, h);
-            resolve({
-              name: file.name.replace(/\.[^.]+$/, ".jpg"),
-              type: "image/jpeg",
-              base64: canvas.toDataURL("image/jpeg", 0.85).split(",")[1]
-            });
+            resolve({ name: file.name.replace(/\.[^.]+$/, ".jpg"), type: "image/jpeg", base64: canvas.toDataURL("image/jpeg", 0.85).split(",")[1] });
           };
         };
-        reader.readAsDataURL(file);
+        r.readAsDataURL(file);
       });
     }
 
-    /* PENGIRIMAN DATA UPLOAD */
     document.getElementById("form-upload").addEventListener("submit", async (e) => {
       e.preventDefault();
-      
-      showLoading("Menyiapkan Berkas...", "Membaca dan mengenkripsi dokumen...", 10);
+      showLoading("Transmisi Sedang Berjalan", "Mengamankan berkas ke dalam server data...");
       
       try {
-        const processedFiles = {};
-        let stepPct = 10;
-        const keysToUpload = requiredFilesList.length > 0 ? requiredFilesList : Object.keys(fileInputs);
+        let processed = {};
+        const uploadKeys = missingList || allKeys;
         
-        const pctIncrement = 60 / keysToUpload.length;
-
-        for (const key of keysToUpload) {
-          if (fileInputs[key].files.length > 0) {
-            const file = fileInputs[key].files[0];
-            processedFiles[key] = await processFile(file);
-            stepPct += pctIncrement;
-            updateProgress(stepPct, "Memproses Dokumen...", `Menyiapkan ${key}...`);
-          }
+        for (const k of uploadKeys) {
+          const inp = document.getElementById(`inp-${k}`);
+          if (inp && inp.files.length > 0) processed[k] = await processFile(inp.files[0]);
         }
         
-        updateProgress(80, "Transmisi Ke Server...", "Mentransfer dokumen ke pangkalan Drive resmi...");
-        
-        const payload = {
-          action: "upload_files",
-          code: currentUser.code,
-          nama: currentUser.nama,
-          delegasi: currentUser.delegasi,
-          files: processedFiles
-        };
-
-        const res = await fetch(CONFIG.SCRIPT_URL, {
+       const res = await fetch(SCRIPT_URL, {
           method: "POST",
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ 
+            action: "upload_files", 
+            code: currentUser.code, 
+            nama: currentUser.nama, 
+            delegasi: currentUser.delegasi,
+            files: processed 
+          })
         });
         const result = await res.json();
         
         if (result.status === "success") {
-          updateProgress(100, "Berhasil!", "Seluruh dokumen telah disimpan.");
+          closeModal();
           setTimeout(() => {
-            modal.classList.remove("active");
-            showSuccessUpload();
-          }, 800);
-        } else {
-          throw new Error(result.message || "Gagal menyimpan berkas");
-        }
-      } catch (err) {
-        showAlert("Gagal Mengunggah", "Koneksi terputus saat memindahkan berkas. Pastikan sinyal stabil dan coba lagi.");
+            document.getElementById('res-icon').innerHTML = `<i data-lucide="check" style="width:32px; stroke-width:3;"></i>`;
+            document.getElementById('res-title').innerText = "Transmisi Berhasil";
+            document.getElementById('res-desc').innerHTML = `Luar biasa, <strong>${currentUser.nama}</strong>. Seluruh berkas persyaratan Anda telah disinkronisasi ke dalam Pangkalan Data.`;
+            switchSection("sec-result");
+            lucide.createIcons();
+            confetti({ particleCount: 100, spread: 70, colors: ['#000000', '#71717a', '#d4d4d8'] });
+          }, 400);
+        } else throw new Error();
+      } catch(err) {
+        showAlert("Transmisi Gagal", "Terjadi gangguan jaringan saat pengiriman. Harap perkecil ukuran file atau coba lagi.");
       }
     });
 
-    /* TAMPILAN SUDAH PERNAH UPLOAD LENGKAP */
-    function showAlreadyComplete(user, tglLahir, timestampString) {
-      document.getElementById("section-auth").style.display = "none";
-      document.getElementById("section-already-complete").style.display = "block";
-      
-      const timeStr = timestampString || "waktu pendaftaran awal";
-      
-      document.getElementById("text-already-complete").innerHTML = 
-        `Rekan/Rekanita <strong style="color:var(--primary-red);">${user.nama}</strong>, delegasi <strong style="color:var(--primary-navy);">${user.delegasi}</strong>, kelahiran <strong style="color:var(--primary-navy);">${tglLahir}</strong>. Anda sudah mengirimkan seluruh berkas file pada <em>${timeStr}</em>.`;
-
-      const textWA = encodeURIComponent(
-        `Halo Admin LAKMUD IV,\n\nNama saya *${user.nama}* dari delegasi *${user.delegasi}*. Saya ingin memperbaiki data/berkas saya yang sudah terkirim sebelumnya. Mohon bantuannya.`
-      );
-      document.getElementById("link-wa-help").href = `https://wa.me/${CONFIG.WA_ADMIN}?text=${textWA}`;
-    }
-
-    /* TAMPILAN BERHASIL UPLOAD */
-    function showSuccessUpload() {
-      document.getElementById("section-upload").style.display = "none";
-      document.getElementById("section-success").style.display = "block";
-      
-      document.getElementById("success-user-name").textContent = currentUser.nama;
-      
-      const textWA = encodeURIComponent(
-        `Assalamu'alaikum Panitia LAKMUD IV,\n\nSaya telah berhasil mentransmisikan seluruh berkas wajib:\n` +
-        `• *Nama:* ${currentUser.nama}\n` +
-        `• *Kode Registrasi:* ${currentUser.code}\n` +
-        `• *Asal Delegasi:* ${currentUser.delegasi}\n\n` +
-        `Mohon verifikasi kelengkapan berkas saya. Terima kasih!`
-      );
-      document.getElementById("link-wa-confirm").href = `https://wa.me/${CONFIG.WA_ADMIN}?text=${textWA}`;
-      
-      if (typeof confetti === "function") {
-        confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 }, colors: ['#d9230f', '#ff5c00', '#0e2238'] });
-      }
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      lucide.createIcons();
-    });
+    document.addEventListener("DOMContentLoaded", () => { lucide.createIcons(); });
   </script>
 </body>
 </html>
