@@ -11,14 +11,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Lucide Icons & Confetti -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Lucide Icons & Confetti (Pinned Version) -->
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     :root {
-      --primary: #101828; /* Midnight Blue/Dark */
-      --brand: #d9230f; /* IPNU Red */
+      --primary: #101828;
+      --brand: #d9230f;
       --brand-soft: rgba(217, 35, 15, 0.08);
       --success: #027A48;
       --success-bg: #ECFDF3;
@@ -29,7 +29,6 @@
       --radius-lg: 16px;
       --radius-md: 12px;
       --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.1), 0 1px 2px rgba(16, 24, 40, 0.06);
-      --shadow-lg: 0 12px 24px -4px rgba(16, 24, 40, 0.08), 0 4px 8px -4px rgba(16, 24, 40, 0.03);
       --glass-bg: rgba(255, 255, 255, 0.85);
     }
 
@@ -47,9 +46,8 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* KELAS UTILITAS & GLASSMORPHISM */
-    .app-container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 24px; }
-    
+    .app-container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 20px; }
+
     .glass-card {
       background: var(--glass-bg);
       backdrop-filter: blur(12px);
@@ -60,7 +58,6 @@
       box-shadow: var(--shadow-sm);
     }
 
-    /* HEADER */
     .header-pills {
       display: inline-flex; align-items: center; gap: 8px;
       background: #fff; padding: 6px 14px; border-radius: 99px;
@@ -71,14 +68,18 @@
     .page-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 6px; }
     .page-subtitle { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
 
-    /* FORM INPUT MODERN */
+    .step-indicator {
+      display: flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 700; color: var(--brand); margin-top: 6px;
+    }
+
     .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
     .form-label { display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.03em; }
-    
+    .field-hint { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; }
+
     .input-wrapper { position: relative; display: flex; align-items: center; }
-    .input-wrapper i { position: absolute; right: 14px; width: 16px; height: 16px; color: var(--success); opacity: 0; transition: opacity 0.3s; }
+    .input-wrapper i { position: absolute; right: 14px; width: 16px; height: 16px; color: var(--success); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
     .input-wrapper.valid i { opacity: 1; }
-    .input-wrapper.valid .form-control { border-color: var(--success); background: var(--success-bg); }
+    .input-wrapper.valid .form-control { border-color: var(--success); background: var(--success-bg); padding-right: 38px; }
 
     .form-control {
       width: 100%; min-height: 48px;
@@ -87,10 +88,10 @@
       font-size: 0.9rem; font-weight: 600; color: var(--text-main);
       transition: all 0.2s ease; outline: none; appearance: none;
     }
+    .form-control.visual-capitalize { text-transform: capitalize; }
     .form-control:focus { border-color: var(--brand); box-shadow: 0 0 0 4px var(--brand-soft); }
-    textarea.form-control { padding-top: 12px; resize: none; }
-    
-    /* SHIRT PICKER */
+    textarea.form-control { padding-top: 12px; padding-bottom: 12px; resize: none; }
+
     .shirt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
     .shirt-btn {
       height: 48px; border: 1.5px solid var(--border); border-radius: var(--radius-md);
@@ -99,7 +100,6 @@
     }
     .shirt-btn.active { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
 
-    /* BUTTONS */
     .btn-primary {
       width: 100%; height: 52px; background: var(--brand); color: #fff;
       border: none; border-radius: var(--radius-md); font-size: 0.95rem; font-weight: 700;
@@ -110,52 +110,54 @@
     .btn-primary:disabled { background: #F2F4F7; color: #98A2B3; box-shadow: none; cursor: not-allowed; }
 
     .btn-outline {
-      width: 100%; height: 48px; background: #fff; border: 1.5px solid var(--border);
+      width: 100%; height: 52px; background: #fff; border: 1.5px solid var(--border);
       color: var(--text-main); border-radius: var(--radius-md); font-weight: 700;
-      font-size: 0.85rem; display: inline-flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer;
+      font-size: 0.9rem; display: inline-flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer;
     }
 
-    /* UPLOAD & SCANNER AREA */
     .upload-box {
       border: 2px dashed var(--border); border-radius: var(--radius-md);
       background: #F9FAFB; padding: 24px; text-align: center; cursor: pointer;
-      position: relative; overflow: hidden; margin-bottom: 16px; transition: border 0.3s;
+      position: relative; overflow: hidden; margin-bottom: 12px; transition: border 0.3s;
     }
-    .upload-box.has-file { border: 2px solid var(--success); padding: 0; background: #000; }
-    .preview-img { width: 100%; height: 200px; object-fit: cover; display: none; opacity: 0.8; }
-    
+    .upload-box.has-file { border: 2px solid var(--success); padding: 0; background: #111; }
+    .preview-img { width: 100%; max-height: 220px; object-fit: contain; display: none; }
+    .reupload-badge {
+      display: none; position: absolute; bottom: 10px; right: 10px;
+      background: rgba(16, 24, 40, 0.85); color: #fff; font-size: 0.72rem; font-weight: 700;
+      padding: 6px 12px; border-radius: 99px;
+    }
+    .upload-box.has-file .reupload-badge { display: inline-flex; align-items: center; gap: 4px; }
+
     .trust-badge {
       display: flex; align-items: flex-start; gap: 8px; background: #F0F9FF; padding: 12px;
-      border-radius: 8px; margin-top: 16px; border: 1px solid #B9E6FE;
+      border-radius: 8px; margin-top: 8px; border: 1px solid #B9E6FE;
     }
-    .trust-badge p { font-size: 0.7rem; color: #026AA2; line-height: 1.4; font-weight: 600; }
+    .trust-badge p { font-size: 0.72rem; color: #026AA2; line-height: 1.45; font-weight: 600; }
 
-    /* INTEGRITY CHECKBOX */
     .integrity-box {
       display: flex; gap: 12px; padding: 16px; background: var(--brand-soft);
-      border-radius: var(--radius-md); border: 1px solid rgba(217,35,15,0.2); margin: 24px 0;
+      border-radius: var(--radius-md); border: 1px solid rgba(217,35,15,0.2); margin: 20px 0 24px;
     }
     .integrity-box input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--brand); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
-    .integrity-box label { font-size: 0.8rem; font-weight: 600; line-height: 1.5; color: var(--primary); cursor: pointer; }
+    .integrity-box label { font-size: 0.78rem; font-weight: 600; line-height: 1.5; color: var(--primary); cursor: pointer; }
 
-    /* SCANNER MODAL (DANA STYLE) */
+    /* SCANNER MODAL */
     .scanner-modal {
       position: fixed; inset: 0; background: #000; z-index: 9999; display: none; flex-direction: column;
     }
     .scanner-modal.active { display: flex; }
     .video-container { position: relative; flex: 1; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-    #video-stream { width: 100%; height: 100%; object-fit: cover; }
-    
-    /* Efek Gelap diluar bingkai KTP */
+    #video-stream { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+
     .scanner-overlay {
       position: absolute; inset: 0; pointer-events: none;
-      background: rgba(0,0,0,0.65);
       display: flex; flex-direction: column; justify-content: center; align-items: center;
     }
     .cutout-frame {
-      width: 90%; max-width: 400px; aspect-ratio: 1.6/1; /* Proporsi KTP/KK */
+      width: 90%; max-width: 400px; aspect-ratio: 1.58 / 1;
       border: 3px solid #fff; border-radius: 12px; position: relative;
-      box-shadow: 0 0 0 9999px rgba(0,0,0,0.65); /* Trik CSS untuk menggelapkan sekeliling */
+      box-shadow: 0 0 0 9999px rgba(0,0,0,0.68);
       background: transparent; overflow: hidden;
     }
     .laser-line {
@@ -167,86 +169,173 @@
     .scanner-controls { padding: 24px; background: #111; display: flex; justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom, 24px); }
     .btn-capture { width: 64px; height: 64px; border-radius: 50%; background: #fff; border: 4px solid #aaa; display: flex; justify-content: center; align-items: center; cursor: pointer; }
 
-    /* PROGRESSIVE LOADING MODAL */
+    /* LOADING MODAL */
     .loading-modal {
-      position: fixed; inset: 0; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px);
+      position: fixed; inset: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px);
       z-index: 10000; display: none; flex-direction: column; align-items: center; justify-content: center;
     }
     .loading-modal.active { display: flex; }
-    .loader-bar { width: 200px; height: 6px; background: #E4E7EC; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
-    .loader-progress { width: 0%; height: 100%; background: var(--brand); transition: width 1s ease; }
-    .loader-text { font-size: 0.95rem; font-weight: 700; color: var(--primary); text-align: center; max-width: 250px; }
+    .loader-bar { width: 220px; height: 6px; background: #E4E7EC; border-radius: 10px; overflow: hidden; margin-bottom: 18px; }
+    .loader-progress { width: 0%; height: 100%; background: var(--brand); transition: width 0.6s ease; }
+    .loader-text { font-size: 0.92rem; font-weight: 700; color: var(--primary); text-align: center; max-width: 260px; }
 
-    /* BOTTOM SHEET MODAL (Untuk Alerts & Draft) */
+    /* BOTTOM SHEET MODAL */
     .bottom-sheet-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99990; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
     .bottom-sheet {
       position: fixed; bottom: -100%; left: 0; right: 0; background: #fff;
-      border-radius: 24px 24px 0 0; padding: 32px 24px max(24px, env(safe-area-inset-bottom));
-      z-index: 99991; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      display: flex; flex-direction: column; gap: 16px;
+      border-radius: 24px 24px 0 0; padding: 28px 24px max(24px, env(safe-area-inset-bottom));
+      z-index: 99991; transition: bottom 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin: 0 auto;
     }
     .bottom-sheet-overlay.active { opacity: 1; pointer-events: auto; }
     .bottom-sheet.active { bottom: 0; }
+
+    .code-badge {
+      display: inline-block; margin-top: 14px; padding: 10px 18px;
+      background: #F2F4F7; border: 1.5px dashed #98A2B3; border-radius: 10px;
+      font-size: 1rem; font-weight: 800; letter-spacing: 0.04em; color: var(--primary);
+    }
 
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
-  <!-- STEP 1: FORM IDENTITAS -->
+  <!-- STEP 1 (DEPAN): UPLOAD PASFOTO 3:4, SCAN KK & DATA KEPENDUDUKAN -->
   <main class="app-container" id="step-1">
     <div>
       <div class="header-pills"><i data-lucide="shield-check" style="width:14px;"></i> Pendaftaran Resmi</div>
       <h1 class="page-title">Formulir LAKMUD IV</h1>
-      <p class="page-subtitle">Sistem Registrasi Pintar PAC IPNU IPPNU DANDER.</p>
+      <p class="page-subtitle">Sistem Registrasi Kader PAC IPNU IPPNU DANDER.</p>
+      <div class="step-indicator">Langkah 1 dari 2 • Unggah Berkas & Data KK</div>
     </div>
 
-    <form id="form-data-diri" class="glass-card">
+    <!-- PASFOTO 3:4 -->
+    <div class="glass-card">
+      <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 4px;">1. Pasfoto Merah (3x4)</h3>
+      <p class="field-hint" style="margin-bottom: 12px;">Gunakan foto resmi berlatar merah yang jelas dan tidak buram.</p>
+      <div class="upload-box" id="box-foto">
+        <img id="prev-foto" class="preview-img" alt="Preview Pasfoto">
+        <span class="reupload-badge"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i> Ganti Foto</span>
+        <div id="ph-foto">
+          <i data-lucide="user" style="color:var(--text-muted); width:32px; height:32px; margin-bottom:8px;"></i>
+          <p style="font-size: 0.82rem; font-weight: 700;">Ketuk untuk Pilih Pasfoto</p>
+        </div>
+      </div>
+      <input type="file" id="file-foto" accept="image/jpeg,image/png,image/webp" class="hidden">
+    </div>
+
+    <!-- KK SCANNER -->
+    <div class="glass-card">
+      <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 4px;">2. Scan Kartu Keluarga (KK)</h3>
+      <p class="field-hint" style="margin-bottom: 12px;">Pastikan tulisan NIK dan nama pada KK terbaca jelas dalam bingkai.</p>
+      <div class="upload-box" id="box-kk">
+        <img id="prev-kk" class="preview-img" alt="Preview Kartu Keluarga">
+        <span class="reupload-badge"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i> Scan Ulang</span>
+        <div id="ph-kk">
+          <i data-lucide="scan-line" style="color:var(--brand); width:32px; height:32px; margin-bottom:8px;"></i>
+          <p style="font-size: 0.82rem; font-weight: 700;">Buka Smart Scanner KK</p>
+        </div>
+      </div>
+      <input type="file" id="file-kk" accept="image/jpeg,image/png,image/webp" class="hidden">
+
+      <div class="trust-badge">
+        <i data-lucide="lock" style="width: 16px; color: #026AA2; flex-shrink: 0; margin-top: 2px;"></i>
+        <p>Data dikirim melalui jalur aman HTTPS dan dokumen KK disimpan terbatas khusus untuk verifikasi panitia kaderisasi.</p>
+      </div>
+    </div>
+
+    <!-- DATA KEPENDUDUKAN (MUNCUL SETELAH KK DIUNGGAH) -->
+    <form id="form-kependudukan" class="glass-card hidden" novalidate>
+      <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 16px; color: var(--brand);">3. Data Kependudukan (Sesuai KK)</h3>
+
       <div class="form-group">
-        <label class="form-label">Nama Lengkap Sesuai KTP/KK</label>
+        <label class="form-label" for="in_nik">NIK Peserta (16 Digit)</label>
+        <div class="input-wrapper" id="wrap-nik">
+          <input type="text" id="in_nik" class="form-control" placeholder="3522 xxxx xxxx xxxx" inputmode="numeric" maxlength="19" required>
+          <i data-lucide="check-circle-2"></i>
+        </div>
+        <span class="field-hint" id="hint-nik">Masukkan 16 digit NIK sesuai Kartu Keluarga.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="in_ayah">Nama Ayah Kandung</label>
+        <div class="input-wrapper" id="wrap-ayah">
+          <input type="text" id="in_ayah" class="form-control visual-capitalize" placeholder="Nama lengkap ayah sesuai KK" required>
+          <i data-lucide="check-circle-2"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="in_ibu">Nama Ibu Kandung</label>
+        <div class="input-wrapper" id="wrap-ibu">
+          <input type="text" id="in_ibu" class="form-control visual-capitalize" placeholder="Nama lengkap ibu sesuai KK" required>
+          <i data-lucide="check-circle-2"></i>
+        </div>
+      </div>
+
+      <button type="button" class="btn-primary" id="btn-to-step2" disabled>
+        Simpan &amp; Lanjutkan ke Biodata <i data-lucide="arrow-right" style="width: 18px;"></i>
+      </button>
+    </form>
+  </main>
+
+  <!-- STEP 2 (SESUDAH): PENGISIAN BIODATA & KIRIM SEMUA -->
+  <main class="app-container hidden" id="step-2">
+    <div>
+      <div class="header-pills"><i data-lucide="user-check" style="width:14px;"></i> Biodata Peserta</div>
+      <h1 class="page-title">Lengkapi Biodata</h1>
+      <p class="page-subtitle">Berkas sudah tersimpan sementara. Lengkapi biodata di bawah lalu kirim pendaftaran.</p>
+      <div class="step-indicator">Langkah 2 dari 2 • Biodata &amp; Pengiriman</div>
+    </div>
+
+    <form id="form-data-diri" class="glass-card" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="in_nama">Nama Lengkap Sesuai KTP/KK</label>
         <div class="input-wrapper" id="wrap-nama">
-          <input type="text" id="in_nama" class="form-control auto-capitalize" placeholder="Contoh: Ahmad Maulana" autocomplete="name" required>
+          <input type="text" id="in_nama" class="form-control visual-capitalize" placeholder="Contoh: Ahmad Maulana" autocomplete="name" required>
           <i data-lucide="check-circle-2"></i>
         </div>
       </div>
 
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <div class="form-group">
-          <label class="form-label">Tempat Lahir</label>
+          <label class="form-label" for="in_tplahir">Tempat Lahir</label>
           <div class="input-wrapper" id="wrap-tplahir">
-            <input type="text" id="in_tplahir" class="form-control auto-capitalize" placeholder="Bojonegoro" required>
+            <input type="text" id="in_tplahir" class="form-control visual-capitalize" placeholder="Bojonegoro" required>
             <i data-lucide="check-circle-2"></i>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Tanggal Lahir</label>
+          <label class="form-label" for="in_tgl">Tanggal Lahir</label>
           <div class="input-wrapper" id="wrap-tgl">
             <input type="date" id="in_tgl" class="form-control" required>
             <i data-lucide="check-circle-2"></i>
           </div>
         </div>
       </div>
+      <p class="field-hint" id="hint-tgl" style="margin-top: -12px; margin-bottom: 18px;">Khusus peserta berusia 16 s/d 23 tahun.</p>
 
       <div class="form-group">
-        <label class="form-label">Nomor WhatsApp Aktif</label>
+        <label class="form-label" for="in_wa">Nomor WhatsApp Aktif</label>
         <div class="input-wrapper" id="wrap-wa">
-          <input type="tel" id="in_wa" class="form-control" placeholder="08xx xxxx xxxx" inputmode="numeric" required>
+          <input type="tel" id="in_wa" class="form-control" placeholder="08xx xxxx xxxx" inputmode="numeric" maxlength="18" required>
           <i data-lucide="check-circle-2"></i>
         </div>
       </div>
 
       <div class="form-group">
-        <label class="form-label">Asal Delegasi / Pimpinan</label>
+        <label class="form-label" for="in_delegasi">Asal Delegasi / Pimpinan</label>
         <div class="input-wrapper" id="wrap-delegasi">
-          <input type="text" id="in_delegasi" class="form-control auto-capitalize" placeholder="PR IPNU Desa X" required>
+          <input type="text" id="in_delegasi" class="form-control visual-capitalize" placeholder="PR IPNU Desa X" required>
           <i data-lucide="check-circle-2"></i>
         </div>
       </div>
 
       <div class="form-group">
-        <label class="form-label">Alamat Lengkap</label>
+        <label class="form-label" for="in_alamat">Alamat Lengkap</label>
         <div class="input-wrapper" id="wrap-alamat">
-          <textarea id="in_alamat" class="form-control auto-capitalize" rows="2" placeholder="Desa, RT/RW, Kecamatan" required></textarea>
+          <textarea id="in_alamat" class="form-control visual-capitalize" rows="2" placeholder="Desa, RT/RW, Kecamatan" required></textarea>
           <i data-lucide="check-circle-2"></i>
         </div>
       </div>
@@ -261,137 +350,63 @@
           <button type="button" class="shirt-btn" data-size="XXL">XXL</button>
           <button type="button" class="shirt-btn" data-size="Custom">Lainnya</button>
         </div>
-        <input type="text" id="in_kaos_custom" class="form-control auto-capitalize hidden" style="margin-top: 8px;" placeholder="Tulis Ukuran (Contoh: 3XL)">
+        <input type="text" id="in_kaos_custom" class="form-control visual-capitalize hidden" style="margin-top: 8px;" placeholder="Tulis Ukuran (Contoh: 3XL)">
       </div>
 
-      <button type="button" class="btn-primary" id="btn-next" disabled>
-        Lanjutkan ke Upload Dokumen <i data-lucide="arrow-right" style="width: 18px;"></i>
-      </button>
-    </form>
-  </main>
-
-  <!-- STEP 2: UPLOAD DOKUMEN & NIK -->
-  <main class="app-container hidden" id="step-2">
-    <div>
-      <div class="header-pills"><i data-lucide="camera" style="width:14px;"></i> Validasi Kependudukan</div>
-      <h1 class="page-title">Pindai Dokumen</h1>
-      <p class="page-subtitle">Sistem akan meminta akses kamera untuk memindai dokumen asli.</p>
-    </div>
-
-    <!-- PASFOTO -->
-    <div class="glass-card" style="margin-bottom: 16px;">
-      <h3 style="font-size: 0.9rem; margin-bottom: 12px;">1. Pasfoto Merah (3x4)</h3>
-      <div class="upload-box" id="box-foto">
-        <img id="prev-foto" class="preview-img">
-        <div id="ph-foto">
-          <i data-lucide="user" style="color:var(--text-muted); width:32px; height:32px; margin-bottom:8px;"></i>
-          <p style="font-size: 0.8rem; font-weight: 600;">Ketuk untuk buka Kamera/Galeri</p>
-        </div>
-      </div>
-      <input type="file" id="file-foto" accept="image/*" class="hidden">
-    </div>
-
-    <!-- KK SCANNER -->
-    <div class="glass-card">
-      <h3 style="font-size: 0.9rem; margin-bottom: 12px;">2. Scan Kartu Keluarga (KK)</h3>
-      <div class="upload-box" id="box-kk" onclick="openScanner()">
-        <img id="prev-kk" class="preview-img">
-        <div id="ph-kk">
-          <i data-lucide="scan-line" style="color:var(--brand); width:32px; height:32px; margin-bottom:8px;"></i>
-          <p style="font-size: 0.8rem; font-weight: 600;">Buka Smart Scanner</p>
-        </div>
-      </div>
-      <input type="file" id="file-kk" accept="image/*" class="hidden">
-
-      <div class="trust-badge">
-        <i data-lucide="lock" style="width: 16px; color: #026AA2; flex-shrink: 0;"></i>
-        <p>Data dilindungi Enkripsi Ujung-ke-Ujung (E2EE). Sesuai kebijakan privasi kepanitiaan, dokumen hanya digunakan untuk validasi.</p>
-      </div>
-    </div>
-
-    <!-- FORM MANUAL KEPENDUDUKAN (MUNCUL JIKA KK SUDAH DIUPLOAD) -->
-    <form id="form-kependudukan" class="glass-card hidden">
-      <h3 style="font-size: 0.9rem; margin-bottom: 16px; color: var(--brand);">Data Kependudukan (Sesuai KK)</h3>
-      
-      <div class="form-group">
-        <label class="form-label">NIK PESERTA (16 DIGIT)</label>
-        <div class="input-wrapper" id="wrap-nik">
-          <input type="text" id="in_nik" class="form-control" placeholder="3522 0000 0000 0000" inputmode="numeric" required>
-          <i data-lucide="check-circle-2"></i>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Nama Ayah</label>
-        <div class="input-wrapper" id="wrap-ayah">
-          <input type="text" id="in_ayah" class="form-control auto-capitalize" required>
-          <i data-lucide="check-circle-2"></i>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Nama Ibu</label>
-        <div class="input-wrapper" id="wrap-ibu">
-          <input type="text" id="in_ibu" class="form-control auto-capitalize" required>
-          <i data-lucide="check-circle-2"></i>
-        </div>
-      </div>
-
-      <!-- PERNYATAAN INTEGRITAS -->
+      <!-- PERNYATAAN INTEGRITAS & PERSETUJUAN DATA -->
       <div class="integrity-box">
         <input type="checkbox" id="check-integritas">
-        <label for="check-integritas">Saya menyatakan bahwa data yang diisi adalah <b>benar</b>, dan dokumen KTP/KK yang diunggah adalah <b>dokumen asli yang terlihat jelas</b>. Saya siap digugurkan jika terbukti memalsukan data.</label>
+        <label for="check-integritas">Saya menyatakan data yang diisi adalah <b>benar</b>, dokumen asli &amp; jelas, serta menyetujui pemrosesan data pribadi oleh panitia LAKMUD IV untuk keperluan kaderisasi. Saya siap digugurkan jika memalsukan data.</label>
       </div>
 
       <div style="display: flex; gap: 10px;">
-        <button type="button" class="btn-outline" id="btn-back-step-1" style="flex: 1;">Kembali</button>
+        <button type="button" class="btn-outline" id="btn-back-step1" style="flex: 1;">Kembali</button>
         <button type="button" class="btn-primary" id="btn-submit" style="flex: 2;" disabled>
-          <i data-lucide="send"></i> Kirim Pendaftaran
+          <i data-lucide="send" style="width: 18px;"></i> Kirim Pendaftaran
         </button>
       </div>
     </form>
   </main>
 
   <!-- STEP 3: SUKSES -->
-  <main class="app-container hidden" id="step-3" style="text-align: center; padding-top: 40px;">
+  <main class="app-container hidden" id="step-3" style="text-align: center; padding-top: 32px;">
     <div style="width: 80px; height: 80px; background: var(--success-bg); color: var(--success); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px;">
       <i data-lucide="check" style="width: 40px; height: 40px; stroke-width: 3;"></i>
     </div>
-    <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--primary);">Pendaftaran Berhasil!</h1>
+    <h1 style="font-size: 1.7rem; font-weight: 800; color: var(--primary);">Pendaftaran Berhasil!</h1>
     <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">
-      Data atas nama <b id="res-nama"></b> telah diamankan dan masuk ke database panitia LAKMUD IV.
+      Berkas dan biodata atas nama <b id="res-nama"></b> telah masuk ke database panitia LAKMUD IV.
     </p>
+    <div>
+      <div class="code-badge" id="res-kode">REG-XXXXXX</div>
+    </div>
 
-    <div class="glass-card" style="margin-top: 32px; display: flex; flex-direction: column; gap: 12px;">
-      <p style="font-size: 0.8rem; font-weight: 700;">Langkah Wajib Selanjutnya:</p>
-      
-      <!-- Tombol Admin (Sekarang jadi hijau penuh dan tanpa nomor) -->
-      <a href="#" target="_blank" id="link-wa-admin" class="btn-primary" style="text-decoration: none; background: #25D366; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);">
-        <i data-lucide="message-circle"></i> Konfirmasi WhatsApp Admin
+    <div class="glass-card" style="margin-top: 12px; display: flex; flex-direction: column; gap: 12px;">
+      <p style="font-size: 0.82rem; font-weight: 700;">Langkah Wajib Selanjutnya:</p>
+      <a href="#" target="_blank" rel="noopener noreferrer" id="link-wa-admin" class="btn-primary" style="text-decoration: none; background: #25D366; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);">
+        <i data-lucide="message-circle" style="width: 18px;"></i> Konfirmasi WhatsApp Admin
       </a>
-      
     </div>
   </main>
 
-
-  <!-- MODAL: SMART SCANNER ALA DANA -->
+  <!-- MODAL: SMART SCANNER -->
   <div class="scanner-modal" id="scanner-modal">
     <div class="video-container">
       <video id="video-stream" autoplay playsinline muted></video>
       <div class="scanner-overlay">
-        <div style="font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 16px;">Posisikan KK Tepat di Bingkai</div>
-        <div class="cutout-frame">
+        <div style="font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 16px; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">Posisikan KK Tepat di Dalam Bingkai</div>
+        <div class="cutout-frame" id="cutout-frame">
           <div class="laser-line"></div>
         </div>
       </div>
     </div>
     <div class="scanner-controls">
       <button type="button" class="btn-outline" style="width: auto; padding: 0 16px; background: transparent; border-color: #555; color: #fff;" onclick="closeScanner()">Batal</button>
-      <button type="button" class="btn-capture" id="btn-shoot-kk">
+      <button type="button" class="btn-capture" id="btn-shoot-kk" aria-label="Ambil Foto KK">
         <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--brand);"></div>
       </button>
-      <button type="button" class="btn-outline" style="width: auto; padding: 0 16px; background: transparent; border-color: #555; color: #fff;" onclick="document.getElementById('file-kk').click(); closeScanner();">
-        <i data-lucide="image"></i> Galeri
+      <button type="button" class="btn-outline" style="width: auto; padding: 0 16px; background: transparent; border-color: #555; color: #fff;" onclick="openGalleryKK()">
+        <i data-lucide="image" style="width: 18px;"></i> Galeri
       </button>
     </div>
   </div>
@@ -400,16 +415,17 @@
   <div class="loading-modal" id="loading-modal">
     <div class="glass-card" style="display: flex; flex-direction: column; align-items: center; min-width: 280px;">
       <div class="loader-bar"><div class="loader-progress" id="loader-bar-fill"></div></div>
-      <p class="loader-text" id="loader-text">Menyiapkan Enkripsi Data...</p>
+      <p class="loader-text" id="loader-text">Mempersiapkan Data...</p>
     </div>
   </div>
 
-  <!-- BOTTOM SHEET: KONFIRMASI FOTO JELAS -->
+  <!-- BOTTOM SHEET: KONFIRMASI FOTO KK -->
   <div class="bottom-sheet-overlay" id="overlay-confirm"></div>
   <div class="bottom-sheet" id="sheet-confirm">
-    <h3 style="font-size: 1.2rem; font-weight: 800;">Verifikasi Kualitas</h3>
-    <p style="font-size: 0.85rem; color: var(--text-muted);">Apakah teks NIK dan Nama pada foto dokumen ini dapat Anda baca dengan jelas tanpa buram?</p>
-    <div style="display: flex; gap: 10px; margin-top: 8px;">
+    <h3 style="font-size: 1.15rem; font-weight: 800;">Verifikasi Hasil Scan KK</h3>
+    <img id="confirm-preview-kk" src="" alt="Hasil Scan KK" style="width: 100%; max-height: 200px; object-fit: contain; border-radius: 10px; border: 1px solid var(--border); background: #111;">
+    <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.45;">Apakah tulisan NIK, Nama Peserta, dan Orang Tua pada hasil potongan gambar ini terbaca jelas tanpa buram?</p>
+    <div style="display: flex; gap: 10px; margin-top: 4px;">
       <button type="button" class="btn-outline" style="flex:1;" onclick="rejectPhoto()">Buram, Ulangi</button>
       <button type="button" class="btn-primary" style="flex:1;" onclick="acceptPhoto()">Sangat Jelas</button>
     </div>
@@ -418,9 +434,9 @@
   <!-- BOTTOM SHEET: DRAFT RESTORE -->
   <div class="bottom-sheet-overlay" id="overlay-draft"></div>
   <div class="bottom-sheet" id="sheet-draft">
-    <h3 style="font-size: 1.2rem; font-weight: 800;">Draf Ditemukan</h3>
-    <p style="font-size: 0.85rem; color: var(--text-muted);">Kami mendeteksi Anda belum menyelesaikan pendaftaran sebelumnya. Lanjutkan mengisi?</p>
-    <div style="display: flex; gap: 10px; margin-top: 8px;">
+    <h3 style="font-size: 1.15rem; font-weight: 800;">Draf Biodata Ditemukan</h3>
+    <p style="font-size: 0.85rem; color: var(--text-muted);">Kami menemukan draf isian Anda sebelumnya. Lanjutkan mengisi? (Foto dan NIK wajib diinput ulang demi keamanan).</p>
+    <div style="display: flex; gap: 10px; margin-top: 4px;">
       <button type="button" class="btn-outline" style="flex:1;" onclick="clearDraft()">Mulai Baru</button>
       <button type="button" class="btn-primary" style="flex:1;" onclick="restoreDraft()">Lanjutkan</button>
     </div>
@@ -430,11 +446,11 @@
   <div class="bottom-sheet-overlay" id="overlay-alert"></div>
   <div class="bottom-sheet" id="sheet-alert">
     <div style="display: flex; align-items: center; gap: 12px;">
-      <i data-lucide="alert-triangle" style="color: var(--brand); width: 28px; height: 28px;"></i>
-      <h3 style="font-size: 1.2rem; font-weight: 800;" id="alert-title">Perhatian</h3>
+      <i data-lucide="alert-triangle" style="color: var(--brand); width: 28px; height: 28px; flex-shrink: 0;"></i>
+      <h3 style="font-size: 1.15rem; font-weight: 800;" id="alert-title">Perhatian</h3>
     </div>
-    <p style="font-size: 0.85rem; color: var(--text-muted);" id="alert-message">Pesan peringatan.</p>
-    <button type="button" class="btn-primary" onclick="closeAlert()" style="margin-top: 8px;">Mengerti</button>
+    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;" id="alert-message">Pesan peringatan.</p>
+    <button type="button" class="btn-primary" onclick="closeAlert()" style="margin-top: 6px;">Mengerti</button>
   </div>
 
   <canvas id="canvas-compress" style="display: none;"></canvas>
@@ -442,406 +458,663 @@
   <script>
     lucide.createIcons();
 
-    /* KONFIGURASI */
+    /* ========================================================
+       KONFIGURASI
+       ======================================================== */
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1ecAXVHCDQuqlkKOVxVljo6spnbQigQensRgfAahCRc81LEmEVuNly8jS9Pgdo1Jamw/exec";
-    const WA_ADMIN_NUMBER = "6281234567890"; 
+    const WA_ADMIN_NUMBER = "6285156486103"; // 085156486103
+    const MIN_AGE = 16;
+    const MAX_AGE = 23;
+    const DRAFT_KEY = "lakmud4_safe_draft_v2";
 
-    /* STATE MANAGEMENT */
+    /* STATE APLIKASI */
     let DATA = {
-      nama: "", tplahir: "", tgl: "", wa: "", delegasi: "", alamat: "", kaos: "",
-      fotoB64: "", kkB64: "", nik: "", ayah: "", ibu: ""
+      fotoB64: "", kkB64: "",
+      nik: "", ayah: "", ibu: "",
+      nama: "", tplahir: "", tgl: "", wa: "", delegasi: "", alamat: "", kaos: ""
     };
-    let currentUploadType = ""; 
+    let selectedShirtSize = "";
     let tempCanvasBase64 = "";
+    let lastKKSource = "scanner";
+    let currentStream = null;
+    let isSubmitting = false;
+
+    /* Mencegah form reload saat tombol Enter ditekan */
+    document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('submit', e => e.preventDefault());
+    });
 
     /* ========================================================
-       1. SMART AUTO-FORMATTING & VALIDASI REAL-TIME
+       UTILITAS FORMAT, USIA, & HASHING
        ======================================================== */
-    
-    // Auto-Capitalize
-    document.querySelectorAll('.auto-capitalize').forEach(input => {
-      input.addEventListener('input', function() {
-        let start = this.selectionStart; let end = this.selectionEnd;
-        this.value = this.value.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
-        this.setSelectionRange(start, end);
-        saveDraft(); validateStep1();
-      });
-    });
-
-    // Masking WhatsApp (08xx xxxx xxxx)
-    const inWA = document.getElementById('in_wa');
-    inWA.addEventListener('input', function() {
-      let raw = this.value.replace(/\D/g, '');
-      if (raw.startsWith('62')) raw = '0' + raw.substring(2);
-      let formatted = raw;
-      if (raw.length > 4 && raw.length <= 8) formatted = raw.replace(/(\d{4})(\d+)/, '$1 $2');
-      else if (raw.length > 8) formatted = raw.replace(/(\d{4})(\d{4})(\d+)/, '$1 $2 $3');
-      this.value = formatted;
-      document.getElementById('wrap-wa').classList.toggle('valid', raw.length >= 10);
-      saveDraft(); validateStep1();
-    });
-
-    // Masking NIK Terketat (Wajib 16 Digit)
-    const inNIK = document.getElementById('in_nik');
-    inNIK.addEventListener('input', function() {
-      let raw = this.value.replace(/\D/g, '').substring(0, 16); // Strict 16 max
-      let formatted = raw.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
-      this.value = formatted;
-      document.getElementById('wrap-nik').classList.toggle('valid', raw.length === 16);
-      saveDraft(); validateStep2();
-    });
-
-    // Pilihan Kaos
-    const shirtBtns = document.querySelectorAll('.shirt-btn');
-    const inKaosCustom = document.getElementById('in_kaos_custom');
-    shirtBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        shirtBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        DATA.kaos = btn.dataset.size;
-        if (DATA.kaos === 'Custom') {
-          inKaosCustom.classList.remove('hidden');
-          inKaosCustom.focus();
-        } else {
-          inKaosCustom.classList.add('hidden');
-          inKaosCustom.value = "";
-        }
-        saveDraft(); validateStep1();
-      });
-    });
-
-    // Validasi Step 1
-    function validateStep1() {
-      DATA.nama = document.getElementById('in_nama').value.trim();
-      DATA.tplahir = document.getElementById('in_tplahir').value.trim();
-      DATA.tgl = document.getElementById('in_tgl').value;
-      DATA.delegasi = document.getElementById('in_delegasi').value.trim();
-      DATA.alamat = document.getElementById('in_alamat').value.trim();
-      if(DATA.kaos === 'Custom') DATA.kaos = inKaosCustom.value.trim();
-
-      document.getElementById('wrap-nama').classList.toggle('valid', DATA.nama.length >= 3);
-      document.getElementById('wrap-tplahir').classList.toggle('valid', DATA.tplahir.length >= 3);
-      document.getElementById('wrap-tgl').classList.toggle('valid', DATA.tgl !== "");
-      document.getElementById('wrap-delegasi').classList.toggle('valid', DATA.delegasi.length >= 3);
-      document.getElementById('wrap-alamat').classList.toggle('valid', DATA.alamat.length >= 10);
-
-      const isValid = DATA.nama.length>=3 && DATA.tplahir.length>=3 && DATA.tgl!=="" && 
-                      inWA.value.replace(/\D/g,'').length>=10 && DATA.delegasi.length>=3 && 
-                      DATA.alamat.length>=10 && DATA.kaos && DATA.kaos!=="";
-      
-      document.getElementById('btn-next').disabled = !isValid;
+    function toTitleCase(str) {
+      return String(str || "")
+        .trim()
+        .replace(/\s+/g, " ")
+        .toLowerCase()
+        .replace(/(^|\s)\S/g, l => l.toUpperCase());
     }
 
-    // Event Listener Umum Step 1
-    ['in_tgl', 'in_kaos_custom'].forEach(id => {
-      document.getElementById(id).addEventListener('input', () => { saveDraft(); validateStep1(); });
-    });
+    function isValidNIK(rawNik) {
+      if (!/^\d{16}$/.test(rawNik)) return false;
+      if (/^(\d)\1{15}$/.test(rawNik)) return false; // Tolak 0000... / 1111...
+      if (rawNik === "1234567890123456" || rawNik === "0123456789012345") return false;
+      return true;
+    }
 
-    // Pindah ke Step 2
-    document.getElementById('btn-next').addEventListener('click', () => {
-      DATA.wa = inWA.value.replace(/\D/g, '');
-      if(DATA.wa.startsWith('0')) DATA.wa = '62' + DATA.wa.substring(1);
-      
-      document.getElementById('step-1').classList.add('hidden');
-      document.getElementById('step-2').classList.remove('hidden');
-      window.scrollTo(0,0);
-    });
-    
-    document.getElementById('btn-back-step-1').addEventListener('click', () => {
-      document.getElementById('step-2').classList.add('hidden');
-      document.getElementById('step-1').classList.remove('hidden');
-    });
+    function isValidWA(rawWa) {
+      // Terima 08xx atau 628xx dengan total digit 10-15
+      let digits = rawWa.replace(/\D/g, "");
+      if (digits.startsWith("62")) digits = "0" + digits.substring(2);
+      return /^08\d{8,13}$/.test(digits);
+    }
 
+    function formatDateYMD(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const d = String(dateObj.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function getExactAge(dobStr) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dobStr)) return -1;
+      const parts = dobStr.split("-").map(Number);
+      const dob = new Date(parts[0], parts[1] - 1, parts[2]);
+      if (isNaN(dob.getTime())) return -1;
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+      const m = today.getMonth() - dob.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+        age--;
+      }
+      return age;
+    }
+
+    function isValidAge(dobStr) {
+      const age = getExactAge(dobStr);
+      return age >= MIN_AGE && age <= MAX_AGE;
+    }
+
+    function setupDateLimits() {
+      const today = new Date();
+      // Usia min 16 -> lahir maksimal tahun ini - 16
+      const maxDob = new Date(today.getFullYear() - MIN_AGE, today.getMonth(), today.getDate());
+      // Usia max 23 (belum genap 24) -> lahir minimal (tahun ini - 24) + 1 hari
+      const minDob = new Date(today.getFullYear() - (MAX_AGE + 1), today.getMonth(), today.getDate() + 1);
+      const inTgl = document.getElementById("in_tgl");
+      inTgl.min = formatDateYMD(minDob);
+      inTgl.max = formatDateYMD(maxDob);
+    }
+    setupDateLimits();
+
+    async function sha256(text) {
+      if (window.crypto && window.crypto.subtle) {
+        const data = new TextEncoder().encode(text);
+        const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+        return Array.from(new Uint8Array(hashBuffer))
+          .map(b => b.toString(16).padStart(2, "0"))
+          .join("");
+      }
+      // Fallback hash sederhana jika dibuka di protokol non-HTTPS saat testing lokal
+      let h = 2166136261;
+      for (let i = 0; i < text.length; i++) {
+        h ^= text.charCodeAt(i);
+        h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24);
+      }
+      return (h >>> 0).toString(16);
+    }
 
     /* ========================================================
-       2. AUTO-SAVE DRAFT & DEDUPLIKASI
+       STEP 1: KAMERA SMART SCANNER (AUTO-CROP) & UPLOAD BERKAS
        ======================================================== */
-    function saveDraft() {
-      const draft = {
-        nama: document.getElementById('in_nama').value, tplahir: document.getElementById('in_tplahir').value,
-        tgl: document.getElementById('in_tgl').value, wa: inWA.value, delegasi: document.getElementById('in_delegasi').value,
-        alamat: document.getElementById('in_alamat').value, nik: document.getElementById('in_nik').value
-      };
-      localStorage.setItem('lakmud_draft', JSON.stringify(draft));
-    }
+    const boxFoto = document.getElementById("box-foto");
+    const fileFoto = document.getElementById("file-foto");
+    const boxKK = document.getElementById("box-kk");
+    const fileKK = document.getElementById("file-kk");
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const draftStr = localStorage.getItem('lakmud_draft');
-      if(draftStr) {
-        document.getElementById('overlay-draft').classList.add('active');
-        document.getElementById('sheet-draft').classList.add('active');
+    boxFoto.addEventListener("click", () => fileFoto.click());
+    fileFoto.addEventListener("change", (e) => {
+      if (e.target.files[0]) processImageFile(e.target.files[0], "foto");
+    });
+
+    boxKK.addEventListener("click", () => openScanner());
+    fileKK.addEventListener("change", (e) => {
+      if (e.target.files[0]) {
+        lastKKSource = "gallery";
+        processImageFile(e.target.files[0], "kk");
       }
     });
 
-    function clearDraft() {
-      localStorage.removeItem('lakmud_draft');
-      document.getElementById('overlay-draft').classList.remove('active');
-      document.getElementById('sheet-draft').classList.remove('active');
+    function openGalleryKK() {
+      closeScanner();
+      fileKK.click();
     }
 
-    function restoreDraft() {
-      const draft = JSON.parse(localStorage.getItem('lakmud_draft'));
-      document.getElementById('in_nama').value = draft.nama || "";
-      document.getElementById('in_tplahir').value = draft.tplahir || "";
-      document.getElementById('in_tgl').value = draft.tgl || "";
-      inWA.value = draft.wa || "";
-      document.getElementById('in_delegasi').value = draft.delegasi || "";
-      document.getElementById('in_alamat').value = draft.alamat || "";
-      inNIK.value = draft.nik || "";
-      validateStep1();
-      // trigger input untuk NIK & WA mask
-      inWA.dispatchEvent(new Event('input'));
-      inNIK.dispatchEvent(new Event('input'));
-      clearDraft(); // Tutup sheet
-    }
-
-
-    /* ========================================================
-       3. SISTEM KAMERA & UPLOAD GALERI TINGKAT TINGGI
-       ======================================================== */
-    let currentStream = null;
-    
-    // Foto Profil via File Biasa (Karena pasfoto jarang live camera)
-    document.getElementById('box-foto').addEventListener('click', () => document.getElementById('file-foto').click());
-    document.getElementById('file-foto').addEventListener('change', (e) => {
-      if(e.target.files[0]) processImage(e.target.files[0], 'foto');
-    });
-
-    // File KK Galeri (Fallback)
-    document.getElementById('file-kk').addEventListener('change', (e) => {
-      if(e.target.files[0]) processImage(e.target.files[0], 'kk');
-    });
-
-    // Scanner KK Live Camera
     async function openScanner() {
-      currentUploadType = 'kk';
-      const modal = document.getElementById('scanner-modal');
-      const video = document.getElementById('video-stream');
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        showAlert("Kamera Tidak Didukung", "Browser Anda tidak mendukung akses kamera langsung. Silakan pilih foto KK dari Galeri.");
+        fileKK.click();
+        return;
+      }
+      const modal = document.getElementById("scanner-modal");
+      const video = document.getElementById("video-stream");
       try {
         currentStream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false
+          video: { facingMode: "environment", width: { ideal: 1920 }, height: { ideal: 1080 } },
+          audio: false
         });
         video.srcObject = currentStream;
-        modal.classList.add('active');
+        modal.classList.add("active");
       } catch (err) {
-        showAlert("Kamera Tidak Tersedia", "Gunakan opsi 'Galeri' untuk memilih foto KTP/KK.");
-        document.getElementById('file-kk').click();
+        showAlert("Izin Kamera Ditolak", "Aktifkan izin kamera atau pilih foto KK dari Galeri.");
+        fileKK.click();
       }
     }
 
     function closeScanner() {
-      if(currentStream) { currentStream.getTracks().forEach(t => t.stop()); currentStream = null; }
-      document.getElementById('scanner-modal').classList.remove('active');
+      if (currentStream) {
+        currentStream.getTracks().forEach(t => t.stop());
+        currentStream = null;
+      }
+      document.getElementById("video-stream").srcObject = null;
+      document.getElementById("scanner-modal").classList.remove("active");
     }
 
-    document.getElementById('btn-shoot-kk').addEventListener('click', () => {
-      const video = document.getElementById('video-stream');
-      const canvas = document.getElementById('canvas-compress');
-      const ctx = canvas.getContext('2d');
-      canvas.width = video.videoWidth; canvas.height = video.videoHeight;
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+    // Potong (Crop) otomatis tepat mengikuti kotak .cutout-frame
+    document.getElementById("btn-shoot-kk").addEventListener("click", () => {
+      const video = document.getElementById("video-stream");
+      const cutout = document.getElementById("cutout-frame");
+      const vw = video.videoWidth;
+      const vh = video.videoHeight;
+      if (!vw || !vh) {
+        return showAlert("Kamera Belum Siap", "Tunggu sebentar hingga tampilan kamera muncul jelas.");
+      }
+
+      const videoRect = video.getBoundingClientRect();
+      const cutoutRect = cutout.getBoundingClientRect();
+
+      // Hitung skala object-fit: cover
+      const rw = videoRect.width;
+      const rh = videoRect.height;
+      const scale = Math.max(rw / vw, rh / vh);
+      const offsetX = (vw * scale - rw) / 2;
+      const offsetY = (vh * scale - rh) / 2;
+
+      const cx = cutoutRect.left - videoRect.left;
+      const cy = cutoutRect.top - videoRect.top;
+      const cw = cutoutRect.width;
+      const ch = cutoutRect.height;
+
+      // Koordinat asli pada sumber video
+      let sx = Math.max(0, (cx + offsetX) / scale);
+      let sy = Math.max(0, (cy + offsetY) / scale);
+      let sw = Math.min(vw - sx, cw / scale);
+      let sh = Math.min(vh - sy, ch / scale);
+
+      // Kompres hasil crop maksimal lebar/tinggi 1600px
+      const MAX = 1600;
+      let outW = Math.round(sw);
+      let outH = Math.round(sh);
+      if (outW > MAX || outH > MAX) {
+        if (outW > outH) {
+          outH = Math.round((outH * MAX) / outW);
+          outW = MAX;
+        } else {
+          outW = Math.round((outW * MAX) / outH);
+          outH = MAX;
+        }
+      }
+
+      const canvas = document.getElementById("canvas-compress");
+      const ctx = canvas.getContext("2d");
+      canvas.width = outW;
+      canvas.height = outH;
+      ctx.drawImage(video, sx, sy, sw, sh, 0, 0, outW, outH);
+
+      tempCanvasBase64 = canvas.toDataURL("image/jpeg", 0.85);
+      lastKKSource = "scanner";
       closeScanner();
-      tempCanvasBase64 = dataUrl;
       showConfirmSheet();
     });
 
-    // Proses Kompresi Berkas (< 2MB)
-    function processImage(file, type) {
-      currentUploadType = type;
-      if (file.size > 8 * 1024 * 1024) return showAlert("File Kebesaran", "Maksimal ukuran foto adalah 8 MB.");
-      
+    function processImageFile(file, type) {
+      if (!/^image\/(jpeg|jpg|png|webp)$/i.test(file.type)) {
+        return showAlert("Format Tidak Didukung", "Pilih file gambar berformat JPG, PNG, atau WEBP.");
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        return showAlert("Ukuran Terlalu Besar", "Maksimal ukuran file foto yang dipilih adalah 10 MB.");
+      }
+
       const reader = new FileReader();
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
-          const canvas = document.getElementById('canvas-compress');
-          const ctx = canvas.getContext('2d');
-          
-          let w = img.width, h = img.height;
-          const MAX = 1600; // Standar agar teks KK tetap terbaca namun file kecil
+          const canvas = document.getElementById("canvas-compress");
+          const ctx = canvas.getContext("2d");
+
+          let w = img.width;
+          let h = img.height;
+          const MAX = type === "foto" ? 1000 : 1600;
           if (w > MAX || h > MAX) {
-            if (w > h) { h = Math.round((h * MAX) / w); w = MAX; } 
+            if (w > h) { h = Math.round((h * MAX) / w); w = MAX; }
             else { w = Math.round((w * MAX) / h); h = MAX; }
           }
-          canvas.width = w; canvas.height = h;
+          canvas.width = w;
+          canvas.height = h;
           ctx.drawImage(img, 0, 0, w, h);
-          tempCanvasBase64 = canvas.toDataURL('image/jpeg', 0.85);
+          const resultBase64 = canvas.toDataURL("image/jpeg", 0.85);
 
-          if(type === 'foto') {
-            applyPhoto('foto', tempCanvasBase64);
+          if (type === "foto") {
+            applyPhoto("foto", resultBase64);
           } else {
+            tempCanvasBase64 = resultBase64;
             showConfirmSheet();
           }
         };
+        img.onerror = () => showAlert("Gambar Rusak", "File gambar gagal dibaca. Pilih gambar lain.");
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
     }
 
     function showConfirmSheet() {
-      document.getElementById('overlay-confirm').classList.add('active');
-      document.getElementById('sheet-confirm').classList.add('active');
+      document.getElementById("confirm-preview-kk").src = tempCanvasBase64;
+      document.getElementById("overlay-confirm").classList.add("active");
+      document.getElementById("sheet-confirm").classList.add("active");
     }
-    
+
     function rejectPhoto() {
-      document.getElementById('overlay-confirm').classList.remove('active');
-      document.getElementById('sheet-confirm').classList.remove('active');
+      document.getElementById("overlay-confirm").classList.remove("active");
+      document.getElementById("sheet-confirm").classList.remove("active");
+      fileKK.value = "";
       tempCanvasBase64 = "";
+      if (lastKKSource === "scanner") {
+        openScanner();
+      } else {
+        fileKK.click();
+      }
     }
 
     function acceptPhoto() {
-      document.getElementById('overlay-confirm').classList.remove('active');
-      document.getElementById('sheet-confirm').classList.remove('active');
-      applyPhoto('kk', tempCanvasBase64);
-      
-      // Munculkan form data manual
-      document.getElementById('form-kependudukan').classList.remove('hidden');
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      document.getElementById("overlay-confirm").classList.remove("active");
+      document.getElementById("sheet-confirm").classList.remove("active");
+      applyPhoto("kk", tempCanvasBase64);
+      tempCanvasBase64 = "";
+
+      const formKK = document.getElementById("form-kependudukan");
+      formKK.classList.remove("hidden");
+      setTimeout(() => {
+        formKK.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 150);
     }
 
     function applyPhoto(type, base64) {
       const box = document.getElementById(`box-${type}`);
       const prev = document.getElementById(`prev-${type}`);
       const ph = document.getElementById(`ph-${type}`);
-      
-      prev.src = base64;
-      prev.style.display = 'block';
-      ph.style.display = 'none';
-      box.classList.add('has-file');
 
-      if(type === 'foto') DATA.fotoB64 = base64;
-      if(type === 'kk') DATA.kkB64 = base64;
-      
-      validateStep2();
+      prev.src = base64;
+      prev.style.display = "block";
+      ph.style.display = "none";
+      box.classList.add("has-file");
+
+      if (type === "foto") DATA.fotoB64 = base64;
+      if (type === "kk") DATA.kkB64 = base64;
+      validateStep1();
     }
 
-
     /* ========================================================
-       4. VALIDASI AKHIR & SUBMIT BERKAS
+       VALIDASI STEP 1 (BERKAS + DATA KK)
        ======================================================== */
-    const inAyah = document.getElementById('in_ayah');
-    const inIbu = document.getElementById('in_ibu');
-    const checkInt = document.getElementById('check-integritas');
+    const inNIK = document.getElementById("in_nik");
+    const inAyah = document.getElementById("in_ayah");
+    const inIbu = document.getElementById("in_ibu");
+    const hintNIK = document.getElementById("hint-nik");
+
+    inNIK.addEventListener("input", function() {
+      let raw = this.value.replace(/\D/g, "").substring(0, 16);
+      this.value = raw.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
+      validateStep1();
+    });
 
     [inAyah, inIbu].forEach(el => {
-      el.addEventListener('input', () => { saveDraft(); validateStep2(); });
+      el.addEventListener("input", () => { saveDraft(); validateStep1(); });
+      el.addEventListener("blur", function() { this.value = toTitleCase(this.value); saveDraft(); validateStep1(); });
     });
-    checkInt.addEventListener('change', validateStep2);
 
-    function validateStep2() {
-      DATA.nik = inNIK.value.replace(/\D/g, '');
-      DATA.ayah = inAyah.value.trim();
-      DATA.ibu = inIbu.value.trim();
+    function validateStep1() {
+      DATA.nik = inNIK.value.replace(/\D/g, "");
+      DATA.ayah = toTitleCase(inAyah.value);
+      DATA.ibu = toTitleCase(inIbu.value);
 
-      document.getElementById('wrap-ayah').classList.toggle('valid', DATA.ayah.length >= 3);
-      document.getElementById('wrap-ibu').classList.toggle('valid', DATA.ibu.length >= 3);
+      const nikOk = isValidNIK(DATA.nik);
+      document.getElementById("wrap-nik").classList.toggle("valid", nikOk);
+      if (DATA.nik.length === 16 && !nikOk) {
+        hintNIK.textContent = "NIK tidak valid (tidak boleh angka berulang/urut).";
+        hintNIK.style.color = "var(--brand)";
+      } else {
+        hintNIK.textContent = "Masukkan 16 digit NIK sesuai Kartu Keluarga.";
+        hintNIK.style.color = "var(--text-muted)";
+      }
 
-      const isReady = DATA.fotoB64 && DATA.kkB64 && DATA.nik.length === 16 && 
-                      DATA.ayah.length >= 3 && DATA.ibu.length >= 3 && checkInt.checked;
-      
-      document.getElementById('btn-submit').disabled = !isReady;
+      document.getElementById("wrap-ayah").classList.toggle("valid", DATA.ayah.length >= 2);
+      document.getElementById("wrap-ibu").classList.toggle("valid", DATA.ibu.length >= 2);
+
+      const step1Ready = Boolean(DATA.fotoB64 && DATA.kkB64 && nikOk && DATA.ayah.length >= 2 && DATA.ibu.length >= 2);
+      document.getElementById("btn-to-step2").disabled = !step1Ready;
     }
 
+    document.getElementById("btn-to-step2").addEventListener("click", () => {
+      // Simpan final nilai Step 1 di state
+      inAyah.value = DATA.ayah;
+      inIbu.value = DATA.ibu;
+      document.getElementById("step-1").classList.add("hidden");
+      document.getElementById("step-2").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      validateStep2();
+    });
+
+    document.getElementById("btn-back-step1").addEventListener("click", () => {
+      document.getElementById("step-2").classList.add("hidden");
+      document.getElementById("step-1").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
 
     /* ========================================================
-       5. PROGRESSIVE LOADING & KEAMANAN NIK GANDA
+       STEP 2: BIODATA, BATAS USIA 16-23, KAOS & SUBMIT
        ======================================================== */
-    document.getElementById('btn-submit').addEventListener('click', async () => {
-      // KEAMANAN DUPLIKAT DI PERANGKAT (Fingerprint)
-      const userFingerprint = `reg_${DATA.nama}_${DATA.tgl}_${DATA.wa}_${DATA.nik}`.replace(/\s/g, '');
-      if (localStorage.getItem(userFingerprint)) {
-        return showAlert("Identitas Ganda", "Sistem mendeteksi bahwa NIK dan Data Anda sudah berhasil didaftarkan dari perangkat ini sebelumnya. Mohon tunggu informasi panitia.");
+    const inNama = document.getElementById("in_nama");
+    const inTpLahir = document.getElementById("in_tplahir");
+    const inTgl = document.getElementById("in_tgl");
+    const inWA = document.getElementById("in_wa");
+    const inDelegasi = document.getElementById("in_delegasi");
+    const inAlamat = document.getElementById("in_alamat");
+    const inKaosCustom = document.getElementById("in_kaos_custom");
+    const checkInt = document.getElementById("check-integritas");
+    const shirtBtns = document.querySelectorAll(".shirt-btn");
+    const hintTgl = document.getElementById("hint-tgl");
+
+    inWA.addEventListener("input", function() {
+      let raw = this.value.replace(/\D/g, "");
+      if (raw.startsWith("62")) raw = "0" + raw.substring(2);
+      raw = raw.substring(0, 14);
+      let formatted = raw;
+      if (raw.length > 4 && raw.length <= 8) formatted = raw.replace(/(\d{4})(\d+)/, "$1 $2");
+      else if (raw.length > 8) formatted = raw.replace(/(\d{4})(\d{4})(\d+)/, "$1 $2 $3");
+      this.value = formatted;
+      saveDraft();
+      validateStep2();
+    });
+
+    [inNama, inTpLahir, inDelegasi, inAlamat].forEach(el => {
+      el.addEventListener("input", () => { saveDraft(); validateStep2(); });
+      el.addEventListener("blur", function() { this.value = toTitleCase(this.value); saveDraft(); validateStep2(); });
+    });
+
+    [inTgl, inKaosCustom].forEach(el => {
+      el.addEventListener("input", () => { saveDraft(); validateStep2(); });
+    });
+    checkInt.addEventListener("change", validateStep2);
+
+    shirtBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        shirtBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        selectedShirtSize = btn.dataset.size;
+        if (selectedShirtSize === "Custom") {
+          inKaosCustom.classList.remove("hidden");
+          inKaosCustom.focus();
+        } else {
+          inKaosCustom.classList.add("hidden");
+          inKaosCustom.value = "";
+        }
+        saveDraft();
+        validateStep2();
+      });
+    });
+
+    function validateStep2() {
+      DATA.nama = toTitleCase(inNama.value);
+      DATA.tplahir = toTitleCase(inTpLahir.value);
+      DATA.tgl = inTgl.value;
+      DATA.delegasi = toTitleCase(inDelegasi.value);
+      DATA.alamat = toTitleCase(inAlamat.value);
+      DATA.kaos = (selectedShirtSize === "Custom")
+        ? inKaosCustom.value.trim().toUpperCase()
+        : selectedShirtSize;
+
+      let waDigits = inWA.value.replace(/\D/g, "");
+      if (waDigits.startsWith("0")) waDigits = "62" + waDigits.substring(1);
+      DATA.wa = waDigits;
+
+      const tglOk = isValidAge(DATA.tgl);
+      const waOk = isValidWA(inWA.value);
+
+      if (DATA.tgl && !tglOk) {
+        const age = getExactAge(DATA.tgl);
+        hintTgl.textContent = `Usia terhitung ${age} tahun. Syarat usia peserta adalah ${MIN_AGE}–${MAX_AGE} tahun.`;
+        hintTgl.style.color = "var(--brand)";
+      } else {
+        hintTgl.textContent = `Khusus peserta berusia ${MIN_AGE} s/d ${MAX_AGE} tahun.`;
+        hintTgl.style.color = "var(--text-muted)";
       }
 
-      const modalLoading = document.getElementById('loading-modal');
-      const textLoading = document.getElementById('loader-text');
-      const barFill = document.getElementById('loader-bar-fill');
-      
-      modalLoading.classList.add('active');
-      
-      // Animasi Teks Loading (Fake but UX Friendly)
-      const messages = [
-        "Mengompresi Gambar Resolusi Tinggi...",
-        "Menyiapkan Jalur Aman (E2EE)...",
-        "Mentransmisikan Data ke Server...",
-        "Memverifikasi Integritas NIK...",
-        "Menyelesaikan Registrasi..."
-      ];
-      let msgIndex = 0; barFill.style.width = '10%';
-      const loaderInterval = setInterval(() => {
-        msgIndex++; barFill.style.width = `${10 + (msgIndex * 15)}%`;
-        if(msgIndex < messages.length) textLoading.textContent = messages[msgIndex];
-      }, 3000);
+      document.getElementById("wrap-nama").classList.toggle("valid", DATA.nama.length >= 3);
+      document.getElementById("wrap-tplahir").classList.toggle("valid", DATA.tplahir.length >= 3);
+      document.getElementById("wrap-tgl").classList.toggle("valid", tglOk);
+      document.getElementById("wrap-wa").classList.toggle("valid", waOk);
+      document.getElementById("wrap-delegasi").classList.toggle("valid", DATA.delegasi.length >= 3);
+      document.getElementById("wrap-alamat").classList.toggle("valid", DATA.alamat.length >= 10);
 
-      // Payload untuk dikirim ke Google Apps Script (Backend WAJIB cek double NIK juga!)
-      const payload = {
-        nama: DATA.nama, tplahir: DATA.tplahir, tglLahir: DATA.tgl, 
-        wa: DATA.wa, delegasi: DATA.delegasi, alamat: DATA.alamat, kaos: DATA.kaos,
-        nik: DATA.nik, ayah: DATA.ayah, ibu: DATA.ibu,
-        fotoBase64: DATA.fotoB64, kkBase64: DATA.kkB64
+      const isReady = !isSubmitting &&
+        DATA.fotoB64 && DATA.kkB64 && isValidNIK(DATA.nik) &&
+        DATA.ayah.length >= 2 && DATA.ibu.length >= 2 &&
+        DATA.nama.length >= 3 && DATA.tplahir.length >= 3 && tglOk &&
+        waOk && DATA.delegasi.length >= 3 && DATA.alamat.length >= 10 &&
+        DATA.kaos.length >= 1 && checkInt.checked;
+
+      document.getElementById("btn-submit").disabled = !isReady;
+    }
+
+    /* ========================================================
+       DRAFT AMAN (TANPA NIK & TANPA FOTO DI LOCALSTORAGE)
+       ======================================================== */
+    function saveDraft() {
+      const draft = {
+        ayah: inAyah.value,
+        ibu: inIbu.value,
+        nama: inNama.value,
+        tplahir: inTpLahir.value,
+        tgl: inTgl.value,
+        wa: inWA.value,
+        delegasi: inDelegasi.value,
+        alamat: inAlamat.value,
+        shirtSize: selectedShirtSize,
+        kaosCustom: inKaosCustom.value
       };
+      try { localStorage.setItem(DRAFT_KEY, JSON.stringify(draft)); } catch (e) {}
+    }
 
-      try {
-        const res = await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload)
-        });
-        const result = await res.json();
-
-        clearInterval(loaderInterval);
-        barFill.style.width = '100%';
-        textLoading.textContent = "Berhasil!";
-        
-        setTimeout(() => {
-          modalLoading.classList.remove('active');
-          if (result.status === "success" || result.status === "updated") {
-            // Kunci pendaftaran di perangkat ini
-            localStorage.setItem(userFingerprint, "TRUE");
-            localStorage.removeItem('lakmud_draft'); // Hapus draft
-            showSuccess(DATA.nama, DATA.delegasi);
-          } else if (result.status === "duplicate") {
-            showAlert("Ditolak Server", "NIK ini sudah terdaftar di Database Server Panitia!");
-          } else {
-            showAlert("Gagal Sinkronisasi", result.message || "Terdapat kendala sistem.");
+    document.addEventListener("DOMContentLoaded", () => {
+      // Bersihkan draft versi lama jika masih ada (yang dulu menyimpan NIK)
+      localStorage.removeItem("lakmud_draft");
+      const draftStr = localStorage.getItem(DRAFT_KEY);
+      if (draftStr) {
+        try {
+          const d = JSON.parse(draftStr);
+          const hasAny = Object.values(d).some(v => v && String(v).trim() !== "");
+          if (hasAny) {
+            document.getElementById("overlay-draft").classList.add("active");
+            document.getElementById("sheet-draft").classList.add("active");
           }
-        }, 1000);
-
-      } catch (err) {
-        clearInterval(loaderInterval);
-        modalLoading.classList.remove('active');
-        showAlert("Koneksi Terputus", "Gagal menghubungi server. Pastikan sinyal internet Anda stabil lalu coba kirim lagi.");
+        } catch (e) {
+          localStorage.removeItem(DRAFT_KEY);
+        }
       }
     });
 
-    function showSuccess(nama, delegasi) {
-      document.getElementById('step-2').classList.add('hidden');
-      document.getElementById('step-3').classList.remove('hidden');
-      document.getElementById('res-nama').textContent = nama;
-      window.scrollTo(0,0);
-      confetti({ particleCount: 150, spread: 90, origin: { y: 0.5 }, colors: ['#d9230f', '#027A48', '#25D366'] });
-
-      // Format WhatsApp Aman (Tanpa NIK)
-      const textWA = encodeURIComponent(
-        `Assalamu'alaikum Admin Panitia LAKMUD IV.\n\nSaya telah berhasil menyelesaikan pendaftaran dan mengunggah dokumen di sistem.\n\n`+
-        `*Nama :* ${nama}\n*Delegasi :* ${delegasi}\n\nMohon panduan selanjutnya. Terima kasih!`
-      );
-      document.getElementById('link-wa-admin').href = `https://wa.me/${+6282228430822}?text=${textWA}`;
+    function clearDraft() {
+      localStorage.removeItem(DRAFT_KEY);
+      document.getElementById("overlay-draft").classList.remove("active");
+      document.getElementById("sheet-draft").classList.remove("active");
     }
 
-    /* CUSTOM ALERT (BOTTOM SHEET) */
+    function restoreDraft() {
+      try {
+        const draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || "{}");
+        inAyah.value = draft.ayah || "";
+        inIbu.value = draft.ibu || "";
+        inNama.value = draft.nama || "";
+        inTpLahir.value = draft.tplahir || "";
+        inTgl.value = draft.tgl || "";
+        inWA.value = draft.wa || "";
+        inDelegasi.value = draft.delegasi || "";
+        inAlamat.value = draft.alamat || "";
+        if (draft.shirtSize) {
+          selectedShirtSize = draft.shirtSize;
+          shirtBtns.forEach(b => b.classList.toggle("active", b.dataset.size === selectedShirtSize));
+          if (selectedShirtSize === "Custom") {
+            inKaosCustom.classList.remove("hidden");
+            inKaosCustom.value = draft.kaosCustom || "";
+          }
+        }
+        inWA.dispatchEvent(new Event("input"));
+        validateStep1();
+        validateStep2();
+      } catch (e) {}
+      document.getElementById("overlay-draft").classList.remove("active");
+      document.getElementById("sheet-draft").classList.remove("active");
+    }
+
+    /* ========================================================
+       SUBMIT SEMUA DATA (BERKAS + BIODATA) KE GAS
+       ======================================================== */
+    document.getElementById("btn-submit").addEventListener("click", async () => {
+      if (isSubmitting) return;
+
+      // Kunci sementara tombol agar tidak klik ganda
+      isSubmitting = true;
+      document.getElementById("btn-submit").disabled = true;
+
+      try {
+        // Cek duplikat perangkat dengan SHA-256 (NIK tidak tersimpan plaintext)
+        const deviceFp = await sha256(`lakmud4_v2_${DATA.nik}`);
+        if (localStorage.getItem(`reg_done_${deviceFp}`)) {
+          isSubmitting = false;
+          validateStep2();
+          return showAlert("Identitas Sudah Terdaftar", "Perangkat ini tercatat sudah berhasil mendaftarkan NIK tersebut sebelumnya. Silakan hubungi panitia jika ada kendala.");
+        }
+
+        const modalLoading = document.getElementById("loading-modal");
+        const textLoading = document.getElementById("loader-text");
+        const barFill = document.getElementById("loader-bar-fill");
+        modalLoading.classList.add("active");
+
+        const messages = [
+          "Memverifikasi kelengkapan berkas...",
+          "Mengirim pasfoto & scan KK via HTTPS...",
+          "Memeriksa duplikasi NIK di database...",
+          "Membuat Kode Unik & QR Registrasi..."
+        ];
+        let msgIndex = 0;
+        barFill.style.width = "18%";
+        textLoading.textContent = messages[0];
+
+        const loaderInterval = setInterval(() => {
+          msgIndex++;
+          if (msgIndex < messages.length) {
+            textLoading.textContent = messages[msgIndex];
+            barFill.style.width = `${18 + msgIndex * 20}%`;
+          }
+        }, 2400);
+
+        const payload = {
+          nama: DATA.nama,
+          tplahir: DATA.tplahir,
+          tglLahir: DATA.tgl,
+          wa: DATA.wa,
+          delegasi: DATA.delegasi,
+          alamat: DATA.alamat,
+          kaos: DATA.kaos,
+          nik: DATA.nik,
+          ayah: DATA.ayah,
+          ibu: DATA.ibu,
+          fotoBase64: DATA.fotoB64,
+          kkBase64: DATA.kkB64
+        };
+
+        const res = await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        const rawText = await res.text();
+        let result;
+        try {
+          result = JSON.parse(rawText);
+        } catch (parseErr) {
+          throw new Error("Respon server tidak valid.");
+        }
+
+        clearInterval(loaderInterval);
+        barFill.style.width = "100%";
+        textLoading.textContent = "Selesai!";
+
+        setTimeout(() => {
+          modalLoading.classList.remove("active");
+          if (result.status === "success" || result.status === "updated") {
+            localStorage.setItem(`reg_done_${deviceFp}`, "1");
+            localStorage.removeItem(DRAFT_KEY);
+            showSuccess(DATA.nama, DATA.delegasi, result.code || "");
+          } else if (result.status === "duplicate") {
+            isSubmitting = false;
+            validateStep2();
+            showAlert("Pendaftaran Ditolak", result.message || "NIK atau identitas peserta ini sudah terdaftar di database panitia.");
+          } else {
+            isSubmitting = false;
+            validateStep2();
+            showAlert("Gagal Menyimpan", result.message || "Terjadi kendala validasi di server.");
+          }
+        }, 600);
+
+      } catch (err) {
+        document.getElementById("loading-modal").classList.remove("active");
+        isSubmitting = false;
+        validateStep2();
+        showAlert("Koneksi Terputus", "Gagal terhubung ke server panitia. Pastikan sinyal internet stabil lalu coba kirim kembali.");
+      }
+    });
+
+    function showSuccess(nama, delegasi, kode) {
+      document.getElementById("step-2").classList.add("hidden");
+      document.getElementById("step-3").classList.remove("hidden");
+      document.getElementById("res-nama").textContent = nama;
+      document.getElementById("res-kode").textContent = kode || "TERDAFTAR";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      if (typeof confetti === "function") {
+        confetti({ particleCount: 140, spread: 90, origin: { y: 0.5 }, colors: ["#d9230f", "#027A48", "#25D366"] });
+      }
+
+      const cleanAdminWA = WA_ADMIN_NUMBER.replace(/\D/g, "");
+      const textWA = encodeURIComponent(
+        `Assalamu'alaikum Admin Panitia LAKMUD IV.\n\nSaya telah berhasil menyelesaikan pendaftaran dan mengunggah berkas di sistem.\n\n` +
+        `*Kode Reg :* ${kode || "-"}\n*Nama :* ${nama}\n*Delegasi :* ${delegasi}\n\nMohon panduan selanjutnya. Terima kasih!`
+      );
+      document.getElementById("link-wa-admin").href = `https://wa.me/${cleanAdminWA}?text=${textWA}`;
+    }
+
     function showAlert(title, message) {
-      document.getElementById('alert-title').textContent = title;
-      document.getElementById('alert-message').textContent = message;
-      document.getElementById('overlay-alert').classList.add('active');
-      document.getElementById('sheet-alert').classList.add('active');
+      document.getElementById("alert-title").textContent = title;
+      document.getElementById("alert-message").textContent = message;
+      document.getElementById("overlay-alert").classList.add("active");
+      document.getElementById("sheet-alert").classList.add("active");
     }
     function closeAlert() {
-      document.getElementById('overlay-alert').classList.remove('active');
-      document.getElementById('sheet-alert').classList.remove('active');
+      document.getElementById("overlay-alert").classList.remove("active");
+      document.getElementById("sheet-alert").classList.remove("active");
     }
-
   </script>
 </body>
 </html>
