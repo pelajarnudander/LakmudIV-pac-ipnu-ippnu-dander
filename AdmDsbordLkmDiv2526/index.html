@@ -643,8 +643,8 @@
         </nav>
 
         <div class="sidebar-rule-box">
-          <strong>Aturan Verifikasi:</strong><br/>
-          Panitia tidak menginput data/berkas. Jika ada kesalahan peserta, cukup <strong>hapus data/file</strong> terkait agar peserta mengisi ulang, lalu kabari via WA.
+          <strong>Info Tahap Pendaftaran:</strong><br/>
+          Saat ini Bot WA fokus <strong>verifikasi data diri & kirim link grup</strong>. Upload berkas dibuka 5 Desember (bisa dicek & dichat manual di menu Arsip Berkas).
         </div>
       </div>
 
@@ -728,7 +728,7 @@
               </div>
             </div>
 
-            <!-- KPI GRID TANPA SCREENING -->
+            <!-- KPI GRID -->
             <div class="kpi-row-grid">
               <div class="kpi-box-clean">
                 <div>
@@ -802,7 +802,7 @@
             <div class="wa-home-widget">
               <div class="wa-home-head">
                 <div>
-                  <h3 style="font-size:0.96rem;font-weight:800;display:flex;align-items:center;gap:8px;">
+                  <h3 style="font-size:0.96rem;font-weight:800;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                     <i data-lucide="bot" style="width:18px;height:18px;color:var(--primary);"></i>
                     Cuplikan Live Monitor Bot WhatsApp
                     <span class="badge-chip-status st-lengkap" id="homeBotStatusPill">Bot Aktif • Jeda 30s</span>
@@ -827,7 +827,7 @@
           </div>
         </section>
 
-        <!-- 2. DATA PESERTA (TANPA TAMBAH & TANPA STATUS SCREENING) -->
+        <!-- 2. DATA PESERTA -->
         <section id="page-peserta" class="view-pane">
           <div class="list-filter-bar" id="pesertaFilterBar">
             <div class="inline-search-box">
@@ -933,7 +933,7 @@
           </div>
         </section>
 
-        <!-- 3. ARSIP BERKAS (TANPA UPLOAD, HANYA LIHAT & HAPUS FILE SALAH + CHAT MANUAL BERKAS) -->
+        <!-- 3. ARSIP BERKAS -->
         <section id="page-berkas" class="view-pane">
           <div class="list-filter-bar">
             <div class="inline-search-box">
@@ -963,7 +963,7 @@
           <div class="berkas-feed-container" id="berkasFeedContainer"></div>
         </section>
 
-        <!-- 4. PUSAT KENDALI WHATSAPP PRODUKSI -->
+        <!-- 4. PUSAT KENDALI WHATSAPP -->
         <section id="page-whatsapp" class="view-pane">
           <div class="wa-container">
             <div class="wa-info-banner">
@@ -973,7 +973,7 @@
                   Pusat Kendali Bot WhatsApp Pintar
                 </h3>
                 <p style="font-size:0.74rem;color:var(--text-sub);margin-top:3px;">
-                  Auto-Reply 2 Tahap (Verifikasi awal ➔ Jeda ±30s cek Sheet & Drive ➔ Kirim hasil + Link Grup WA) • Filter Kode Reg/Acak • Chat Manual & Broadcast Antrean Aman.
+                  Auto-Reply 2 Tahap (Balas salam &amp; cek data diri ➔ Jeda ±30s ➔ Kirim Link Grup WA) • Hapus Log Pesan • Chat Manual &amp; Broadcast Aman.
                 </p>
               </div>
               <button type="button" class="btn-pill-action primary" id="btnOpenManualWaModal">
@@ -983,10 +983,10 @@
 
             <div class="wa-subtabs">
               <button type="button" class="wa-subtab-btn active" data-watab="wa-panel-logs">
-                <i data-lucide="inbox" style="width:15px;height:15px;"></i> Live Monitor & Inbox
+                <i data-lucide="inbox" style="width:15px;height:15px;"></i> Live Monitor &amp; Inbox
               </button>
               <button type="button" class="wa-subtab-btn" data-watab="wa-panel-settings">
-                <i data-lucide="settings" style="width:15px;height:15px;"></i> Pengaturan Bot 2 Tahap & Grup WA
+                <i data-lucide="settings" style="width:15px;height:15px;"></i> Pengaturan Bot 2 Tahap &amp; Grup WA
               </button>
               <button type="button" class="wa-subtab-btn" data-watab="wa-panel-broadcast">
                 <i data-lucide="radio" style="width:15px;height:15px;"></i> Broadcast Antrean Aman
@@ -1005,7 +1005,7 @@
                   <div class="num" id="waStatSent" style="color:var(--primary);">0</div>
                 </div>
                 <div class="wa-mini-stat">
-                  <div class="kpi-lbl">Gagal / Tertunda</div>
+                  <div class="kpi-lbl">Gagal / Ditolak</div>
                   <div class="num" id="waStatFail" style="color:var(--rose);">0</div>
                 </div>
                 <div class="wa-mini-stat">
@@ -1015,15 +1015,23 @@
               </div>
 
               <div class="filter-controls-row">
-                <div class="inline-search-box" style="flex:1;min-width:240px;">
+                <div class="inline-search-box" style="flex:1;min-width:220px;">
                   <i data-lucide="search" style="width:16px;height:16px;color:var(--primary);"></i>
                   <input type="text" id="waSearchInput" placeholder="Cari log WA berdasarkan nama, kode reg, no. WA, atau isi pesan..." />
                 </div>
-                <select class="filter-select" id="waLogFilterSelect">
-                  <option value="ALL">Semua Status Log</option>
-                  <option value="SENT">Terkirim / Sukses</option>
-                  <option value="FAIL">Gagal / Menunggu</option>
-                </select>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+                  <select class="filter-select" id="waLogFilterSelect">
+                    <option value="ALL">Semua Status Log</option>
+                    <option value="SENT">Terkirim / Sukses</option>
+                    <option value="FAIL">Gagal / Ditolak</option>
+                  </select>
+                  <button type="button" class="btn-pill-action" id="btnClearFailedWaLogs" style="color:var(--accent);border-color:#fde68a;padding:7px 11px;font-size:0.72rem;" title="Hapus semua log yang gagal atau ditolak">
+                    <i data-lucide="eraser" style="width:14px;height:14px;"></i> Hapus Log Gagal
+                  </button>
+                  <button type="button" class="btn-pill-action" id="btnClearAllWaLogs" style="color:var(--rose);border-color:#fecdd3;padding:7px 11px;font-size:0.72rem;" title="Bersihkan seluruh riwayat log WA">
+                    <i data-lucide="trash-2" style="width:14px;height:14px;"></i> Bersihkan Semua
+                  </button>
+                </div>
               </div>
 
               <div id="waLogsList" style="display:flex;flex-direction:column;gap:10px;"></div>
@@ -1034,9 +1042,9 @@
               <form class="bot-card" id="botSettingsForm">
                 <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
                   <div>
-                    <h4 style="font-size:0.95rem;font-weight:800;">Pengaturan Respon Otomatis 2 Tahap & Link Grup</h4>
+                    <h4 style="font-size:0.95rem;font-weight:800;">Pengaturan Respon Otomatis 2 Tahap &amp; Link Grup</h4>
                     <p style="font-size:0.73rem;color:var(--text-muted);margin-top:2px;">
-                      Atur link grup WhatsApp, jeda pengecekan (~30 detik), syarat kelengkapan, dan isi balasan otomatis bot.
+                      Atur mode pemeriksaan (fokus data diri saja atau cek berkas), link grup WA, jeda, dan template balasan bot.
                     </p>
                   </div>
                   <span class="badge-chip-status st-ok" id="botSettingsSyncBadge">Siap Diatur</span>
@@ -1045,7 +1053,7 @@
                 <div class="toggle-switch-row">
                   <div>
                     <strong style="font-size:0.84rem;display:block;">Aktifkan Bot Auto-Reply 2 Tahap</strong>
-                    <span style="font-size:0.72rem;color:var(--text-muted);">Jika aktif, chat peserta berisi Kode Reg/Acak akan langsung dijawab verifikasi awal lalu disusul hasil + Link Grup.</span>
+                    <span style="font-size:0.72rem;color:var(--text-muted);">Jika aktif, chat peserta berisi Kode Reg/Acak akan langsung dibalas pemeriksaan data lalu disusul Link Grup WA.</span>
                   </div>
                   <label class="toggle-switch">
                     <input type="checkbox" id="setBotEnabled" checked />
@@ -1065,26 +1073,27 @@
                 </div>
 
                 <div class="input-group-clean">
-                  <label for="setGroupRule">Syarat Bot Mengirim Link Grup WA (Tahap 2)</label>
+                  <label for="setGroupRule">Mode Verifikasi Bot Sebelum Kirim Link Grup WA (Tahap 2)</label>
                   <select id="setGroupRule">
-                    <option value="ALL_MATCHED">Asal Kode Reg Cocok di Sheet (Tetap beri catatan jika ada berkas kurang/belum bayar)</option>
+                    <option value="DATA_DIRI_ONLY">Fokus Verifikasi Data Diri Saja (Tanpa Cek Berkas — Sebelum 5 Des)</option>
+                    <option value="ALL_MATCHED">Kode Reg Cocok + Tetap Tampilkan Catatan Kekurangan Berkas/Bayar</option>
                     <option value="FULL_FILES_ONLY">Wajib Berkas Lengkap 9/9 (Jika berkas kurang, link grup ditahan)</option>
-                    <option value="FULL_AND_PAID">Wajib Berkas Lengkap 9/9 & Sudah Bayar Lunas (Jika belum, link grup ditahan)</option>
+                    <option value="FULL_AND_PAID">Wajib Berkas Lengkap 9/9 &amp; Sudah Bayar Lunas (Jika belum, link grup ditahan)</option>
                   </select>
                 </div>
 
                 <div class="input-group-clean">
-                  <label for="setMsgStage1">Pesan Tahap 1 — Respon Cepat Verifikasi Awal (Variabel: {nama}, {kode}, {delegasi})</label>
+                  <label for="setMsgStage1">Pesan Tahap 1 — Balas Salam &amp; Periksa Data Diri (Variabel: {nama}, {kode}, {delegasi})</label>
                   <textarea id="setMsgStage1" rows="4"></textarea>
                 </div>
 
                 <div class="input-group-clean">
-                  <label for="setMsgStage2Success">Pesan Tahap 2 — Jika Data Berhasil / Lolos Syarat (Variabel: {nama}, {kode}, {delegasi}, {link_grup})</label>
+                  <label for="setMsgStage2Success">Pesan Tahap 2 — Data Dicek &amp; Kirim Link Grup WA (Variabel: {nama}, {kode}, {delegasi}, {link_grup})</label>
                   <textarea id="setMsgStage2Success" rows="5"></textarea>
                 </div>
 
                 <div class="input-group-clean">
-                  <label for="setMsgStage2Lack">Pesan Tahap 2 — Jika Berkas Kurang / Belum Bayar (Variabel: {nama}, {kode}, {delegasi}, {kekurangan})</label>
+                  <label for="setMsgStage2Lack">Pesan Tahap 2 — Jika Ada Data/Syarat yang Kurang (Variabel: {nama}, {kode}, {delegasi}, {kekurangan})</label>
                   <textarea id="setMsgStage2Lack" rows="5"></textarea>
                 </div>
 
@@ -1165,7 +1174,7 @@
     </div>
   </div>
 
-  <!-- MODAL PREVIEW BERKAS (HANYA PREVIEW + HAPUS FILE SALAH) -->
+  <!-- MODAL PREVIEW BERKAS -->
   <div class="modal-overlay-bg" id="modalPreview" role="dialog" aria-modal="true">
     <div class="modal-window-card" style="max-width:820px;">
       <div class="modal-window-head">
@@ -1193,7 +1202,7 @@
               <i data-lucide="image" style="width:14px;height:14px;"></i> Ganti Mode Tampilan (Foto / PDF)
             </button>
             <button type="button" class="btn-pill-action" id="btnModalDeleteFile" style="font-size:0.72rem;color:var(--rose);">
-              <i data-lucide="trash-2" style="width:14px;height:14px;"></i> Hapus File Salah (Drive & Sheet)
+              <i data-lucide="trash-2" style="width:14px;height:14px;"></i> Hapus File Salah (Drive &amp; Sheet)
             </button>
             <button type="button" class="btn-pill-action" id="btnModalChatFile" style="font-size:0.72rem;color:var(--primary);">
               <i data-lucide="message-circle" style="width:14px;height:14px;"></i> Chat Peserta Soal Berkas
@@ -1207,11 +1216,11 @@
     </div>
   </div>
 
-  <!-- MODAL CHAT MANUAL WA CANGGIH (UNTUK BERKAS & BIASA) -->
+  <!-- MODAL CHAT MANUAL WA -->
   <div class="modal-overlay-bg" id="modalSendWa" role="dialog" aria-modal="true">
     <form class="modal-window-card" id="sendWaForm" style="max-width:540px;">
       <div class="modal-window-head">
-        <h3 style="font-size:0.95rem;font-weight:800;">Chat Manual WhatsApp (Cerdas & Otomatis)</h3>
+        <h3 style="font-size:0.95rem;font-weight:800;">Chat Manual WhatsApp (Cerdas &amp; Otomatis)</h3>
         <button type="button" id="btnCloseSendWa" style="background:none;border:none;color:var(--text-muted);cursor:pointer;"><i data-lucide="x" style="width:18px;height:18px;"></i></button>
       </div>
       <div class="modal-window-body">
@@ -1229,8 +1238,8 @@
           <label for="waTemplateSelect">Pilih Mode / Template Pintar</label>
           <select id="waTemplateSelect">
             <option value="berkas_auto">Chat Manual Berkas (Otomatis Sebut Berkas Kurang / Dihapus)</option>
-            <option value="berkas_ulang">Instruksi Hapus & Daftar Ulang (Kesalahan Fatal)</option>
-            <option value="verif_grup">Kirim Verifikasi Berhasil & Link Grup WA</option>
+            <option value="berkas_ulang">Instruksi Hapus &amp; Daftar Ulang (Kesalahan Fatal)</option>
+            <option value="verif_grup">Kirim Verifikasi Berhasil &amp; Link Grup WA</option>
             <option value="tagihan">Pengingat Pembayaran</option>
             <option value="custom">Tulis Pesan Bebas</option>
           </select>
@@ -1318,12 +1327,12 @@
 
       const DEFAULT_BOT_SETTINGS = {
         botEnabled: true,
-        groupLink: "https://chat.whatsapp.com/",
+        groupLink: "https://chat.whatsapp.com/ISyTohpywobGJ0FcZWtGnV",
         stage2DelaySec: 30,
-        groupRule: "ALL_MATCHED",
-        msgStage1: "Wa'alaikumsalam Wr. Wb. Baik Rekan/Rekanita *{nama}* ({delegasi}).\nKonfirmasi pendaftaran dengan Kode Reg *{kode}* sudah kami terima.\n\nKami verifikasi dan cek dulu kelengkapan data serta berkas Anda di sistem, mohon tunggu sebentar ya...",
-        msgStage2Success: "✅ *VERIFIKASI DATA BERHASIL!*\nRekan/Rekanita *{nama}* ({kode} - {delegasi}), data pendaftaran Anda sudah terkonfirmasi di sistem panitia.\n\nSilakan segera bergabung ke Grup WhatsApp Resmi Peserta melalui link berikut:\n{link_grup}\n\nMohon perkenalkan diri setelah masuk grup. Terima kasih!",
-        msgStage2Lack: "⚠️ *HASIL VERIFIKASI DATA*\nRekan/Rekanita *{nama}* ({kode} - {delegasi}), data Anda tercatat namun masih ada yang perlu dilengkapi:\n{kekurangan}\n\nMohon segera melengkapi kekurangan tersebut atau mengisi ulang berkas yang bermasalah. Jika butuh bantuan, silakan balas chat ini."
+        groupRule: "DATA_DIRI_ONLY",
+        msgStage1: "Wa'alaikumsalam Wr. Wb. Baik Rekan/Rekanita *{nama}* ({delegasi}).\nKonfirmasi pendaftaran dengan Kode Reg *{kode}* sudah kami terima.\n\nBaik, kami akan periksa data diri Anda terlebih dahulu di sistem, mohon tunggu sebentar ya...",
+        msgStage2Success: "✅ *DATA DIRI TERVERIFIKASI!*\nRekan/Rekanita *{nama}* ({kode} - {delegasi}), data diri Anda sudah kami periksa dan tercatat di sistem panitia.\n\nSilakan segera bergabung ke Grup WhatsApp Resmi Peserta melalui link berikut:\n{link_grup}\n\nMohon perkenalkan diri setelah masuk grup ya. Terima kasih!",
+        msgStage2Lack: "⚠️ *HASIL PEMERIKSAAN DATA*\nRekan/Rekanita *{nama}* ({kode} - {delegasi}), data Anda tercatat namun masih ada yang perlu dilengkapi:\n{kekurangan}\n\nMohon segera melengkapi kekurangan tersebut. Jika butuh bantuan, silakan balas chat ini."
       };
 
       const STATE = {
@@ -1535,7 +1544,7 @@
         document.getElementById("setBotEnabled").checked = Boolean(STATE.botSettings.botEnabled);
         document.getElementById("setGroupLink").value = STATE.botSettings.groupLink || "";
         document.getElementById("setStage2Delay").value = Number(STATE.botSettings.stage2DelaySec) || 30;
-        document.getElementById("setGroupRule").value = STATE.botSettings.groupRule || "ALL_MATCHED";
+        document.getElementById("setGroupRule").value = STATE.botSettings.groupRule || "DATA_DIRI_ONLY";
         document.getElementById("setMsgStage1").value = STATE.botSettings.msgStage1 || DEFAULT_BOT_SETTINGS.msgStage1;
         document.getElementById("setMsgStage2Success").value = STATE.botSettings.msgStage2Success || DEFAULT_BOT_SETTINGS.msgStage2Success;
         document.getElementById("setMsgStage2Lack").value = STATE.botSettings.msgStage2Lack || DEFAULT_BOT_SETTINGS.msgStage2Lack;
@@ -1730,7 +1739,7 @@
       }
 
       // =====================================================================
-      // BERANDA (KPI AKURAT + CHART ADAPTIF + CUPLIKAN MONITOR WA)
+      // BERANDA
       // =====================================================================
       function updateDashboardStats() {
         const total = STATE.dataset.length;
@@ -1779,12 +1788,24 @@
                   <span style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;font-weight:800;color:var(--primary);">${escapeHTML(l.code || "-")}</span>
                   <strong style="font-size:0.8rem;margin-left:5px;">${escapeHTML(l.nama || "Tidak Dikenal")}</strong>
                 </div>
-                <span class="badge-chip-status ${ok ? "st-lengkap" : "st-kurang"}">${escapeHTML(l.statusBot || "Proses")}</span>
+                <div style="display:flex;align-items:center;gap:5px;flex-shrink:0;">
+                  <span class="badge-chip-status ${ok ? "st-lengkap" : "st-gagal"}">${escapeHTML(l.statusBot || "Proses")}</span>
+                  <button type="button" class="btn-mini-tile danger" title="Hapus Log Ini"
+                    data-wa-action="delete-log"
+                    data-row-index="${escapeHTML(String(l.rowIndex || ""))}"
+                    data-timestamp="${escapeHTML(l.timestamp || "")}"
+                    data-code="${escapeHTML(l.code || "")}"
+                    data-whatsapp="${escapeHTML(l.whatsapp || "")}"
+                    style="width:24px;height:24px;">
+                    <i data-lucide="trash-2" style="width:12px;height:12px;"></i>
+                  </button>
+                </div>
               </div>
               <div class="wa-snippet-msg"><strong>Masuk (${escapeHTML(l.timestamp || "-")}):</strong> ${escapeHTML(l.pesanMasuk || "-")}</div>
               <div class="wa-snippet-reply"><strong>Balasan Bot:</strong> ${escapeHTML(l.balasanBot || "-")}</div>
             </div>`;
         }).join("");
+        refreshIcons();
       }
 
       function renderCharts() {
@@ -1878,7 +1899,7 @@
       }
 
       // =====================================================================
-      // PESERTA & FILTER OPERASIONAL (TANPA SCREENING & TANPA TAMBAH)
+      // PESERTA & FILTER OPERASIONAL
       // =====================================================================
       function populatePacFilters() {
         const pacSet = new Set(STATE.dataset.map(d => d.delegasi).filter(Boolean));
@@ -2061,7 +2082,7 @@
       }
 
       // =====================================================================
-      // AKSI MUTASI YANG DIIZINKAN (BAYAR & HAPUS DATA/FILE SAJA)
+      // AKSI MUTASI YANG DIIZINKAN
       // =====================================================================
       async function togglePaymentStatus(code) {
         const p = STATE.dataset.find(x => x.code === code);
@@ -2160,7 +2181,7 @@
       }
 
       // =====================================================================
-      // ARSIP BERKAS (HANYA CEK, PREVIEW & HAPUS FILE SALAH — TANPA UPLOAD)
+      // ARSIP BERKAS
       // =====================================================================
       function renderBerkasFeed() {
         const q = STATE.berkasSearch.toLowerCase().trim();
@@ -2333,7 +2354,7 @@
       }
 
       // =====================================================================
-      // WHATSAPP MONITOR, PENGATURAN BOT 2 TAHAP & CHAT MANUAL/BROADCAST
+      // WHATSAPP MONITOR, HAPUS LOG, PENGATURAN BOT & BROADCAST
       // =====================================================================
       function renderWaLogs() {
         const totalLogs = STATE.waLogs.length;
@@ -2377,18 +2398,84 @@
               </div>
               <div class="wa-bubble-in"><strong>Peserta:</strong>\n${escapeHTML(l.pesanMasuk)}</div>
               <div class="wa-bubble-out"><strong>Balasan Bot / Admin:</strong>\n${escapeHTML(l.balasanBot)}</div>
-              ${hasCode ? `
-                <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;">
+              <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;">
+                ${hasCode ? `
                   <button type="button" class="btn-pill-action" style="padding:5px 10px;font-size:0.7rem;" data-wa-action="open-chat" data-code="${escapeHTML(l.code)}">
                     <i data-lucide="reply" style="width:13px;height:13px;color:var(--primary);"></i> Balas Manual
                   </button>
                   <button type="button" class="btn-pill-action" style="padding:5px 10px;font-size:0.7rem;" data-wa-action="open-files" data-code="${escapeHTML(l.code)}">
                     <i data-lucide="folder-open" style="width:13px;height:13px;color:var(--sky);"></i> Cek Berkas
-                  </button>
-                </div>` : ""}
+                  </button>` : ""}
+                <button type="button" class="btn-pill-action" style="padding:5px 10px;font-size:0.7rem;color:var(--rose);border-color:#fecdd3;"
+                  data-wa-action="delete-log"
+                  data-row-index="${escapeHTML(String(l.rowIndex || ""))}"
+                  data-timestamp="${escapeHTML(l.timestamp || "")}"
+                  data-code="${escapeHTML(l.code || "")}"
+                  data-whatsapp="${escapeHTML(l.whatsapp || "")}">
+                  <i data-lucide="trash-2" style="width:13px;height:13px;"></i> Hapus Log
+                </button>
+              </div>
             </div>`;
         }).join("");
         refreshIcons();
+      }
+
+      async function deleteSingleWaLog({ rowIndex, timestamp, code, whatsapp }) {
+        const { confirmed } = await askConfirmation({
+          title: "Hapus Log Pesan Bot",
+          message: `Hapus riwayat pesan WhatsApp "${code || whatsapp || "ini"}" dari Monitor & Sheet Log_WhatsApp?`,
+          confirmText: "Ya, Hapus Log",
+          danger: true
+        });
+        if (!confirmed) return;
+
+        const prevLogs = [...STATE.waLogs];
+        STATE.waLogs = STATE.waLogs.filter(l =>
+          !(String(l.rowIndex || "") === String(rowIndex || "") &&
+            String(l.timestamp || "") === String(timestamp || "") &&
+            String(l.code || "") === String(code || "") &&
+            String(l.whatsapp || "") === String(whatsapp || ""))
+        );
+        renderAllSyncedViews();
+
+        try {
+          const res = await postToCloud({
+            action: "delete_wa_log",
+            rowIndex: Number(rowIndex) || 0,
+            timestamp,
+            code,
+            whatsapp
+          });
+          STATE.lastSignature = computeSignature(STATE.dataset, STATE.waLogs);
+          showToast(res.message || "Log pesan bot dihapus.");
+        } catch (err) {
+          STATE.waLogs = prevLogs;
+          renderAllSyncedViews();
+          showToast(`Gagal hapus log: ${err.message}`, "error");
+        }
+      }
+
+      async function clearWaLogs(mode) {
+        if (!STATE.waLogs.length) return showToast("Log WA sudah kosong.", "error");
+        const isAll = mode === "ALL";
+        const { confirmed } = await askConfirmation({
+          title: isAll ? "Bersihkan Semua Log WA" : "Hapus Semua Log Gagal / Ditolak",
+          message: isAll
+            ? "Seluruh riwayat pesan di Monitor WA dan tab Log_WhatsApp akan dihapus (data peserta di Sheet utama tetap aman). Lanjutkan?"
+            : "Semua log pesan yang gagal terkirim atau ditolak bot akan dihapus agar monitor kembali rapi. Lanjutkan?",
+          confirmText: isAll ? "Bersihkan Semua" : "Hapus Log Gagal",
+          danger: true
+        });
+        if (!confirmed) return;
+
+        try {
+          showToast("Membersihkan log WA...");
+          const res = await postToCloud({ action: "clear_wa_logs", mode });
+          showToast(res.message || "Log WA dibersihkan.");
+          await fetchCloudData(false);
+        } catch (err) {
+          showToast(`Gagal bersihkan log: ${err.message}`, "error");
+        }
       }
 
       async function handleSaveBotSettings(e) {
@@ -2415,9 +2502,9 @@
           document.getElementById("botSettingsSyncBadge").className = "badge-chip-status st-lengkap";
           showToast("Pengaturan Bot 2 Tahap & Link Grup tersimpan ke server!");
         } catch (err) {
-          document.getElementById("botSettingsSyncBadge").textContent = "Tersimpan Lokal (Menunggu Update GAS)";
+          document.getElementById("botSettingsSyncBadge").textContent = "Tersimpan Lokal";
           document.getElementById("botSettingsSyncBadge").className = "badge-chip-status st-kurang";
-          showToast("Tersimpan di browser! Pengaturan akan sinkron penuh setelah Code.gs diperbarui.", "error");
+          showToast(`Gagal simpan ke server: ${err.message}`, "error");
         } finally {
           btn.disabled = false;
           btn.innerHTML = `<i data-lucide="save" style="width:15px;height:15px;"></i> Simpan Pengaturan Bot`;
@@ -2430,7 +2517,7 @@
         const missingBullets = fs.missing.length
           ? fs.missing.map((m, i) => `${i + 1}. ${m.l}`).join("\n")
           : "- (Tidak ada berkas kurang, semua 9 berkas terisi)";
-        const groupLink = STATE.botSettings.groupLink || "https://chat.whatsapp.com/";
+        const groupLink = STATE.botSettings.groupLink || "https://chat.whatsapp.com/ISyTohpywobGJ0FcZWtGnV";
 
         if (tplType === "berkas_auto") {
           if (fs.isFull) {
@@ -2550,9 +2637,9 @@
         } else if (tpl === "bayar") {
           box.value = `Assalamu'alaikum Rekan/Rekanita *{nama}* ({kode} - {delegasi}).\n\nMengingatkan status pembayaran registrasi LAKMUD Anda saat ini: *{status_bayar}*. Mohon segera menyelesaikan administrasi ke panitia. Terima kasih.`;
         } else if (tpl === "konfirm") {
-          box.value = `Assalamu'alaikum Rekan/Rekanita *{nama}* ({delegasi}).\nKami mendeteksi Anda belum melakukan konfirmasi kode registrasi (*{kode}*) ke WhatsApp Bot Panitia.\n\nSilakan kirim pesan konfirmasi Anda agar sistem dapat memverifikasi data dan mengirimkan link grup WA peserta. Terima kasih.`;
+          box.value = `Assalamu'alaikum Rekan/Rekanita *{nama}* ({delegasi}).\nKami mendeteksi Anda belum melakukan konfirmasi kode registrasi (*{kode}*) ke WhatsApp Bot Panitia.\n\nSilakan kirim pesan konfirmasi Anda agar sistem dapat memverifikasi data diri dan mengirimkan link grup WA peserta. Terima kasih.`;
         } else if (tpl === "grup") {
-          box.value = `Assalamu'alaikum Rekan/Rekanita *{nama}* ({kode} - {delegasi}).\nData Anda telah terverifikasi. Silakan segera bergabung ke Grup WhatsApp Resmi Peserta melalui link berikut:\n{link_grup}\n\nTerima kasih!`;
+          box.value = `Assalamu'alaikum Rekan/Rekanita *{nama}* ({kode} - {delegasi}).\nData diri Anda telah terverifikasi. Silakan segera bergabung ke Grup WhatsApp Resmi Peserta melalui link berikut:\n{link_grup}\n\nTerima kasih!`;
         }
       }
 
@@ -2570,7 +2657,7 @@
           .replace(/\{delegasi\}/gi, p.delegasi || "-")
           .replace(/\{status_bayar\}/gi, p.statusBayar || "Belum Bayar")
           .replace(/\{berkas_kurang\}/gi, missingList)
-          .replace(/\{link_grup\}/gi, STATE.botSettings.groupLink || "https://chat.whatsapp.com/");
+          .replace(/\{link_grup\}/gi, STATE.botSettings.groupLink || "https://chat.whatsapp.com/ISyTohpywobGJ0FcZWtGnV");
       }
 
       async function startSafeBroadcast() {
@@ -2632,6 +2719,22 @@
       // =====================================================================
       // BIND EVENTS
       // =====================================================================
+      function handleWaActionClick(e) {
+        const btn = e.target.closest("[data-wa-action]");
+        if (!btn) return;
+        const act = btn.dataset.waAction;
+        if (act === "open-chat") openSendWaModal(btn.dataset.code, "berkas_auto");
+        else if (act === "open-files") openFilePreview(btn.dataset.code, null);
+        else if (act === "delete-log") {
+          deleteSingleWaLog({
+            rowIndex: btn.dataset.rowIndex,
+            timestamp: btn.dataset.timestamp,
+            code: btn.dataset.code,
+            whatsapp: btn.dataset.whatsapp
+          });
+        }
+      }
+
       function bindEvents() {
         ["click", "keydown", "mousemove", "touchstart"].forEach(evt => {
           document.addEventListener(evt, resetIdleClock, { passive: true });
@@ -2674,6 +2777,7 @@
           switchNavMenu("page-whatsapp", "Pusat Kendali WhatsApp", "Monitor Bot Otomatis 2 Tahap, Grup WA & Broadcast");
           switchWaSubtab("wa-panel-settings");
         });
+        document.getElementById("berandaWaSnippetGrid").addEventListener("click", handleWaActionClick);
 
         // Peserta Search & Filter
         const clearBtn = document.getElementById("btnClearPesertaSearch");
@@ -2791,12 +2895,9 @@
         });
         document.getElementById("waSearchInput").addEventListener("input", debounce(e => { STATE.waSearch = e.target.value; renderWaLogs(); }));
         document.getElementById("waLogFilterSelect").addEventListener("change", e => { STATE.waLogFilter = e.target.value; renderWaLogs(); });
-        document.getElementById("waLogsList").addEventListener("click", e => {
-          const btn = e.target.closest("[data-wa-action]");
-          if (!btn) return;
-          if (btn.dataset.waAction === "open-chat") openSendWaModal(btn.dataset.code, "berkas_auto");
-          else if (btn.dataset.waAction === "open-files") openFilePreview(btn.dataset.code, null);
-        });
+        document.getElementById("btnClearFailedWaLogs").addEventListener("click", () => clearWaLogs("FAILED"));
+        document.getElementById("btnClearAllWaLogs").addEventListener("click", () => clearWaLogs("ALL"));
+        document.getElementById("waLogsList").addEventListener("click", handleWaActionClick);
 
         // Bot Settings Form
         document.getElementById("botSettingsForm").addEventListener("submit", handleSaveBotSettings);
